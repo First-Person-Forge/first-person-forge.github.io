@@ -3,104 +3,104 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>JavaScript Code Example</title>
+  <title>Display JavaScript Code as Plain Text</title>
 </head>
 <body>
-  <h1>JavaScript Code Display</h1>
-  
-  <!-- The <pre> tag is used to preserve the formatting of the code -->
+  <h1>JavaScript Code Example</h1>
+
+  <!-- Preformatted block to show code -->
   <pre>
-    &lt;script&gt;
-      if(document.getElementById("ttrs-hack-panel")) return;
-      let intervalId = null, delay = 600, answerCount = 0, maxAnswers = Infinity, isPaused = false;
-      
-      function createPanel() {
-        let panel = document.createElement("div");
-        panel.id = "ttrs-hack-panel";
-        panel.style = "position:fixed;bottom:20px;right:20px;z-index:9999;background:#f4f4f4;color:#333;padding:10px 12px;border:1px solid #ccc;border-radius:10px;font-family:sans-serif;font-size:13px;box-shadow:0 4px 8px rgba(0,0,0,0.1);min-width:180px;cursor:move;user-select:none;";
-        panel.innerHTML = `
-          <div id="ttrs-header" style="font-weight:600;margin-bottom:5px;cursor:move;">⚙️ TTRS Helper</div>
-          <div style="margin-bottom:5px;">Answers: <span id="ttrs-count">0</span></div>
-          <div style="margin-bottom:5px;">
-            <button id="ttrs-start" style="margin-right:4px;">Start</button>
-            <button id="ttrs-stop">Stop</button>
-            <button id="ttrs-pause" style="margin-left:4px;">Pause</button>
-          </div>
-          <div style="margin-bottom:5px;">
-            <label>How much help (ms):</label>
-            <input id="ttrs-help" type="number" value="600" style="width:50px;">
-          </div>
-          <div style="margin-bottom:5px;">
-            <label>Max Answers:</label>
-            <input id="ttrs-max" type="number" value="0" style="width:50px;">
-          </div>
-          <div style="margin-bottom:5px;">
-            <label>Theme:</label>
-            <select id="ttrs-theme">
-              <option value="light">Light</option>
-              <option value="dark">Dark</option>
-            </select>
-          </div>
-          <button id="ttrs-hide" style="font-size:11px;">Hide Panel</button>
-        `;
-        document.body.appendChild(panel);
-      }
-      
-      function startHack() {
-        if(intervalId) clearInterval(intervalId);
-        answerCount = 0;
-        intervalId = setInterval(getAnswer, delay);
-      }
-      
-      function stopHack() {
-        clearInterval(intervalId);
-        intervalId = null;
-      }
-      
-      function getAnswer() {
-        if (isPaused) return;
-        if (answerCount >= maxAnswers) {
-          stopHack();
-          alert("Reached max answers: " + maxAnswers);
-          return;
-        }
-        let q = document.querySelector("ttr-game-question:nth-child(2)");
-        if (!q) return;
-        let t = q.innerText.trim().replace("×", "*").replace("÷", "/");
-        let a;
-        try {
-          let parts = t.match(/(\d+)\s*([\*\/])\s*(\d+)/);
-          if (!parts) return;
-          a = parts[2] === "*" ? (parseInt(parts[1]) * parseInt(parts[3])) : (parseInt(parts[1]) / parseInt(parts[3]));
-          a = Math.floor(a);
-        } catch (err) {
-          console.error("Parse error", err);
-          return;
-        }
-        let keys = [
-          document.querySelector("ttr-game-numpad > div > div:nth-child(4) > div.key-n.key-shade"),
-          document.querySelector("ttr-game-numpad > div > div:nth-child(1) > div:nth-child(1)"),
-          document.querySelector("ttr-game-numpad > div > div:nth-child(1) > div:nth-child(2)"),
-          document.querySelector("ttr-game-numpad > div > div:nth-child(1) > div:nth-child(3)"),
-          document.querySelector("ttr-game-numpad > div > div:nth-child(2) > div:nth-child(1)"),
-          document.querySelector("ttr-game-numpad > div > div:nth-child(2) > div:nth-child(2)"),
-          document.querySelector("ttr-game-numpad > div > div:nth-child(2) > div:nth-child(3)"),
-          document.querySelector("ttr-game-numpad > div > div:nth-child(3) > div:nth-child(1)"),
-          document.querySelector("ttr-game-numpad > div > div:nth-child(3) > div:nth-child(2)"),
-          document.querySelector("ttr-game-numpad > div > div:nth-child(3) > div:nth-child(3)")
-        ];
-        let enter = document.querySelector("ttr-game-numpad > div > div:nth-child(4) > div.key-ent.ng-star-inserted");
-        if (!enter) return;
-        a.toString().split('').forEach(function(c) {
-          let k = keys[parseInt(c)];
-          if (k) k.click();
-        });
-        enter.click();
-        answerCount++;
-      }
-      
-      createPanel();
-    &lt;/script&gt;
+&lt;script&gt;
+  if(document.getElementById(&quot;ttrs-hack-panel&quot;)) return;
+  let intervalId = null, delay = 600, answerCount = 0, maxAnswers = Infinity, isPaused = false;
+
+  function createPanel() {
+    let panel = document.createElement(&quot;div&quot;);
+    panel.id = &quot;ttrs-hack-panel&quot;;
+    panel.style = &quot;position:fixed;bottom:20px;right:20px;z-index:9999;background:#f4f4f4;color:#333;padding:10px 12px;border:1px solid #ccc;border-radius:10px;font-family:sans-serif;font-size:13px;box-shadow:0 4px 8px rgba(0,0,0,0.1);min-width:180px;cursor:move;user-select:none;&quot;;
+    panel.innerHTML = `
+      &lt;div id=&quot;ttrs-header&quot; style=&quot;font-weight:600;margin-bottom:5px;cursor:move;&quot;&gt;⚙️ TTRS Helper&lt;/div&gt;
+      &lt;div style=&quot;margin-bottom:5px;&quot;&gt;Answers: &lt;span id=&quot;ttrs-count&quot;&gt;0&lt;/span&gt;&lt;/div&gt;
+      &lt;div style=&quot;margin-bottom:5px;&quot;&gt;
+        &lt;button id=&quot;ttrs-start&quot; style=&quot;margin-right:4px;&quot;&gt;Start&lt;/button&gt;
+        &lt;button id=&quot;ttrs-stop&quot;&gt;Stop&lt;/button&gt;
+        &lt;button id=&quot;ttrs-pause&quot; style=&quot;margin-left:4px;&quot;&gt;Pause&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;div style=&quot;margin-bottom:5px;&quot;&gt;
+        &lt;label&gt;How much help (ms):&lt;/label&gt;
+        &lt;input id=&quot;ttrs-help&quot; type=&quot;number&quot; value=&quot;600&quot; style=&quot;width:50px;&quot;&gt;
+      &lt;/div&gt;
+      &lt;div style=&quot;margin-bottom:5px;&quot;&gt;
+        &lt;label&gt;Max Answers:&lt;/label&gt;
+        &lt;input id=&quot;ttrs-max&quot; type=&quot;number&quot; value=&quot;0&quot; style=&quot;width:50px;&quot;&gt;
+      &lt;/div&gt;
+      &lt;div style=&quot;margin-bottom:5px;&quot;&gt;
+        &lt;label&gt;Theme:&lt;/label&gt;
+        &lt;select id=&quot;ttrs-theme&quot;&gt;
+          &lt;option value=&quot;light&quot;&gt;Light&lt;/option&gt;
+          &lt;option value=&quot;dark&quot;&gt;Dark&lt;/option&gt;
+        &lt;/select&gt;
+      &lt;/div&gt;
+      &lt;button id=&quot;ttrs-hide&quot; style=&quot;font-size:11px;&quot;&gt;Hide Panel&lt;/button&gt;
+    `;
+    document.body.appendChild(panel);
+  }
+
+  function startHack() {
+    if(intervalId) clearInterval(intervalId);
+    answerCount = 0;
+    intervalId = setInterval(getAnswer, delay);
+  }
+
+  function stopHack() {
+    clearInterval(intervalId);
+    intervalId = null;
+  }
+
+  function getAnswer() {
+    if (isPaused) return;
+    if (answerCount >= maxAnswers) {
+      stopHack();
+      alert(&quot;Reached max answers: &quot; + maxAnswers);
+      return;
+    }
+    let q = document.querySelector(&quot;ttr-game-question:nth-child(2)&quot;);
+    if (!q) return;
+    let t = q.innerText.trim().replace(&quot;×&quot;, &quot;*&quot;).replace(&quot;÷&quot;, &quot;/&quot;);
+    let a;
+    try {
+      let parts = t.match(/(\d+)\s*([\*\/])\s*(\d+)/);
+      if (!parts) return;
+      a = parts[2] === &quot;*&quot; ? (parseInt(parts[1]) * parseInt(parts[3])) : (parseInt(parts[1]) / parseInt(parts[3]));
+      a = Math.floor(a);
+    } catch (err) {
+      console.error(&quot;Parse error&quot;, err);
+      return;
+    }
+    let keys = [
+      document.querySelector(&quot;ttr-game-numpad &gt; div &gt; div:nth-child(4) &gt; div.key-n.key-shade&quot;),
+      document.querySelector(&quot;ttr-game-numpad &gt; div &gt; div:nth-child(1) &gt; div:nth-child(1)&quot;),
+      document.querySelector(&quot;ttr-game-numpad &gt; div &gt; div:nth-child(1) &gt; div:nth-child(2)&quot;),
+      document.querySelector(&quot;ttr-game-numpad &gt; div &gt; div:nth-child(1) &gt; div:nth-child(3)&quot;),
+      document.querySelector(&quot;ttr-game-numpad &gt; div &gt; div:nth-child(2) &gt; div:nth-child(1)&quot;),
+      document.querySelector(&quot;ttr-game-numpad &gt; div &gt; div:nth-child(2) &gt; div:nth-child(2)&quot;),
+      document.querySelector(&quot;ttr-game-numpad &gt; div &gt; div:nth-child(2) &gt; div:nth-child(3)&quot;),
+      document.querySelector(&quot;ttr-game-numpad &gt; div &gt; div:nth-child(3) &gt; div:nth-child(1)&quot;),
+      document.querySelector(&quot;ttr-game-numpad &gt; div &gt; div:nth-child(3) &gt; div:nth-child(2)&quot;),
+      document.querySelector(&quot;ttr-game-numpad &gt; div &gt; div:nth-child(3) &gt; div:nth-child(3)&quot;)
+    ];
+    let enter = document.querySelector(&quot;ttr-game-numpad &gt; div &gt; div:nth-child(4) &gt; div.key-ent.ng-star-inserted&quot;);
+    if (!enter) return;
+    a.toString().split(&#39;&quot;&#39;).forEach(function(c) {
+      let k = keys[parseInt(c)];
+      if (k) k.click();
+    });
+    enter.click();
+    answerCount++;
+  }
+
+  createPanel();
+&lt;/script&gt;
   </pre>
 </body>
 </html>
