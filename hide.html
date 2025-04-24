@@ -1,70 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TTRS Bookmarklet</title>
+  <meta charset="UTF-8">
+  <title>TTRS Helper Bookmarklet</title>
   <style>
     body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      background: #f9f9f9;
+    }
+    textarea {
+      width: 100%;
+      height: 200px;
       font-family: monospace;
-      background: #f0f0f0;
-      padding: 20px;
-    }
-    h1 {
-      font-size: 20px;
-    }
-    pre {
-      background: #eee;
-      padding: 15px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      overflow-x: auto;
-      white-space: pre-wrap;
-      word-break: break-word;
-      margin-bottom: 10px;
-    }
-    code {
       font-size: 14px;
+      padding: 10px;
     }
     button {
-      padding: 8px 12px;
-      background: #007bff;
-      color: white;
-      border: none;
-      border-radius: 4px;
+      padding: 10px 20px;
+      font-size: 14px;
+      margin-top: 10px;
       cursor: pointer;
-      font-size: 14px;
     }
-    button:active {
-      background: #0056b3;
-    }
-    #copied-msg {
-      display: none;
+    .status {
+      margin-left: 10px;
       color: green;
-      font-size: 14px;
-      margin-top: 8px;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <h1>📎 TTRS Bookmarklet Code</h1>
-  <p>Copy the code below and paste it into a browser bookmark URL field:</p>
-
-  <pre><code id="bookmarklet">
-javascript:(function(){if(document.getElementById("ttrs-hack-panel"))return;let intervalId=null,delay=600,answerCount=0,maxAnswers=Infinity,isPaused=false;function createPanel(){let panel=document.createElement("div");panel.id="ttrs-hack-panel";panel.style="position:fixed;bottom:80px;right:20px;z-index:9999;background:#f4f4f4;color:#333;padding:10px 12px;border:1px solid #ccc;border-radius:10px;font-family:sans-serif;font-size:13px;box-shadow:0 4px 8px rgba(0,0,0,0.1);min-width:180px;cursor:move;user-select:none;";panel.innerHTML=`<div id="ttrs-header" style="font-weight:600;margin-bottom:5px;cursor:move;">⚙️ TTRS Helper</div><div style="margin-bottom:5px;">Answers: <span id="ttrs-count">0</span></div><div style="margin-bottom:5px;"><button id="ttrs-start" style="margin-right:4px;">Start</button><button id="ttrs-stop">Stop</button></div><div style="margin-bottom:5px;"><label>How much help (ms):</label><input id="ttrs-help" type="number" value="600" style="width:50px;"></div><div style="margin-bottom:5px;"><label>Max Answers:</label><input id="ttrs-max" type="number" value="0" style="width:50px;"></div><div style="margin-bottom:5px;"><label>Theme:</label><select id="ttrs-theme"><option value="light">Light</option><option value="dark">Dark</option></select></div><button id="ttrs-hide" style="font-size:11px;">Hide Panel</button>`;document.body.appendChild(panel);document.getElementById("ttrs-start").onclick=startHack;document.getElementById("ttrs-stop").onclick=stopHack;document.getElementById("ttrs-help").onchange=function(){delay=parseInt(this.value)||600;restartHack();};document.getElementById("ttrs-max").onchange=function(){let val=parseInt(this.value);maxAnswers=(val>0)?val:Infinity;};document.getElementById("ttrs-theme").onchange=function(){if(this.value==="dark"){panel.style.background="#1e1e1e";panel.style.color="#eee";panel.style.border="1px solid #444";}else{panel.style.background="#f4f4f4";panel.style.color="#333";panel.style.border="1px solid #ccc";}};document.getElementById("ttrs-hide").onclick=function(){panel.style.display="none";};document.addEventListener("keydown",function(e){if(e.shiftKey&&e.key==="T"){panel.style.display=(panel.style.display==="none")?"block":"none";}if(e.shiftKey&&e.key==="P"){isPaused=!isPaused;console.log(isPaused?"Paused":"Resumed");}});dragElement(panel);}function addSpacebarButton(){let btn=document.createElement("button");btn.id="ttrs-space-mobile";btn.textContent="␣ Space";btn.style="position:fixed;bottom:10px;left:50%;transform:translateX(-50%);z-index:9999;padding:12px 30px;font-size:18px;background:#007bff;color:#fff;border:none;border-radius:8px;box-shadow:0 2px 4px rgba(0,0,0,0.3);";btn.onclick=function(){let evt=new KeyboardEvent("keydown",{key:" ",code:"Space",keyCode:32,which:32,bubbles:true});document.dispatchEvent(evt);};document.body.appendChild(btn);}function updateCount(){document.getElementById("ttrs-count").textContent=answerCount;}function getAnswer(){if(isPaused)return;if(answerCount>=maxAnswers){stopHack();alert("Reached max answers: "+maxAnswers);return;}let q=document.querySelector("ttr-game-question:nth-child(2)");if(!q)return;let t=q.innerText.trim().replace("×","*").replace("÷","/");let a;try{let parts=t.match(/(\d+)\s*([*/])\s*(\d+)/);if(!parts)return;a=parts[2]==="*"?(parseInt(parts[1])*parseInt(parts[3])):(parseInt(parts[1])/parseInt(parts[3]));a=Math.floor(a);}catch(err){console.error("Parse error",err);return;}let keys=[document.querySelector("ttr-game-numpad > div > div:nth-child(4) > div.key-n.key-shade"),document.querySelector("ttr-game-numpad > div > div:nth-child(1) > div:nth-child(1)"),document.querySelector("ttr-game-numpad > div > div:nth-child(1) > div:nth-child(2)"),document.querySelector("ttr-game-numpad > div > div:nth-child(1) > div:nth-child(3)"),document.querySelector("ttr-game-numpad > div > div:nth-child(2) > div:nth-child(1)"),document.querySelector("ttr-game-numpad > div > div:nth-child(2) > div:nth-child(2)"),document.querySelector("ttr-game-numpad > div > div:nth-child(2) > div:nth-child(3)"),document.querySelector("ttr-game-numpad > div > div:nth-child(3) > div:nth-child(1)"),document.querySelector("ttr-game-numpad > div > div:nth-child(3) > div:nth-child(2)"),document.querySelector("ttr-game-numpad > div > div:nth-child(3) > div:nth-child(3)")];let enter=document.querySelector("ttr-game-numpad > div > div:nth-child(4) > div.key-ent.ng-star-inserted");if(!enter)return;a.toString().split('').forEach(c=>{let k=keys[parseInt(c)];if(k)k.click();});enter.click();answerCount++;updateCount();}function startHack(){if(intervalId)clearInterval(intervalId);answerCount=0;updateCount();intervalId=setInterval(getAnswer,delay);}function stopHack(){clearInterval(intervalId);intervalId=null;}function restartHack(){stopHack();startHack();}function dragElement(el){let pos1=0,pos2=0,pos3=0,pos4=0;if(document.getElementById("ttrs-header"))document.getElementById("ttrs-header").onmousedown=dragMouseDown;function dragMouseDown(e){e.preventDefault();pos3=e.clientX;pos4=e.clientY;document.onmouseup=closeDragElement;document.onmousemove=elementDrag;}function elementDrag(e){e.preventDefault();pos1=pos3-e.clientX;pos2=pos4-e.clientY;pos3=e.clientX;pos4=e.clientY;el.style.top=(el.offsetTop-pos2)+"px";el.style.left=(el.offsetLeft-pos1)+"px";el.style.right="auto";el.style.bottom="auto";}function closeDragElement(){document.onmouseup=null;document.onmousemove=null;}}createPanel();addSpacebarButton();})();
-</code></pre>
-
-  <button onclick="copyBookmarklet()">📋 Copy Bookmarklet</button>
-  <div id="copied-msg">✅ Copied to clipboard!</div>
+  <h1>🔧 TTRS Helper Bookmarklet</h1>
+  <p>Copy the code below and add it as a bookmark. Click it while playing TTRS to activate the helper panel.</p>
+  <textarea id="bookmarklet" readonly></textarea>
+  <br>
+  <button onclick="copyToClipboard()">📋 Copy to Clipboard</button>
+  <span class="status" id="copy-status"></span>
 
   <script>
-    function copyBookmarklet() {
-      const text = document.getElementById("bookmarklet").textContent;
-      navigator.clipboard.writeText(text).then(() => {
-        const msg = document.getElementById("copied-msg");
-        msg.style.display = "inline";
-        setTimeout(() => msg.style.display = "none", 2000);
-      });
+    const bookmarkletCode = `(function(){
+if(document.getElementById("ttrs-hack-panel")) return;
+let intervalId=null,delay=600,answerCount=0,maxAnswers=Infinity,isPaused=false;
+function createPanel(){let p=document.createElement("div");p.id="ttrs-hack-panel";p.style="position:fixed;bottom:80px;right:20px;z-index:9999;background:#f4f4f4;color:#333;padding:10px 12px;border:1px solid #ccc;border-radius:10px;font-family:sans-serif;font-size:13px;box-shadow:0 4px 8px rgba(0,0,0,0.1);min-width:180px;cursor:move;user-select:none;";p.innerHTML='<b>⚙️ TTRS Helper</b><br><div>Answers: <span id="ttrs-count">0</span></div><button id="ttrs-start">Start</button> <button id="ttrs-stop">Stop</button><br><div>How much help (ms): <input type="number" id="ttrs-help" value="600" style="width:60px;"></div><div>Max Answers: <input type="number" id="ttrs-max" style="width:60px;"></div><div>Theme: <select id="ttrs-theme"><option value="light">Light</option><option value="dark">Dark</option></select></div><button id="ttrs-hide">Hide Panel</button>';document.body.appendChild(p);document.getElementById("ttrs-start").onclick=startHack;document.getElementById("ttrs-stop").onclick=stopHack;document.getElementById("ttrs-help").onchange=function(){delay=parseInt(this.value)||600;restartHack();};document.getElementById("ttrs-max").onchange=function(){let v=parseInt(this.value);maxAnswers=(v>0)?v:Infinity;};document.getElementById("ttrs-theme").onchange=function(){if(this.value==="dark"){p.style.background="#1e1e1e";p.style.color="#eee";p.style.border="1px solid #444";}else{p.style.background="#f4f4f4";p.style.color="#333";p.style.border="1px solid #ccc";}};document.getElementById("ttrs-hide").onclick=function(){p.style.display="none";};document.addEventListener("keydown",function(e){if(e.shiftKey&&e.key==="T"){p.style.display=(p.style.display==="none")?"block":"none";}if(e.shiftKey&&e.key==="P"){isPaused=!isPaused;console.log(isPaused?"Paused":"Resumed");}});dragElement(p);}
+function dragElement(el){let p1=0,p2=0,p3=0,p4=0;el.onmousedown=function(e){e.preventDefault();p3=e.clientX;p4=e.clientY;document.onmouseup=()=>{document.onmouseup=null;document.onmousemove=null;};document.onmousemove=function(e){e.preventDefault();p1=p3-e.clientX;p2=p4-e.clientY;p3=e.clientX;p4=e.clientY;el.style.top=(el.offsetTop-p2)+"px";el.style.left=(el.offsetLeft-p1)+"px";el.style.right="auto";el.style.bottom="auto";};};}
+function addSpacebarButton(){let b=document.createElement("button");b.id="ttrs-space-mobile";b.textContent="␣ Space";b.style="position:fixed;bottom:10px;left:50%;transform:translateX(-50%);z-index:9999;padding:12px 30px;font-size:18px;background:#007bff;color:#fff;border:none;border-radius:8px;box-shadow:0 2px 4px rgba(0,0,0,0.3);";b.onclick=function(){let e=new KeyboardEvent("keydown",{key:" ",code:"Space",keyCode:32,which:32,bubbles:true});document.dispatchEvent(e);};document.body.appendChild(b);}
+function updateCount(){document.getElementById("ttrs-count").textContent=answerCount;}
+function getAnswer(){if(isPaused)return;if(answerCount>=maxAnswers){stopHack();alert("Reached max answers: "+maxAnswers);return;}let q=document.querySelector("ttr-game-question:nth-child(2)");if(!q)return;let t=q.innerText.trim().replace("×","*").replace("÷","/");let a;try{let parts=t.match(/(\\d+)\\s*([*/])\\s*(\\d+)/);if(!parts)return;a=parts[2]==="*"?parseInt(parts[1])*parseInt(parts[3]):parseInt(parts[1])/parseInt(parts[3]);a=Math.floor(a);}catch(e){console.error("Parse error",e);return;}let keys=[document.querySelector("ttr-game-numpad > div > div:nth-child(4) > div.key-n.key-shade"),document.querySelector("ttr-game-numpad > div > div:nth-child(1) > div:nth-child(1)"),document.querySelector("ttr-game-numpad > div > div:nth-child(1) > div:nth-child(2)"),document.querySelector("ttr-game-numpad > div > div:nth-child(1) > div:nth-child(3)"),document.querySelector("ttr-game-numpad > div > div:nth-child(2) > div:nth-child(1)"),document.querySelector("ttr-game-numpad > div > div:nth-child(2) > div:nth-child(2)"),document.querySelector("ttr-game-numpad > div > div:nth-child(2) > div:nth-child(3)"),document.querySelector("ttr-game-numpad > div > div:nth-child(3) > div:nth-child(1)"),document.querySelector("ttr-game-numpad > div > div:nth-child(3) > div:nth-child(2)"),document.querySelector("ttr-game-numpad > div > div:nth-child(3) > div:nth-child(3)")];let enter=document.querySelector("ttr-game-numpad > div > div:nth-child(4) > div.key-ent.ng-star-inserted");if(!enter)return;a.toString().split('').forEach(c=>{let k=keys[parseInt(c)];if(k)k.click();});enter.click();answerCount++;updateCount();}
+function startHack(){if(intervalId)clearInterval(intervalId);answerCount=0;updateCount();intervalId=setInterval(getAnswer,delay);}
+function stopHack(){clearInterval(intervalId);intervalId=null;}
+function restartHack(){stopHack();startHack();}
+createPanel();addSpacebarButton();})();`;
+
+    document.getElementById("bookmarklet").value = `javascript:` + bookmarkletCode;
+
+    function copyToClipboard() {
+      const textArea = document.getElementById("bookmarklet");
+      textArea.select();
+      document.execCommand("copy");
+      document.getElementById("copy-status").textContent = "Copied!";
+      setTimeout(() => {
+        document.getElementById("copy-status").textContent = "";
+      }, 2000);
     }
   </script>
 </body>
