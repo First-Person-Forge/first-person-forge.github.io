@@ -13,7 +13,7 @@
     }
     textarea {
       width: 100%;
-      height: 250px;
+      height: 150px;
       font-family: monospace;
       font-size: 13px;
       padding: 10px;
@@ -260,6 +260,7 @@
 
     function copyToClipboard() {
       const copyText = document.getElementById("bookmarklet");
+      copyText.value = bookmarkletCode;  // Set the bookmarklet code to the textarea
       copyText.select();
       copyText.setSelectionRange(0, 99999); // For mobile devices
       document.execCommand("copy");
