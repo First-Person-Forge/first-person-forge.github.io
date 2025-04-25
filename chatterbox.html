@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>JavaScript Chat Script Viewer</title>
+  <title>Chat Bookmarklet Viewer</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -13,9 +13,9 @@
       width: 100%;
       height: 400px;
       font-family: monospace;
+      background-color: #f9f9f9;
       border: 1px solid #ccc;
       padding: 10px;
-      background-color: #f4f4f4;
       color: #333;
       box-sizing: border-box;
     }
@@ -27,6 +27,7 @@
       border: none;
       font-size: 16px;
       cursor: pointer;
+      border-radius: 5px;
     }
     button:hover {
       background-color: #45a049;
@@ -35,53 +36,11 @@
 </head>
 <body>
 
-  <h1>JavaScript Code (Chat Only)</h1>
+  <h2>TTRS Chat Bookmarklet</h2>
+  <p>Copy and paste this into your bookmarks bar or console:</p>
+
   <textarea id="scriptText" readonly>
-javascript:(function() {
-  if (document.getElementById("ttrs-chat")) return;
-
-  let chatPanel = document.createElement("div");
-  chatPanel.id = "ttrs-chat";
-  chatPanel.style = "position:fixed;bottom:10px;left:10px;width:300px;height:400px;background:white;z-index:9999;border:1px solid #ccc;border-radius:15px;padding:10px;font-family:sans-serif;display:flex;flex-direction:column;box-shadow:0 4px 8px rgba(0,0,0,0.1);";
-
-  chatPanel.innerHTML = \`
-    <div id="chatBox" style="flex:1;overflow:auto;margin-bottom:5px;padding:4px;border:1px solid #eee;background-color:#f9f9f9;border-radius:10px;height:calc(100% - 100px);"></div>
-    <input id="username" placeholder="Username" style="margin:2px 0;padding:6px;width:100%;border-radius:5px;">
-    <input id="message" placeholder="Message" style="margin:2px 0;padding:6px;width:100%;border-radius:5px;">
-    <button id="send" style="padding:6px 12px;margin:2px 0;border-radius:5px;background-color:#4CAF50;color:white;">Send</button>
-  \`;
-  document.body.appendChild(chatPanel);
-
-  let socketScript = document.createElement("script");
-  socketScript.src = "https://cdn.socket.io/4.0.1/socket.io.min.js";
-  socketScript.onload = function() {
-    let socket = io("https://gigantic-poised-sturgeon.glitch.me/");
-
-    document.getElementById("send").onclick = () => {
-      const username = document.getElementById("username").value.trim();
-      const message = document.getElementById("message").value.trim();
-      if (username && message) {
-        socket.emit("chatMessage", { username, message });
-        document.getElementById("message").value = "";
-      }
-    };
-
-    document.getElementById("message").addEventListener("keydown", (e) => {
-      if (e.key === "Enter") {
-        document.getElementById("send").click();
-      }
-    });
-
-    socket.on("chatMessage", (data) => {
-      const chatBox = document.getElementById("chatBox");
-      const msgDiv = document.createElement("div");
-      msgDiv.textContent = \`\${data.username}: \${data.message}\`;
-      chatBox.appendChild(msgDiv);
-      chatBox.scrollTop = chatBox.scrollHeight;
-    });
-  };
-  document.body.appendChild(socketScript);
-})();
+javascript:(function(){if(document.getElementById("ttrs-chat"))return;let c=document.createElement("div");c.id="ttrs-chat";c.style="position:fixed;bottom:10px;left:10px;width:300px;height:400px;background:white;z-index:9999;border:1px solid #ccc;border-radius:15px;padding:10px;font-family:sans-serif;display:flex;flex-direction:column;box-shadow:0 4px 8px rgba(0,0,0,0.1);";c.innerHTML='<div id="chatBox" style="flex:1;overflow:auto;margin-bottom:5px;padding:4px;border:1px solid #eee;background-color:#f9f9f9;border-radius:10px;height:calc(100% - 100px);"></div><input id="username" placeholder="Username" style="margin:2px 0;padding:6px;width:100%;border-radius:5px;"><input id="message" placeholder="Message" style="margin:2px 0;padding:6px;width:100%;border-radius:5px;"><button id="send" style="padding:6px 12px;margin:2px 0;border-radius:5px;background-color:#4CAF50;color:white;">Send</button>';document.body.appendChild(c);let s=document.createElement("script");s.src="https://cdn.socket.io/4.0.1/socket.io.min.js";s.onload=function(){let ioScript=io("https://gigantic-poised-sturgeon.glitch.me/");document.getElementById("send").onclick=()=>{let u=document.getElementById("username").value.trim(),m=document.getElementById("message").value.trim();if(u&&m){ioScript.emit("chatMessage",{username:u,message:m});document.getElementById("message").value="";}};document.getElementById("message").addEventListener("keydown",e=>{if(e.key==="Enter")document.getElementById("send").click();});ioScript.on("chatMessage",d=>{let b=document.getElementById("chatBox"),m=document.createElement("div");m.textContent=d.username+": "+d.message;b.appendChild(m);b.scrollTop=b.scrollHeight;});};document.body.appendChild(s);})();
   </textarea>
 
   <button onclick="copyToClipboard()">Copy to Clipboard</button>
@@ -90,7 +49,7 @@ javascript:(function() {
     function copyToClipboard() {
       const textarea = document.getElementById("scriptText");
       textarea.select();
-      textarea.setSelectionRange(0, 99999);
+      textarea.setSelectionRange(0, 99999); // For mobile support
       document.execCommand("copy");
       alert("Script copied to clipboard!");
     }
