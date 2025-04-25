@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JavaScript Code Display with Copy to Clipboard</title>
+    <title>TTRS Copy to Clipboard</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -45,36 +45,23 @@ javascript:(function() {
 
   let helperPanel = document.createElement("div");
   helperPanel.id = "ttrs-hack-panel";
-  helperPanel.style = "position:fixed;bottom:80px;right:20px;z-index:9999;background:#f4f4f4;color:#333;padding:10px;border:1px solid #ccc;border-radius:10px;font-family:sans-serif;font-size:13px;box-shadow:0 4px 8px rgba(0,0,0,0.1);min-width:200px;";
+  helperPanel.style = "position:fixed;bottom:80px;right:20px;z-index:9999;background:#f4f4f4;color:#333;padding:10px;border:1px solid #ccc;border-radius:10px;font-family:sans-serif;font-size:13px;box-shadow:0 4px 8px rgba(0,0,0,0.1);min-width:200px;outline:2px solid #000;";
   helperPanel.innerHTML = `
     <strong>⚙️ TTRS Helper</strong><br>
     Answers: <span id="ttrs-count">0</span><br>
-    <button id="ttrs-start">Start</button>
-    <button id="ttrs-stop">Stop</button><br>
-    <input id="ttrs-help" placeholder="Delay (ms)" style="width:100%;margin:4px 0;">
-    <input id="ttrs-max" placeholder="Max Answers" style="width:100%;"><br>
-    <button id="ttrs-hide">Hide</button>
+    <button id="ttrs-start" style="outline:2px solid #000;">Start</button>
+    <button id="ttrs-stop" style="outline:2px solid #000;">Stop</button><br>
+    <input id="ttrs-help" placeholder="Delay (ms)" style="width:100%;margin:4px 0;outline:2px solid #000;">
+    <input id="ttrs-max" placeholder="Max Answers" style="width:100%;outline:2px solid #000;"><br>
+    <button id="ttrs-hide" style="outline:2px solid #000;">Hide</button>
   `;
   document.body.appendChild(helperPanel);
 
-  let intervalId = null, delay = 600, answerCount = 0, maxAnswers = Infinity, isPaused = false;
-
-  function startHack() {
-    if (intervalId) clearInterval(intervalId);
-    answerCount = 0;
-    updateCount();
-    intervalId = setInterval(getAnswer, delay);
-  }
-
-  function stopHack() {
-    clearInterval(intervalId);
-    intervalId = null;
-  }
-
-  function restartHack() {
-    stopHack();
-    startHack();
-  }
+  let intervalId = null;
+  let delay = 600;
+  let answerCount = 0;
+  let maxAnswers = Infinity;
+  let isPaused = false;
 
   function updateCount() {
     document.getElementById("ttrs-count").textContent = answerCount;
@@ -112,6 +99,23 @@ javascript:(function() {
     updateCount();
   }
 
+  function startHack() {
+    if (intervalId) clearInterval(intervalId);
+    answerCount = 0;
+    updateCount();
+    intervalId = setInterval(getAnswer, delay);
+  }
+
+  function stopHack() {
+    clearInterval(intervalId);
+    intervalId = null;
+  }
+
+  function restartHack() {
+    stopHack();
+    startHack();
+  }
+
   document.getElementById("ttrs-start").onclick = startHack;
   document.getElementById("ttrs-stop").onclick = stopHack;
   document.getElementById("ttrs-help").onchange = function() {
@@ -138,13 +142,12 @@ javascript:(function() {
 
   let chatPanel = document.createElement("div");
   chatPanel.id = "ttrs-chat";
-  chatPanel.style = "position:fixed;bottom:10px;left:10px;width:300px;height:400px;background:white;z-index:9999;border:1px solid #ccc;border-radius:15px;padding:10px;font-family:sans-serif;display:flex;flex-direction:column;box-shadow:0 4px 8px rgba(0,0,0,0.1);";
-
+  chatPanel.style = "position:fixed;bottom:10px;left:10px;width:300px;height:400px;background:white;z-index:9999;border:1px solid #ccc;border-radius:15px;padding:10px;font-family:sans-serif;display:flex;flex-direction:column;box-shadow:0 4px 8px rgba(0,0,0,0.1);outline:2px solid #000;";
   chatPanel.innerHTML = `
-    <div id="chatBox" style="flex:1;overflow:auto;margin-bottom:5px;padding:4px;border:1px solid #eee;background-color:#f9f9f9;border-radius:10px;height:calc(100% - 100px);"></div>
-    <input id="username" placeholder="Username" style="margin:2px 0;padding:6px;width:100%;border-radius:5px;">
-    <input id="message" placeholder="Message" style="margin:2px 0;padding:6px;width:100%;border-radius:5px;">
-    <button id="send" style="padding:6px 12px;margin:2px 0;border-radius:5px;background-color:#4CAF50;color:white;">Send</button>
+    <div id="chatBox" style="flex:1;overflow:auto;margin-bottom:5px;padding:4px;border:1px solid #eee;background-color:#f9f9f9;border-radius:10px;height:calc(100% - 100px);outline:2px solid #000;"></div>
+    <input id="username" placeholder="Username" style="margin:2px 0;padding:6px;width:100%;border-radius:5px;outline:2px solid #000;">
+    <input id="message" placeholder="Message" style="margin:2px 0;padding:6px;width:100%;border-radius:5px;outline:2px solid #000;">
+    <button id="send" style="padding:6px 12px;margin:2px 0;border-radius:5px;background-color:#4CAF50;color:white;outline:2px solid #000;">Send</button>
   `;
   document.body.appendChild(chatPanel);
 
@@ -152,35 +155,37 @@ javascript:(function() {
   socketScript.src = "https://cdn.socket.io/4.0.1/socket.io.min.js";
   socketScript.onload = function() {
     let socket = io("https://gigantic-poised-sturgeon.glitch.me/");
-
     document.getElementById("send").onclick = () => {
       const username = document.getElementById("username").value.trim();
       const message = document.getElementById("message").value.trim();
       if (username && message) {
         socket.emit("chatMessage", { username, message });
         document.getElementById("message").value = "";
+        let audio = new Audio("https://www.soundjay.com/button/beep-07.wav");
+        audio.play();
       }
     };
-
     document.getElementById("message").addEventListener("keydown", (e) => {
       if (e.key === "Enter") {
         document.getElementById("send").click();
       }
     });
-
     socket.on("chatMessage", (data) => {
       const chatBox = document.getElementById("chatBox");
       const msgDiv = document.createElement("div");
       msgDiv.textContent = `${data.username}: ${data.message}`;
       chatBox.appendChild(msgDiv);
       chatBox.scrollTop = chatBox.scrollHeight;
+
+      let alertAudio = new Audio("https://www.soundjay.com/button/beep-07.wav");
+      alertAudio.play();
     });
   };
   document.body.appendChild(socketScript);
 
   let mobileSpaceBar = document.createElement("button");
   mobileSpaceBar.id = "mobile-spacebar";
-  mobileSpaceBar.style = "position:fixed;bottom:0;left:50%;transform:translateX(-50%);z-index:10000;width:100%;height:50px;background-color:#4CAF50;color:white;border:none;border-radius:5px;font-size:18px;";
+  mobileSpaceBar.style = "position:fixed;bottom:10px;left:50%;transform:translateX(-50%);z-index:10000;width:50%;height:40px;background-color:blue;color:white;border:none;border-radius:5px;font-size:18px;outline:2px solid #000;";
   mobileSpaceBar.textContent = "Space";
   mobileSpaceBar.onclick = () => {
     let event = new KeyboardEvent('keydown', { key: ' ' });
@@ -188,6 +193,7 @@ javascript:(function() {
   };
   document.body.appendChild(mobileSpaceBar);
 })();
+
     </textarea>
     
     <button onclick="copyToClipboard()">Copy to Clipboard</button>
