@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Layered Images</title>
+  <style>
+    .image-container {
+      position: relative; /* Allows the images to be layered */
+      width: 500px; /* You can adjust the width */
+      height: 500px; /* You can adjust the height */
+    }
+
+    .dog-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 3; /* Dog on top */
+    }
+
+    .plane-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 2; /* Plane in the middle */
+    }
+
+    .trump-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.7; /* Slight transparency for trump image */
+      z-index: 1; /* Trump at the bottom */
+    }
+  </style>
+</head>
+<body>
+  <div class="image-container">
+    <img src="https://first-person-forge.github.io/dog.png" alt="Dog Image" class="dog-image">
+    <img src="https://first-person-forge.github.io/plane.webp" alt="Plane Image" class="plane-image">
+    <img src="https://first-person-forge.github.io/trump.png" alt="Trump Image" class="trump-image">
+  </div>
+</body>
+</html>
