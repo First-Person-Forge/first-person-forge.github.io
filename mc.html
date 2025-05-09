@@ -1,33 +1,143 @@
-<!doctype html>
-<!--[if lt IE 7]><html class="no-js ie ie6 lt-ie9 lt-ie8 lt-ie7" lang="sv-SE"> <![endif]-->
-<!--[if IE 7]><html class="no-js ie ie7 lt-ie9 lt-ie8" lang="sv-SE"> <![endif]-->
-<!--[if IE 8]><html class="no-js ie ie8 lt-ie9" lang="sv-SE"> <![endif]-->
-<!--[if gt IE 8]><!-->
-<html class="no-js" lang="sv-SE" prefix="og: http://ogp.me/ns#"> <!--<![endif]-->
-<head>
-    <meta charset="UTF-8"/>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>1.5.2</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MENBM6GSNY"></script><script>function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-MENBM6GSNY")</script>
+    <script type="text/javascript" src="classes.js"></script>
+    <script type="text/javascript" src="eagswebrtc.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/st39/sdk@main/api.js"></script>
+    <script type="text/javascript">
+      if (document.location.href.startsWith("file:")) {
+        alert(
+          "You cannot 'open' this file in your browser, the code doesn't work. Upload this folder to your HTTP(s) server and access it via the internet to launch the stable-download game. This is not a bug, please read the documentation."
+        );
+      } else {
+        window.addEventListener("load", function () {
+          const relayId = Math.floor(Math.random() * 3);
+          window.eaglercraftOpts = {
+            container: "game_frame",
+            assetsURI: "assets.epk",
+            serverWorkerURI: "worker_bootstrap.js",
+            worldsFolder: "MAIN",
+            servers: [
+              {
+                serverName: "Asspixel",
+                serverAddress: "wss://web.asspixel.net/CAP/",
+                hideAddress: false,
+              },
+              {
+                serverName: "VanillaCraft",
+                serverAddress: "wss://play.vanillacraftsmp.org",
+                hideAddress: false,
+              },
+              {
+                serverName: "CraftClue",
+                serverAddress: "wss://play.craftclue.rocks",
+                hideAddress: false,
+              },
+              {
+                serverName: "Ayunboom",
+                serverAddress: "wss://sus.shhnowisnottheti.me",
+                hideAddress: false,
+              },
+              {
+                serverName: "Sealcraft",
+                serverAddress: "wss://sealcraft.ddns.net:442/servers",
+                hideAddress: false,
+              },
+              {
+                serverName: "MessCraft",
+                serverAddress: "wss://mess.eu.org/s1/",
+                hideAddress: false,
+              },
+              {
+                serverName: "B2",
+                serverAddress: "wss://mc.b2server.tk",
+                hideAddress: false,
+              },
+              {
+                serverName: "Epic Survival",
+                serverAddress: "wss://play.theepicgamer.repl.co/server",
+                hideAddress: false,
+              },
+              {
+                serverName: "IMC.RE",
+                serverAddress: "wss://play.imc.re:441/server",
+                hideAddress: false,
+              },
+              {
+                serverName: "BnogoCraftMC",
+                serverAddress: "wss://play.bnogocarft.games",
+                hideAddress: false,
+              },
+              {
+                serverName: "Aeon Network",
+                serverAddress: "wss://aeon-network.net/server",
+                hideAddress: false,
+              },
+              {
+                serverName: "ArchMC",
+                serverAddress: "wss://web.arch.lol/join",
+                hideAddress: false,
+              },
+              {
+                serverName: "Hyper Network",
+                serverAddress: "wss://hyper-network.me/server",
+                hideAddress: false,
+              },
+              {
+                serverName: "TrippleThePotatoes",
+                serverAddress: "wss://tripplethepotatoes.potatolord5.repl.co/server",
+                hideAddress: false,
+              },
+              {
+                serverName: "Samcraft",
+                serverAddress: "wss://Samsunggamingyt.samsungtah.repl.co/server",
+                hideAddress: false,
+              },
+              {
+                serverName: "HardCoreSMP",
+                serverAddress: "wss://hardcoresmp.mrnewt.repl.co/serve",
+                hideAddress: false,
+              },
+            ],
+            relays: [
+              {
+                addr: "wss://relay.deev.is/",
+                name: "lax1dude relay #1",
+                primary: relayId == 0,
+              },
+              {
+                addr: "wss://relay.lax1dude.net/",
+                name: "lax1dude relay #2",
+                primary: relayId == 1,
+              },
+              {
+                addr: "wss://relay.shhnowisnottheti.me/",
+                name: "ayunami relay #1",
+                primary: relayId == 2,
+              },
+            ],
+            mainMenu: {
+              splashes: ["Darviglet!", "eaglerenophile!", "You Eagler!", "Yeeeeeee!", "yeee", "Echo on top!", "3kh0.github.io", "Echo is cool", "REEEEEEE", "EEEEEEEEE!", "You Darvig!", "You Vigg!", ":>", "|>", "You Yumpster!"],
+              eaglerLogo: false,
+            },
+          };
 
-    <title>Minecraft Classic</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="google" content="notranslate" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<link href="assets/css/style.css" rel="stylesheet"></head>
-<body>
-<div class="page-content">
-    <main role="main" class="u-main">
-    </main>
-</div>
-<div id="hide"><textarea class="js-copytextarea">url_to_copy</textarea></div>
-<div id="version"></div>
-<div id="hotbar"></div>
-<div id="previewWindow"></div>
-<div id="chat"></div>
-<div id="menu"></div>
-<div id="progress"></div>
-<div id="overlay"></div>
-<div id="mobile"><div id="text_vertical"><P><H2>Sorry!</H2></P><P>This version of Minecraft<br>requires a keyboard.</P><P>Please try again on another device.</P></div></div>
-<div id="webgl_webrtc"><div id="text_vertical"><P><H2>Sorry!</H2></P><P>It seems like your browser doesn’t support<br>WebGL or WebRTC that is required to run this game.<P><P>Find a new one at <a href="https://browsehappy.com" target="_blank">https://browsehappy.com</a></P></div></div>
-
-<script src="assets/js/app.js"></script></body>
+          (function () {
+            var q = window.location.search;
+            if (typeof q === "string" && q.startsWith("?")) {
+              q = new URLSearchParams(q);
+              var s = q.get("server");
+              if (s) window.minecraftOpts.push(s);
+            }
+          })();
+          main();
+        });
+      }
+    </script>
+  </head>
+  <body style="margin: 0px; width: 100vw; height: 100vh; onclick="window.focus()"; id="game_frame" onclick="window.focus()"></body>
 </html>
