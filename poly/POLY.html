@@ -11,5 +11,179 @@
 		<div id="transition-layer"></div>
 
 		<script type="module" src="main.bundle.js" defer></script>
+
+		    <script>
+        (function () {
+            'use strict';
+
+            const defaultKeys = {
+                up: { bindKey: 'ArrowUp', label: '↑' },
+                down: { bindKey: 'ArrowDown', label: '↓' },
+                left: { bindKey: 'ArrowLeft', label: '←' },
+                right: { bindKey: 'ArrowRight', label: '→' },
+            };
+
+            const currentKeys = JSON.parse(JSON.stringify(defaultKeys));
+            let waitingForBind = null;
+
+            const overlay = document.createElement('div');
+            overlay.style.position = 'fixed';
+            overlay.style.bottom = '10px';
+            overlay.style.left = '10px';
+            overlay.style.display = 'grid';
+            overlay.style.gridTemplateColumns = '50px 50px 50px';
+            overlay.style.gridTemplateRows = '50px 50px';
+            overlay.style.gap = '5px';
+            overlay.style.zIndex = '9999';
+            overlay.style.userSelect = 'none';
+            overlay.style.pointerEvents = 'none';
+
+            const keyBoxes = {
+                up: makeKeyBox(currentKeys.up.label),
+                down: makeKeyBox(currentKeys.down.label),
+                left: makeKeyBox(currentKeys.left.label),
+                right: makeKeyBox(currentKeys.right.label),
+            };
+
+            overlay.appendChild(blank());
+            overlay.appendChild(keyBoxes.up);
+            overlay.appendChild(blank());
+            overlay.appendChild(keyBoxes.left);
+            overlay.appendChild(keyBoxes.down);
+            overlay.appendChild(keyBoxes.right);
+            document.body.appendChild(overlay);
+
+            // ⚙️ Settings button
+            const settingsBtn = document.createElement('button');
+            settingsBtn.textContent = '⚙️';
+            settingsBtn.style.position = 'fixed';
+            settingsBtn.style.top = '10px';
+            settingsBtn.style.right = '10px';
+            settingsBtn.style.zIndex = '10000';
+            settingsBtn.style.background = '#222';
+            settingsBtn.style.color = 'white';
+            settingsBtn.style.border = 'none';
+            settingsBtn.style.borderRadius = '5px';
+            settingsBtn.style.padding = '5px';
+            settingsBtn.style.cursor = 'pointer';
+            settingsBtn.style.userSelect = 'none';
+            document.body.appendChild(settingsBtn);
+
+            // 🪟 Settings overlay
+            const settingsOverlay = document.createElement('div');
+            settingsOverlay.style.position = 'fixed';
+            settingsOverlay.style.top = '293px';
+            settingsOverlay.style.left = '575px';
+            settingsOverlay.style.padding = '10px';
+            settingsOverlay.style.background = 'rgba(0,0,0,0.85)';
+            settingsOverlay.style.color = 'white';
+            settingsOverlay.style.fontFamily = 'monospace';
+            settingsOverlay.style.fontSize = '14px';
+            settingsOverlay.style.borderRadius = '8px';
+            settingsOverlay.style.display = 'none';
+            settingsOverlay.style.zIndex = '10001';
+            settingsOverlay.style.maxWidth = '300px';
+            settingsOverlay.style.boxShadow = '0 0 10px rgba(0,0,0,0.5)';
+            document.body.appendChild(settingsOverlay);
+
+            const directions = ['up', 'down', 'left', 'right'];
+            directions.forEach(dir => {
+                const row = document.createElement('div');
+                row.style.display = 'flex';
+                row.style.alignItems = 'center';
+                row.style.marginBottom = '8px';
+
+                const label = document.createElement('div');
+                label.textContent = dir.toUpperCase();
+                label.style.width = '60px';
+
+                const bindBtn = document.createElement('button');
+                bindBtn.textContent = `🎮 Bind (${currentKeys[dir].bindKey})`;
+                bindBtn.style.marginRight = '6px';
+                bindBtn.style.cursor = 'pointer';
+                bindBtn.onclick = () => {
+                    waitingForBind = dir;
+                    bindBtn.textContent = '🎮 Press any key...';
+                };
+
+                const labelBtn = document.createElement('button');
+                labelBtn.textContent = `🔤 Label (${currentKeys[dir].label})`;
+                labelBtn.style.cursor = 'pointer';
+                labelBtn.onclick = () => {
+                    const newLabel = prompt(`New label for ${dir.toUpperCase()}:`, currentKeys[dir].label);
+                    if (newLabel) {
+                        currentKeys[dir].label = newLabel;
+                        keyBoxes[dir].textContent = newLabel;
+                        labelBtn.textContent = `🔤 Label (${newLabel})`;
+                    }
+                };
+
+                row.appendChild(label);
+                row.appendChild(bindBtn);
+                row.appendChild(labelBtn);
+                settingsOverlay.appendChild(row);
+            });
+
+            settingsBtn.addEventListener('click', () => {
+                settingsOverlay.style.display = settingsOverlay.style.display === 'none' ? 'block' : 'none';
+            });
+
+            document.addEventListener('keydown', e => {
+                if (waitingForBind) {
+                    currentKeys[waitingForBind].bindKey = e.key;
+                    keyBoxes[waitingForBind].textContent = currentKeys[waitingForBind].label;
+                    // Update button text in settings
+                    [...settingsOverlay.children].forEach(row => {
+                        if (row.children[0].textContent.toLowerCase() === waitingForBind) {
+                            row.children[1].textContent = `🎮 Bind (${e.key})`;
+                        }
+                    });
+                    waitingForBind = null;
+                    return;
+                }
+
+                for (let dir in currentKeys) {
+                    if (e.key === currentKeys[dir].bindKey) {
+                        keyBoxes[dir].style.backgroundColor = '#4CAF50';
+                    }
+                }
+            });
+
+            document.addEventListener('keyup', e => {
+                for (let dir in currentKeys) {
+                    if (e.key === currentKeys[dir].bindKey) {
+                        keyBoxes[dir].style.backgroundColor = '#333';
+                    }
+                }
+            });
+
+            function makeKeyBox(label) {
+                const el = document.createElement('div');
+                el.textContent = label;
+                el.style.width = '50px';
+                el.style.height = '50px';
+                el.style.display = 'flex';
+                el.style.alignItems = 'center';
+                el.style.justifyContent = 'center';
+                el.style.backgroundColor = '#333';
+                el.style.color = 'white';
+                el.style.fontSize = '20px';
+                el.style.borderRadius = '8px';
+                el.style.fontFamily = 'monospace';
+                el.style.transition = 'background-color 0.1s ease';
+                el.style.userSelect = 'none';
+                el.style.pointerEvents = 'none';
+                return el;
+            }
+
+            function blank() {
+                const el = document.createElement('div');
+                el.style.width = '50px';
+                el.style.height = '50px';
+                el.style.pointerEvents = 'none';
+                return el;
+            }
+        })();
+    </script>
 	</body>
 </html>
