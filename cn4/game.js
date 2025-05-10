@@ -53,6 +53,8 @@ function updateBoard() {
         const row = cell.dataset.row;
         const col = cell.dataset.col;
         if (gameBoard[row][col]) {
+            // Log the current row and column for debugging
+            console.log(`Placing ${gameBoard[row][col]} at [${row}, ${col}]`);
             cell.classList.add(gameBoard[row][col]);  // Add red/yellow class based on player
         } else {
             cell.classList.remove('red', 'yellow');  // Remove any color classes if empty
@@ -107,122 +109,7 @@ function checkDirection(row, col, rowDir, colDir) {
 // Minimax algorithm for AI to make a decision
 function aiMove() {
     const bestMove = minimax(gameBoard, 4, -Infinity, Infinity, true);
-    handleMove(bestMove);
-}
-
-// Minimax algorithm with alpha-beta pruning
-function minimax(board, depth, alpha, beta, isMaximizingPlayer) {
-    const availableColumns = getAvailableColumns();
-    let bestScore = isMaximizingPlayer ? -Infinity : Infinity;
-    let bestCol = null;
-
-    if (depth === 0 || checkGameOver()) {
-        return evaluateBoard(board); // Return the score of the board
-    }
-
-    for (let col of availableColumns) {
-        const row = getAvailableRow(col);
-        board[row][col] = isMaximizingPlayer ? aiPlayer : humanPlayer;
-
-        const score = minimax(board, depth - 1, alpha, beta, !isMaximizingPlayer);
-
-        board[row][col] = null; // Undo the move
-
-        if (isMaximizingPlayer) {
-            if (score > bestScore) {
-                bestScore = score;
-                bestCol = col;
-            }
-            alpha = Math.max(alpha, score);
-        } else {
-            if (score < bestScore) {
-                bestScore = score;
-                bestCol = col;
-            }
-            beta = Math.min(beta, score);
-        }
-
-        if (beta <= alpha) break; // Alpha-beta pruning
-    }
-
-    if (depth === 4) {
-        return bestCol; // Return the best column at the top level
-    }
-
-    return bestScore; // Return the best score at deeper levels
-}
-
-// Evaluate the board: +10 for AI win, -10 for human win, 0 for a draw or non-terminal state
-function evaluateBoard(board) {
-    let score = 0;
-
-    // Check if AI is winning
-    if (checkWinnerForPlayer(aiPlayer)) {
-        score += 100;
-    }
-
-    // Check if human is winning
-    if (checkWinnerForPlayer(humanPlayer)) {
-        score -= 100;
-    }
-
-    // Look for potential threats and opportunities
-    score += evaluateCenterControl(board);
-    score += evaluatePotentialWins(board, aiPlayer);
-    score -= evaluatePotentialWins(board, humanPlayer);
-
-    return score;
-}
-
-// Check if a player has won
-function checkWinnerForPlayer(player) {
-    for (let row = 0; row < 6; row++) {
-        for (let col = 0; col < 7; col++) {
-            if (board[row][col] === player) {
-                if (checkDirection(row, col, 1, 0) || // Horizontal
-                    checkDirection(row, col, 0, 1) || // Vertical
-                    checkDirection(row, col, 1, 1) || // Diagonal /
-                    checkDirection(row, col, 1, -1)) { // Diagonal \
-                    return true;
-                }
-            }
-        }
-    }
-    return false;
-}
-
-// Evaluate center control (more control over the center is better)
-function evaluateCenterControl(board) {
-    let score = 0;
-    // Center column is most valuable (column 3)
-    for (let row = 0; row < 6; row++) {
-        if (board[row][3] === aiPlayer) {
-            score += 3;
-        }
-        if (board[row][3] === humanPlayer) {
-            score -= 3;
-        }
-    }
-    return score;
-}
-
-// Evaluate potential winning moves
-function evaluatePotentialWins(board, player) {
-    let score = 0;
-    // Check for opportunities to complete a 3-in-a-row or block the opponent
-    for (let row = 0; row < 6; row++) {
-        for (let col = 0; col < 7; col++) {
-            if (board[row][col] === player) {
-                if (checkDirection(row, col, 1, 0) || // Horizontal
-                    checkDirection(row, col, 0, 1) || // Vertical
-                    checkDirection(row, col, 1, 1) || // Diagonal /
-                    checkDirection(row, col, 1, -1)) { // Diagonal \
-                    score += 5;
-                }
-            }
-        }
-    }
-    return score;
+    handleMove(bestMove); // Handle the AI move as if it was a human move
 }
 
 // Get available columns for AI to drop a piece
@@ -234,21 +121,6 @@ function getAvailableColumns() {
         }
     }
     return availableColumns;
-}
-
-// Get the available row in a column
-function getAvailableRow(col) {
-    for (let row = 5; row >= 0; row--) {
-        if (gameBoard[row][col] === null) {
-            return row;
-        }
-    }
-    return -1;
-}
-
-// Check if the game is over (either AI or human wins)
-function checkGameOver() {
-    return checkWinnerForPlayer(aiPlayer) || checkWinnerForPlayer(humanPlayer) || getAvailableColumns().length === 0;
 }
 
 // Toggle AI state
