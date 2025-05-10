@@ -1,5 +1,3 @@
-// game.js
-
 // Initial game setup
 let currentPlayer = 'red'; // red starts first
 let gameBoard = Array(6).fill().map(() => Array(7).fill(null)); // 6 rows, 7 columns
@@ -33,6 +31,7 @@ function handleMove(col) {
             } else {
                 // Only switch players if no one has won
                 currentPlayer = currentPlayer === 'red' ? 'yellow' : 'red'; // Switch player
+                updateTurnDisplay(); // Update turn display
             }
             break;
         }
@@ -51,6 +50,13 @@ function updateBoard() {
             cell.classList.remove('red', 'yellow');  // Clear the discs when reset
         }
     });
+}
+
+// Update the "Current Turn" display
+function updateTurnDisplay() {
+    const currentPlayerElement = document.getElementById('current-player');
+    currentPlayerElement.innerText = `${currentPlayer.charAt(0).toUpperCase() + currentPlayer.slice(1)}'s`;  // Capitalize first letter (Red's / Yellow's)
+    currentPlayerElement.style.color = currentPlayer;  // Change the color of the text (red or yellow)
 }
 
 // Check if there's a winner
@@ -96,7 +102,9 @@ function resetGame() {
     currentPlayer = 'red';  // Reset to red's turn
     updateBoard();  // Update the visual grid
     document.getElementById('message').innerText = '';  // Clear any win message
+    updateTurnDisplay(); // Reset the current player display
 }
 
 // Initialize the game
 createBoard();
+updateTurnDisplay(); // Show the initial turn (Red's turn)
