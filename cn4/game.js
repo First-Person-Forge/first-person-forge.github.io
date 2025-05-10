@@ -28,7 +28,6 @@ function handleMove(col) {
     for (let row = 5; row >= 0; row--) {
         if (!gameBoard[row][col]) {
             gameBoard[row][col] = currentPlayer;
-            console.log(gameBoard); // Log the game board after every move
             updateBoard();
             if (checkWinner(row, col)) {  // Check if the move results in a win
                 document.getElementById('message').innerText = `${currentPlayer} wins!`;
@@ -108,7 +107,7 @@ function checkDirection(row, col, rowDir, colDir) {
 // Minimax algorithm for AI to make a decision
 function aiMove() {
     // Ensure the AI only makes a move when it's yellow's turn
-    if (currentPlayer !== aiPlayer) return;
+    if (currentPlayer !== aiPlayer) return; // Don't let AI play if it's not its turn
 
     const bestMove = minimax(gameBoard, 4, -Infinity, Infinity, true);
     handleMove(bestMove); // Handle the AI move as if it was a human move
