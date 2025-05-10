@@ -107,6 +107,9 @@ function checkDirection(row, col, rowDir, colDir) {
 
 // Minimax algorithm for AI to make a decision
 function aiMove() {
+    // Ensure the AI only makes a move when it's yellow's turn
+    if (currentPlayer !== aiPlayer) return;
+
     const bestMove = minimax(gameBoard, 4, -Infinity, Infinity, true);
     handleMove(bestMove); // Handle the AI move as if it was a human move
 }
@@ -128,9 +131,13 @@ function toggleAI() {
     const toggleButton = document.getElementById('toggle-ai-btn');
     if (isAI) {
         toggleButton.innerText = 'AI: On';
-        aiMove();  // Make AI move immediately if AI is turned on
     } else {
         toggleButton.innerText = 'AI: Off';
+    }
+
+    // If the AI is on and it's yellow's turn, let the AI make a move immediately
+    if (isAI && currentPlayer === aiPlayer) {
+        aiMove();
     }
 }
 
