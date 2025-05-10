@@ -54,8 +54,6 @@ function updateBoard() {
         const row = cell.dataset.row;
         const col = cell.dataset.col;
         if (gameBoard[row][col]) {
-            // Log the current row and column for debugging
-            console.log(`Placing ${gameBoard[row][col]} at [${row}, ${col}]`);
             cell.classList.add(gameBoard[row][col]);  // Add red/yellow class based on player
         } else {
             cell.classList.remove('red', 'yellow');  // Remove any color classes if empty
