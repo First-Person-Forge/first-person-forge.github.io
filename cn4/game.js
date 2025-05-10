@@ -282,3 +282,6 @@ updateTurnDisplay(); // Show the initial turn (Red's turn)
 
 // Attach toggleAI to the button
 document.getElementById('toggle-ai-btn').addEventListener('click', toggleAI);
+
+// Attach resetGame to the restart button
+document.getElementById('reset-btn').addEventListener('click', resetGame);
