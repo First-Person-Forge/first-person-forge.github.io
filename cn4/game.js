@@ -37,6 +37,7 @@ function handleMove(col) {
                 currentPlayer = currentPlayer === 'red' ? 'yellow' : 'red'; // Switch player
                 updateTurnDisplay(); // Update turn display
                 
+                // If AI is enabled and it's yellow's turn, let AI make a move
                 if (currentPlayer === aiPlayer && isAI) {
                     aiMove(); // AI's turn
                 }
