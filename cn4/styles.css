@@ -1,66 +1,40 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-}
-
-body, html {
-    height: 100%;
+/* styles.css */
+body {
+    font-family: 'Arial', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #f4f4f4;
-    color: #333;
-}
-
-#container {
-    text-align: center;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-#header {
-    margin-bottom: 20px;
-}
-
-#current-turn {
-    font-size: 1.5em;
-    margin-bottom: 10px;
-}
-
-#current-turn p {
+    height: 100vh;
     margin: 0;
+    background-color: #f4f4f4;
 }
 
-#current-player {
-    font-weight: bold;
-    color: red;
+.game-container {
+    text-align: center;
+    background-color: #1e3a8a; /* Blue background */
+    padding: 20px;
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Light shadow */
 }
 
-h1 {
-    font-size: 3em;
-    margin-bottom: 20px;
-    font-weight: bold;
-}
-
-#board {
+.board {
     display: grid;
-    grid-template-columns: repeat(7, 80px);
-    grid-gap: 5px;
+    grid-template-columns: repeat(7, 70px);
+    grid-template-rows: repeat(6, 70px);
+    gap: 5px;
     justify-content: center;
-    margin-bottom: 20px;
 }
 
 .cell {
-    width: 80px;
-    height: 80px;
-    background-color: #ddd;
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
 .cell.red {
@@ -71,19 +45,14 @@ h1 {
     background-color: yellow;
 }
 
-#controls {
-    margin-bottom: 20px;
-}
-
 button {
-    padding: 10px 20px;
-    font-size: 1.2em;
+    margin-top: 20px;
+    padding: 10px;
     background-color: #4CAF50;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
 }
 
 button:hover {
@@ -91,7 +60,7 @@ button:hover {
 }
 
 #message {
-    font-size: 1.5em;
-    font-weight: bold;
-    color: #d9534f;
+    margin-top: 10px;
+    font-size: 18px;
+    color: white;
 }
