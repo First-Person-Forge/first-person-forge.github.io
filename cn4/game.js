@@ -1,7 +1,7 @@
 let currentPlayer = 'red'; // red starts first
 let gameBoard = Array(6).fill().map(() => Array(7).fill(null)); // 6 rows, 7 columns
 let isAI = false; // Initially AI is disabled
-let aiPlayer = 'yellow'; // AI will play yellow
+let aiPlayer = 'yellow'; // AI plays yellow
 let humanPlayer = 'red'; // Human plays red
 
 // Create the game board dynamically
@@ -28,6 +28,7 @@ function handleMove(col) {
     for (let row = 5; row >= 0; row--) {
         if (!gameBoard[row][col]) {
             gameBoard[row][col] = currentPlayer;
+            console.log(gameBoard); // Log the game board after every move
             updateBoard();
             if (checkWinner(row, col)) {  // Check if the move results in a win
                 document.getElementById('message').innerText = `${currentPlayer} wins!`;
@@ -140,3 +141,60 @@ createBoard();
 updateTurnDisplay();
 
 document.getElementById('toggle-ai-btn').addEventListener('click', toggleAI);
+
+// Minimax function for the AI's decision-making
+function minimax(board, depth, alpha, beta, isMaximizingPlayer) {
+    const availableColumns = getAvailableColumns();
+    if (depth === 0 || availableColumns.length === 0) {
+        return evaluateBoard(board); // Return a heuristic evaluation of the board
+    }
+
+    let bestMove = availableColumns[0];
+    if (isMaximizingPlayer) {
+        let maxEval = -Infinity;
+        for (const col of availableColumns) {
+            const row = getAvailableRow(col);
+            board[row][col] = aiPlayer;
+            const eval = minimax(board, depth - 1, alpha, beta, false);
+            board[row][col] = null;
+            if (eval > maxEval) {
+                maxEval = eval;
+                bestMove = col;
+            }
+            alpha = Math.max(alpha, eval);
+            if (beta <= alpha) break;  // Beta cutoff
+        }
+    } else {
+        let minEval = Infinity;
+        for (const col of availableColumns) {
+            const row = getAvailableRow(col);
+            board[row][col] = humanPlayer;
+            const eval = minimax(board, depth - 1, alpha, beta, true);
+            board[row][col] = null;
+            if (eval < minEval) {
+                minEval = eval;
+                bestMove = col;
+            }
+            beta = Math.min(beta, eval);
+            if (beta <= alpha) break;  // Alpha cutoff
+        }
+    }
+
+    return bestMove;
+}
+
+// Evaluate the board (simple heuristic)
+function evaluateBoard(board) {
+    // For simplicity, the evaluation is based on number of possible connections
+    return 0; // Placeholder, can be expanded for better AI behavior
+}
+
+// Get the next available row in a column
+function getAvailableRow(col) {
+    for (let row = 5; row >= 0; row--) {
+        if (gameBoard[row][col] === null) {
+            return row;
+        }
+    }
+    return -1; // No available row
+}
