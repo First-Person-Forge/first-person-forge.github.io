@@ -53,9 +53,9 @@ function updateBoard() {
         const row = cell.dataset.row;
         const col = cell.dataset.col;
         if (gameBoard[row][col]) {
-            cell.classList.add(gameBoard[row][col]);
+            cell.classList.add(gameBoard[row][col]);  // Add red/yellow class based on player
         } else {
-            cell.classList.remove('red', 'yellow');  // Clear the discs when reset
+            cell.classList.remove('red', 'yellow');  // Remove any color classes if empty
         }
     });
 }
@@ -256,32 +256,15 @@ function toggleAI() {
     isAI = !isAI;
     const toggleButton = document.getElementById('toggle-ai-btn');
     if (isAI) {
-        toggleButton.innerText = 'Disable AI';  // Change button text
-        document.getElementById('message').innerText = 'AI is now active!';
-        if (currentPlayer === aiPlayer) {
-            aiMove(); // If AI is active and it’s its turn, make it play
-        }
+        toggleButton.innerText = 'AI: On';
+        aiMove();  // Make AI move immediately if AI is turned on
     } else {
-        toggleButton.innerText = 'Activate AI';  // Change button text
-        document.getElementById('message').innerText = 'AI is now disabled! You are playing against another player.';
+        toggleButton.innerText = 'AI: Off';
     }
-}
-
-// Reset the game
-function resetGame() {
-    gameBoard = Array(6).fill().map(() => Array(7).fill(null));  // Reset game board
-    currentPlayer = 'red';  // Reset to red's turn
-    updateBoard();  // Update the visual grid
-    document.getElementById('message').innerText = '';  // Clear any win message
-    updateTurnDisplay(); // Reset the current player display
 }
 
 // Initialize the game
 createBoard();
-updateTurnDisplay(); // Show the initial turn (Red's turn)
+updateTurnDisplay();
 
-// Attach toggleAI to the button
 document.getElementById('toggle-ai-btn').addEventListener('click', toggleAI);
-
-// Attach resetGame to the restart button
-document.getElementById('reset-btn').addEventListener('click', resetGame);
