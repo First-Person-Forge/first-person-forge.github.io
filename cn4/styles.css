@@ -11,6 +11,10 @@ body {
 
 .game-container {
     text-align: center;
+    background-color: #1e3a8a; /* Blue background */
+    padding: 20px;
+    border-radius: 15px; /* Rounded corners */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1); /* Light shadow */
 }
 
 .board {
@@ -58,4 +62,5 @@ button:hover {
 #message {
     margin-top: 10px;
     font-size: 18px;
+    color: white;
 }
