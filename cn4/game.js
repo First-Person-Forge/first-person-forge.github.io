@@ -31,6 +31,7 @@ function handleMove(col) {
                 document.getElementById('message').innerText = `${currentPlayer} wins!`;
                 setTimeout(() => alert(`${currentPlayer} wins!`), 100);
             } else {
+                // Only switch players if no one has won
                 currentPlayer = currentPlayer === 'red' ? 'yellow' : 'red'; // Switch player
             }
             break;
@@ -47,7 +48,7 @@ function updateBoard() {
         if (gameBoard[row][col]) {
             cell.classList.add(gameBoard[row][col]);
         } else {
-            cell.classList.remove('red', 'yellow');  // Remove any color if the cell is empty
+            cell.classList.remove('red', 'yellow');  // Clear the discs when reset
         }
     });
 }
