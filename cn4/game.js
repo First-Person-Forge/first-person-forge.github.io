@@ -7,7 +7,7 @@ let gameBoard = Array(6).fill().map(() => Array(7).fill(null)); // 6 rows, 7 col
 // Create the game board dynamically
 function createBoard() {
     const board = document.getElementById('board');
-    board.innerHTML = '';
+    board.innerHTML = '';  // Clear the existing grid
     for (let row = 0; row < 6; row++) {
         for (let col = 0; col < 7; col++) {
             const cell = document.createElement('div');
@@ -27,8 +27,12 @@ function handleMove(col) {
         if (!gameBoard[row][col]) {
             gameBoard[row][col] = currentPlayer;
             updateBoard();
-            checkWinner(row, col);
-            currentPlayer = currentPlayer === 'red' ? 'yellow' : 'red'; // Switch player
+            if (checkWinner(row, col)) {  // Check if the move results in a win
+                document.getElementById('message').innerText = `${currentPlayer} wins!`;
+                setTimeout(() => alert(`${currentPlayer} wins!`), 100);
+            } else {
+                currentPlayer = currentPlayer === 'red' ? 'yellow' : 'red'; // Switch player
+            }
             break;
         }
     }
@@ -42,6 +46,8 @@ function updateBoard() {
         const col = cell.dataset.col;
         if (gameBoard[row][col]) {
             cell.classList.add(gameBoard[row][col]);
+        } else {
+            cell.classList.remove('red', 'yellow');  // Remove any color if the cell is empty
         }
     });
 }
@@ -52,9 +58,9 @@ function checkWinner(row, col) {
         checkDirection(row, col, 0, 1) || // Vertical
         checkDirection(row, col, 1, 1) || // Diagonal /
         checkDirection(row, col, 1, -1)) { // Diagonal \
-        document.getElementById('message').innerText = `${currentPlayer} wins!`;
-        setTimeout(() => alert(`${currentPlayer} wins!`), 100);
+        return true;
     }
+    return false;
 }
 
 // Check a given direction for a winning condition
@@ -85,10 +91,10 @@ function checkDirection(row, col, rowDir, colDir) {
 
 // Reset the game
 function resetGame() {
-    gameBoard = Array(6).fill().map(() => Array(7).fill(null));
-    currentPlayer = 'red';
-    updateBoard();
-    document.getElementById('message').innerText = '';
+    gameBoard = Array(6).fill().map(() => Array(7).fill(null));  // Reset game board
+    currentPlayer = 'red';  // Reset to red's turn
+    updateBoard();  // Update the visual grid
+    document.getElementById('message').innerText = '';  // Clear any win message
 }
 
 // Initialize the game
