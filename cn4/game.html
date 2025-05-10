@@ -7,15 +7,20 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="game-container">
-        <h1>Connect 4</h1>
-        <div id="current-player"></div>
-        <div id="board" class="board"></div>
-        <div id="message" class="message"></div>
-        <button id="toggle-ai-btn">Activate AI</button>
-        <button id="reset-btn">Restart Game</button>
+    <div id="container">
+        <div id="header">
+            <div id="current-turn">
+                <p>It's <span id="current-player">Red's</span> turn</p>
+            </div>
+            <h1>Connect 4</h1>
+        </div>
+        <div id="board"></div>
+        <div id="controls">
+            <button onclick="resetGame()">Restart Game</button>
+        </div>
+        <div id="message"></div>
     </div>
-
+    
     <script src="game.js"></script>
 </body>
 </html>
