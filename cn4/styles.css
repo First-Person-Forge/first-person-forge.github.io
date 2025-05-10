@@ -1,98 +1,109 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* General styling for the body */
+body {
     font-family: Arial, sans-serif;
-}
-
-body, html {
-    height: 100%;
+    background-color: #f4f4f4;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #f4f4f4;
-    color: #333;
+    height: 100vh;
+    margin: 0;
+    flex-direction: column;
 }
 
-#container {
-    text-align: center;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-#header {
-    margin-bottom: 20px;
-}
-
-#current-turn {
-    font-size: 1.5em;
+/* Styling for the header and turn indicator */
+#title {
+    font-size: 36px;
+    font-weight: bold;
     margin-bottom: 10px;
 }
 
-#current-turn p {
-    margin: 0;
-}
-
 #current-player {
+    font-size: 24px;
     font-weight: bold;
-    color: red;
-}
-
-h1 {
-    font-size: 3em;
     margin-bottom: 20px;
-    font-weight: bold;
 }
 
+/* Board container styling */
 #board {
-  display: grid;
-  grid-template-columns: repeat(7, 50px);
-  grid-template-rows: repeat(6, 50px);
-  gap: 5px;
+    display: grid;
+    grid-template-columns: repeat(7, 50px);
+    grid-template-rows: repeat(6, 50px);
+    gap: 5px;
+    border: 3px solid #333;
+    border-radius: 10px;
+    margin-bottom: 20px;
 }
 
+/* Individual cell styling */
 .cell {
-  width: 50px;
-  height: 50px;
-  background-color: lightgray;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    background-color: #e6e6e6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
+.cell:hover {
+    background-color: #d3d3d3;
+}
+
+/* Styling for the red and yellow counters */
 .red {
-  background-color: red;
+    background-color: red;
 }
 
 .yellow {
-  background-color: yellow;
+    background-color: yellow;
 }
 
-
-#controls {
-    margin-bottom: 20px;
+/* Message display area */
+#message {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 20px;
+    color: green;
 }
 
-button {
+/* Button to toggle AI */
+#toggle-ai-btn {
     padding: 10px 20px;
-    font-size: 1.2em;
     background-color: #4CAF50;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    font-size: 18px;
+    margin-top: 20px;
 }
 
-button:hover {
+#toggle-ai-btn:hover {
     background-color: #45a049;
 }
 
-#message {
-    font-size: 1.5em;
-    font-weight: bold;
-    color: #d9534f;
+#toggle-ai-btn:active {
+    background-color: #3c8d3c;
+}
+
+/* Styling for the reset button */
+#reset-btn {
+    padding: 10px 20px;
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+#reset-btn:hover {
+    background-color: #e53935;
+}
+
+#reset-btn:active {
+    background-color: #d32f2f;
 }
