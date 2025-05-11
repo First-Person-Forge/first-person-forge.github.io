@@ -2,25 +2,51 @@ body {
   font-family: 'Comic Sans MS', cursive, sans-serif;
   text-align: center;
   background-color: #f0f8ff;
+  padding: 10px;
+}
+
+h1 {
+  font-size: 2em;
+  margin: 10px 0;
+}
+
+.legend {
+  font-size: 1.2em;
+  margin-top: 20px;
+  color: #333;
+}
+
+.legend p {
+  margin: 5px 0;
+}
+
+.snake-legend {
+  color: red;
+}
+
+.ladder-legend {
+  color: green;
 }
 
 .board {
   display: grid;
-  grid-template-columns: repeat(10, 50px);
-  grid-template-rows: repeat(10, 50px);
+  grid-template-columns: repeat(10, 1fr);
+  gap: 2px;
   margin: 20px auto;
-  width: 500px;
-  height: 500px;
+  width: 90vw;
+  max-width: 500px;
+  aspect-ratio: 1 / 1;
   border: 2px solid #000;
 }
 
 .board div {
   border: 1px solid #ccc;
+  font-size: 12px;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 12px;
-  position: relative;
+  background-color: #fffbe7;
 }
 
 .player {
@@ -35,4 +61,65 @@ body {
 
 .controls {
   margin-top: 20px;
+}
+
+button {
+  font-size: 1.2em;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+#dice-result,
+#turn {
+  font-size: 1.2em;
+  margin: 10px 0;
+}
+
+/* 🔥 Mobile-specific tweaks */
+@media (max-width: 600px) {
+  h1 {
+    font-size: 1.5em;
+  }
+
+  .board div {
+    font-size: 10px;
+  }
+
+  .player {
+    width: 10px;
+    height: 10px;
+  }
+
+  button {
+    width: 100%;
+    font-size: 1.1em;
+  }
+}
+
+.snake-arrow {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 2px;
+  height: 20px;
+  background-color: red;
+  transform: rotate(45deg);
+}
+
+.ladder-arrow {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 2px;
+  height: 20px;
+  background-color: green;
+  transform: rotate(-45deg);
 }
