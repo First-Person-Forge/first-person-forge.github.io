@@ -1,27 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Snakes & Ladders</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Tic-Tac-Toe with AI</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>🎲 Snakes & Ladders 🐍</h1>
-
-  <!-- Legend explaining snakes and ladders -->
-  <div class="legend">
-    <p><span class="snake-legend">🐍</span> Snakes are red</p>
-    <p><span class="ladder-legend">🪜</span> Ladders are green</p>
+  <div class="game-container">
+    <h1>Tic-Tac-Toe with AI</h1>
+    <div class="board" id="board">
+      <div class="cell" data-cell-index="0"></div>
+      <div class="cell" data-cell-index="1"></div>
+      <div class="cell" data-cell-index="2"></div>
+      <div class="cell" data-cell-index="3"></div>
+      <div class="cell" data-cell-index="4"></div>
+      <div class="cell" data-cell-index="5"></div>
+      <div class="cell" data-cell-index="6"></div>
+      <div class="cell" data-cell-index="7"></div>
+      <div class="cell" data-cell-index="8"></div>
+    </div>
+    <button id="toggleAI" class="toggle-ai">Turn AI On</button>
+    <button id="restart" class="restart">Restart Game</button>
+    <p id="status"></p>
   </div>
 
-  <div id="board" class="board"></div>
-  <div class="controls">
-    <button onclick="rollDice()">Roll Dice</button>
-    <p id="dice-result">Roll the dice!</p>
-    <p id="turn">Player 1's Turn</p>
-  </div>
-  
   <script src="script.js"></script>
 </body>
 </html>
