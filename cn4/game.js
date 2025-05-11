@@ -1,5 +1,3 @@
-// game.js
-
 // Initial game setup
 let currentPlayer = 'red'; // red starts first
 let gameBoard = Array(6).fill().map(() => Array(7).fill(null)); // 6 rows, 7 columns
@@ -22,33 +20,44 @@ function createBoard() {
 
 // Handle a move when a player clicks on a column
 function handleMove(col) {
+    // If the current player is AI (yellow), don't allow player to click
+    if (currentPlayer === 'yellow') return;
+
     // Find the first available row in the selected column
     for (let row = 5; row >= 0; row--) {
         if (!gameBoard[row][col]) {
             gameBoard[row][col] = currentPlayer;
-            updateBoard();
+            updateBoard(row, col); // Update board and pass row/column to update
             if (checkWinner(row, col)) {  // Check if the move results in a win
                 document.getElementById('message').innerText = `${currentPlayer} wins!`;
                 setTimeout(() => alert(`${currentPlayer} wins!`), 100);
             } else {
                 // Only switch players if no one has won
                 currentPlayer = currentPlayer === 'red' ? 'yellow' : 'red'; // Switch player
+                document.getElementById('message').innerText = "It's AI's Turn!";
+                if (currentPlayer === 'yellow') {
+                    aiMove(); // Call AI move after player turn
+                }
             }
             break;
         }
     }
 }
 
-// Update the visual board
-function updateBoard() {
+// Update the visual board and trigger falling animation
+function updateBoard(row, col) {
     const cells = document.querySelectorAll('.cell');
     cells.forEach(cell => {
-        const row = cell.dataset.row;
-        const col = cell.dataset.col;
-        if (gameBoard[row][col]) {
-            cell.classList.add(gameBoard[row][col]);
+        const r = cell.dataset.row;
+        const c = cell.dataset.col;
+        if (gameBoard[r][c]) {
+            cell.classList.add(gameBoard[r][c]);
+            if (r == row && c == col) {
+                cell.classList.add('falling'); // Add falling animation class to the cell
+            }
         } else {
             cell.classList.remove('red', 'yellow');  // Clear the discs when reset
+            cell.classList.remove('falling');  // Remove the falling animation
         }
     });
 }
@@ -69,14 +78,14 @@ function checkDirection(row, col, rowDir, colDir) {
     let count = 1;
     let r = row + rowDir;
     let c = col + colDir;
-    
+
     // Check one direction
     while (r >= 0 && r < 6 && c >= 0 && c < 7 && gameBoard[r][c] === currentPlayer) {
         count++;
         r += rowDir;
         c += colDir;
     }
-    
+
     r = row - rowDir;
     c = col - colDir;
 
@@ -88,6 +97,33 @@ function checkDirection(row, col, rowDir, colDir) {
     }
 
     return count >= 4;
+}
+
+// AI Move (basic AI selects the first available row in a column)
+function aiMove() {
+    let col = -1;
+
+    // AI will choose the first available column (simple strategy)
+    for (let i = 0; i < 7; i++) {
+        for (let row = 5; row >= 0; row--) {
+            if (!gameBoard[row][i]) {
+                col = i;
+                gameBoard[row][i] = 'yellow';  // AI places its move
+                updateBoard(row, i);  // Update board with AI move
+                break;
+            }
+        }
+        if (col !== -1) break;
+    }
+
+    // After AI move, check for win or change turn
+    if (checkWinner(col, 5)) {  // Check if AI wins
+        document.getElementById('message').innerText = "AI wins!";
+        setTimeout(() => alert("AI wins!"), 100);
+    } else {
+        currentPlayer = 'red';  // Switch back to player after AI's move
+        document.getElementById('message').innerText = "Player's Turn!";
+    }
 }
 
 // Reset the game
