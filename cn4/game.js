@@ -1,6 +1,7 @@
 // Initial game setup
 let currentPlayer = 'red'; // red starts first
 let gameBoard = Array(6).fill().map(() => Array(7).fill(null)); // 6 rows, 7 columns
+let aiEnabled = false; // Flag to track whether AI is enabled
 
 // Create the game board dynamically
 function createBoard() {
@@ -20,8 +21,7 @@ function createBoard() {
 
 // Handle a move when a player clicks on a column
 function handleMove(col) {
-    // If the current player is AI (yellow), don't allow player to click
-    if (currentPlayer === 'yellow') return;
+    if (aiEnabled && currentPlayer === 'yellow') return; // Block player move when AI is playing
 
     // Find the first available row in the selected column
     for (let row = 5; row >= 0; row--) {
@@ -34,9 +34,11 @@ function handleMove(col) {
             } else {
                 // Only switch players if no one has won
                 currentPlayer = currentPlayer === 'red' ? 'yellow' : 'red'; // Switch player
-                document.getElementById('message').innerText = "It's AI's Turn!";
-                if (currentPlayer === 'yellow') {
-                    aiMove(); // Call AI move after player turn
+                if (aiEnabled && currentPlayer === 'yellow') {
+                    document.getElementById('message').innerText = "AI's Turn!";
+                    aiMove(); // Call AI move if enabled and it's AI's turn
+                } else {
+                    document.getElementById('message').innerText = "Player's Turn!";
                 }
             }
             break;
@@ -124,6 +126,12 @@ function aiMove() {
         currentPlayer = 'red';  // Switch back to player after AI's move
         document.getElementById('message').innerText = "Player's Turn!";
     }
+}
+
+// Toggle the AI on/off
+function toggleAI() {
+    aiEnabled = !aiEnabled;  // Toggle the AI state
+    document.getElementById('message').innerText = aiEnabled ? "AI is now active. Player's Turn!" : "AI is now off. Player's Turn!";
 }
 
 // Reset the game
