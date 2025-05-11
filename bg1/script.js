@@ -7,12 +7,12 @@ const statusText = document.getElementById('status');
 const restartButton = document.getElementById('restart');
 const toggleAIButton = document.getElementById('toggleAI');
 
-// Minimax algorithm (unchanged from previous code)
+// Minimax algorithm to decide the AI's moves with a normal difficulty
 function minimax(board, depth, isMaximizingPlayer) {
   const winner = checkWinner(board);
   if (winner === 'X') return -10 + depth;
   if (winner === 'O') return 10 - depth;
-  if (board.every(cell => cell !== '')) return 0;
+  if (board.every(cell => cell !== '')) return 0; // draw
 
   if (isMaximizingPlayer) {
     let best = -Infinity;
@@ -54,6 +54,7 @@ function bestMove() {
   return move;
 }
 
+// Check for winner
 function checkWinner(board) {
   const winPatterns = [
     [0, 1, 2], [3, 4, 5], [6, 7, 8], // rows
@@ -98,7 +99,7 @@ function handleCellClick(event) {
   }
 }
 
-// AI makes a move
+// AI makes a move based on Minimax
 function aiMove() {
   const aiMoveIndex = bestMove();
   gameBoard[aiMoveIndex] = 'O';
