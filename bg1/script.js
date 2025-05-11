@@ -1,11 +1,4 @@
-const board = document.getElementById('board');
-const diceResult = document.getElementById('dice-result');
-const turnText = document.getElementById('turn');
-
-let player1Pos = 1;
-let player2Pos = 1;
-let currentPlayer = 1;
-
+// Set up the board
 const snakes = {
   16: 6,
   47: 26,
@@ -16,7 +9,7 @@ const snakes = {
   87: 24,
   93: 73,
   95: 75,
-  98: 78,
+  98: 78
 };
 
 const ladders = {
@@ -28,19 +21,83 @@ const ladders = {
   36: 44,
   51: 67,
   71: 91,
-  80: 100,
+  80: 100
 };
 
+let player1Pos = 1;
+let player2Pos = 1;
+let currentPlayer = 1;
+
+// Create the game board dynamically
 function createBoard() {
-  board.innerHTML = '';
+  const board = document.getElementById('board');
   for (let i = 100; i >= 1; i--) {
     const cell = document.createElement('div');
-    cell.id = 'cell-' + i;
-    cell.textContent = i;
+    cell.id = `cell-${i}`;
     board.appendChild(cell);
   }
+  updateBoard();
 }
 
+// Update the positions of the snakes and ladders
+function updateBoard() {
+  // Clear any existing snakes/ladders arrows
+  document.querySelectorAll('.snake-arrow, .ladder-arrow').forEach(arrow => arrow.remove());
+
+  // Draw the snakes and ladders on the board
+  Object.keys(snakes).forEach((startPos) => {
+    const endPos = snakes[startPos];
+    drawSnakeLadder(startPos, endPos, 'snake');
+  });
+
+  Object.keys(ladders).forEach((startPos) => {
+    const endPos = ladders[startPos];
+    drawSnakeLadder(startPos, endPos, 'ladder');
+  });
+}
+
+// Draw an arrow indicating a snake or ladder
+function drawSnakeLadder(start, end, type) {
+  const startCell = document.getElementById(`cell-${start}`);
+  const endCell = document.getElementById(`cell-${end}`);
+  
+  const arrow = document.createElement('div');
+  arrow.classList.add(type === 'snake' ? 'snake-arrow' : 'ladder-arrow');
+  
+  startCell.appendChild(arrow);
+}
+
+// Roll the dice and move the current player
+function rollDice() {
+  const diceRoll = Math.floor(Math.random() * 6) + 1;
+  document.getElementById('dice-result').innerText = `You rolled a ${diceRoll}!`;
+
+  if (currentPlayer === 1) {
+    player1Pos += diceRoll;
+    if (player1Pos > 100) player1Pos = 100;
+    document.getElementById('turn').innerText = "Player 2's Turn";
+    currentPlayer = 2;
+  } else {
+    player2Pos += diceRoll;
+    if (player2Pos > 100) player2Pos = 100;
+    document.getElementById('turn').innerText = "Player 1's Turn";
+    currentPlayer = 1;
+  }
+
+  handleSnakesAndLadders();
+  updatePlayers();
+}
+
+// Handle the effects of snakes and ladders
+function handleSnakesAndLadders() {
+  if (snakes[player1Pos]) player1Pos = snakes[player1Pos];
+  if (ladders[player1Pos]) player1Pos = ladders[player1Pos];
+
+  if (snakes[player2Pos]) player2Pos = snakes[player2Pos];
+  if (ladders[player2Pos]) player2Pos = ladders[player2Pos];
+}
+
+// Update player positions on the board
 function updatePlayers() {
   document.querySelectorAll('.player').forEach(p => p.remove());
 
@@ -53,57 +110,5 @@ function updatePlayers() {
   document.getElementById('cell-' + player2Pos)?.appendChild(player2);
 }
 
-function rollDice() {
-  const roll = Math.floor(Math.random() * 6) + 1;
-  diceResult.textContent = `You rolled a ${roll}!`;
-
-  if (currentPlayer === 1) {
-    player1Pos = movePlayer(player1Pos, roll);
-    currentPlayer = 2;
-    turnText.textContent = "Player 2's Turn";
-  } else {
-    player2Pos = movePlayer(player2Pos, roll);
-    currentPlayer = 1;
-    turnText.textContent = "Player 1's Turn";
-  }
-
-  updatePlayers();
-  checkWin();
-}
-
-function movePlayer(pos, roll) {
-  let newPos = pos + roll;
-  if (newPos > 100) return pos;
-
-  if (snakes[newPos]) {
-    alert(`🐍 Oops! Bitten by a snake! Go down from ${newPos} to ${snakes[newPos]}`);
-    newPos = snakes[newPos];
-  } else if (ladders[newPos]) {
-    alert(`🪜 Woohoo! Ladder up from ${newPos} to ${ladders[newPos]}`);
-    newPos = ladders[newPos];
-  }
-
-  return newPos;
-}
-
-function checkWin() {
-  if (player1Pos === 100) {
-    alert('🎉 Player 1 Wins!');
-    resetGame();
-  } else if (player2Pos === 100) {
-    alert('🎉 Player 2 Wins!');
-    resetGame();
-  }
-}
-
-function resetGame() {
-  player1Pos = 1;
-  player2Pos = 1;
-  currentPlayer = 1;
-  updatePlayers();
-  diceResult.textContent = "Roll the dice!";
-  turnText.textContent = "Player 1's Turn";
-}
-
+// Initialize the game
 createBoard();
-updatePlayers();
