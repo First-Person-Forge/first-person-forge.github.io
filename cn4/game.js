@@ -46,7 +46,7 @@ function handleMove(col) {
     }
 }
 
-// Update the visual board and trigger falling animation
+// Update the visual board
 function updateBoard(row, col) {
     const cells = document.querySelectorAll('.cell');
     cells.forEach(cell => {
@@ -54,12 +54,8 @@ function updateBoard(row, col) {
         const c = cell.dataset.col;
         if (gameBoard[r][c]) {
             cell.classList.add(gameBoard[r][c]);
-            if (r == row && c == col) {
-                cell.classList.add('falling'); // Add falling animation class to the cell
-            }
         } else {
             cell.classList.remove('red', 'yellow');  // Clear the discs when reset
-            cell.classList.remove('falling');  // Remove the falling animation
         }
     });
 }
