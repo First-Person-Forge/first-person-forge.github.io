@@ -1,125 +1,63 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-  font-family: 'Comic Sans MS', cursive, sans-serif;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+}
+
+.game-container {
   text-align: center;
-  background-color: #f0f8ff;
-  padding: 10px;
 }
 
 h1 {
-  font-size: 2em;
-  margin: 10px 0;
-}
-
-.legend {
-  font-size: 1.2em;
-  margin-top: 20px;
-  color: #333;
-}
-
-.legend p {
-  margin: 5px 0;
-}
-
-.snake-legend {
-  color: red;
-}
-
-.ladder-legend {
-  color: green;
+  font-size: 2.5em;
+  margin-bottom: 20px;
 }
 
 .board {
   display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  gap: 2px;
-  margin: 20px auto;
-  width: 90vw;
-  max-width: 500px;
-  aspect-ratio: 1 / 1;
-  border: 2px solid #000;
+  grid-template-columns: repeat(3, 100px);
+  grid-template-rows: repeat(3, 100px);
+  gap: 5px;
+  margin-bottom: 20px;
 }
 
-.board div {
-  border: 1px solid #ccc;
-  font-size: 12px;
-  position: relative;
+.cell {
   display: flex;
-  align-items: center;
   justify-content: center;
-  background-color: #fffbe7;
-}
-
-.player {
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  position: absolute;
-}
-
-.player1 { background: red; top: 5px; left: 5px; }
-.player2 { background: blue; bottom: 5px; right: 5px; }
-
-.controls {
-  margin-top: 20px;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  background-color: #fff;
+  border: 2px solid #000;
+  font-size: 2em;
+  cursor: pointer;
 }
 
 button {
-  font-size: 1.2em;
   padding: 10px 20px;
-  border-radius: 10px;
-  border: none;
+  font-size: 1.2em;
   background-color: #4CAF50;
   color: white;
+  border: none;
   cursor: pointer;
+  border-radius: 5px;
+  margin-top: 10px;
 }
 
 button:hover {
   background-color: #45a049;
 }
 
-#dice-result,
-#turn {
-  font-size: 1.2em;
-  margin: 10px 0;
-}
-
-/* 🔥 Mobile-specific tweaks */
-@media (max-width: 600px) {
-  h1 {
-    font-size: 1.5em;
-  }
-
-  .board div {
-    font-size: 10px;
-  }
-
-  .player {
-    width: 10px;
-    height: 10px;
-  }
-
-  button {
-    width: 100%;
-    font-size: 1.1em;
-  }
-}
-
-.snake-arrow {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 2px;
-  height: 20px;
-  background-color: red;
-  transform: rotate(45deg);
-}
-
-.ladder-arrow {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 2px;
-  height: 20px;
-  background-color: green;
-  transform: rotate(-45deg);
+#status {
+  font-size: 1.5em;
+  margin-top: 10px;
 }
