@@ -1,114 +1,147 @@
-// Set up the board
-const snakes = {
-  16: 6,
-  47: 26,
-  49: 11,
-  56: 53,
-  62: 19,
-  64: 60,
-  87: 24,
-  93: 73,
-  95: 75,
-  98: 78
-};
+let currentPlayer = 'X';
+let gameBoard = ['', '', '', '', '', '', '', '', ''];
+let isGameActive = true;
+let isAIEnabled = false; // Variable to toggle AI on/off
+const cells = document.querySelectorAll('.cell');
+const statusText = document.getElementById('status');
+const restartButton = document.getElementById('restart');
+const toggleAIButton = document.getElementById('toggleAI');
 
-const ladders = {
-  1: 38,
-  4: 14,
-  9: 31,
-  21: 42,
-  28: 84,
-  36: 44,
-  51: 67,
-  71: 91,
-  80: 100
-};
+// Minimax algorithm (unchanged from previous code)
+function minimax(board, depth, isMaximizingPlayer) {
+  const winner = checkWinner(board);
+  if (winner === 'X') return -10 + depth;
+  if (winner === 'O') return 10 - depth;
+  if (board.every(cell => cell !== '')) return 0;
 
-let player1Pos = 1;
-let player2Pos = 1;
-let currentPlayer = 1;
-
-// Create the game board dynamically
-function createBoard() {
-  const board = document.getElementById('board');
-  for (let i = 100; i >= 1; i--) {
-    const cell = document.createElement('div');
-    cell.id = `cell-${i}`;
-    board.appendChild(cell);
-  }
-  updateBoard();
-}
-
-// Update the positions of the snakes and ladders
-function updateBoard() {
-  // Clear any existing snakes/ladders arrows
-  document.querySelectorAll('.snake-arrow, .ladder-arrow').forEach(arrow => arrow.remove());
-
-  // Draw the snakes and ladders on the board
-  Object.keys(snakes).forEach((startPos) => {
-    const endPos = snakes[startPos];
-    drawSnakeLadder(startPos, endPos, 'snake');
-  });
-
-  Object.keys(ladders).forEach((startPos) => {
-    const endPos = ladders[startPos];
-    drawSnakeLadder(startPos, endPos, 'ladder');
-  });
-}
-
-// Draw an arrow indicating a snake or ladder
-function drawSnakeLadder(start, end, type) {
-  const startCell = document.getElementById(`cell-${start}`);
-  const endCell = document.getElementById(`cell-${end}`);
-  
-  const arrow = document.createElement('div');
-  arrow.classList.add(type === 'snake' ? 'snake-arrow' : 'ladder-arrow');
-  
-  startCell.appendChild(arrow);
-}
-
-// Roll the dice and move the current player
-function rollDice() {
-  const diceRoll = Math.floor(Math.random() * 6) + 1;
-  document.getElementById('dice-result').innerText = `You rolled a ${diceRoll}!`;
-
-  if (currentPlayer === 1) {
-    player1Pos += diceRoll;
-    if (player1Pos > 100) player1Pos = 100;
-    document.getElementById('turn').innerText = "Player 2's Turn";
-    currentPlayer = 2;
+  if (isMaximizingPlayer) {
+    let best = -Infinity;
+    for (let i = 0; i < 9; i++) {
+      if (board[i] === '') {
+        board[i] = 'O';
+        best = Math.max(best, minimax(board, depth + 1, false));
+        board[i] = '';
+      }
+    }
+    return best;
   } else {
-    player2Pos += diceRoll;
-    if (player2Pos > 100) player2Pos = 100;
-    document.getElementById('turn').innerText = "Player 1's Turn";
-    currentPlayer = 1;
+    let best = Infinity;
+    for (let i = 0; i < 9; i++) {
+      if (board[i] === '') {
+        board[i] = 'X';
+        best = Math.min(best, minimax(board, depth + 1, true));
+        board[i] = '';
+      }
+    }
+    return best;
+  }
+}
+
+function bestMove() {
+  let bestVal = -Infinity;
+  let move = -1;
+  for (let i = 0; i < 9; i++) {
+    if (gameBoard[i] === '') {
+      gameBoard[i] = 'O';
+      let moveVal = minimax(gameBoard, 0, false);
+      gameBoard[i] = '';
+      if (moveVal > bestVal) {
+        move = i;
+        bestVal = moveVal;
+      }
+    }
+  }
+  return move;
+}
+
+function checkWinner(board) {
+  const winPatterns = [
+    [0, 1, 2], [3, 4, 5], [6, 7, 8], // rows
+    [0, 3, 6], [1, 4, 7], [2, 5, 8], // columns
+    [0, 4, 8], [2, 4, 6]             // diagonals
+  ];
+
+  for (let [a, b, c] of winPatterns) {
+    if (board[a] !== '' && board[a] === board[b] && board[b] === board[c]) {
+      return board[a];
+    }
+  }
+  return null;
+}
+
+// Handle cell click
+function handleCellClick(event) {
+  const cellIndex = event.target.getAttribute('data-cell-index');
+
+  if (gameBoard[cellIndex] !== '' || !isGameActive || (currentPlayer === 'O' && isAIEnabled)) return;
+
+  gameBoard[cellIndex] = currentPlayer;
+  event.target.innerText = currentPlayer;
+
+  if (checkWinner(gameBoard)) {
+    statusText.innerText = `${currentPlayer} Wins!`;
+    isGameActive = false;
+    return;
   }
 
-  handleSnakesAndLadders();
-  updatePlayers();
+  if (gameBoard.every(cell => cell !== '')) {
+    statusText.innerText = "It's a Draw!";
+    isGameActive = false;
+    return;
+  }
+
+  currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+  statusText.innerText = currentPlayer === 'X' ? "Player X's Turn" : "AI's Turn";
+
+  if (isAIEnabled && currentPlayer === 'O') {
+    aiMove();
+  }
 }
 
-// Handle the effects of snakes and ladders
-function handleSnakesAndLadders() {
-  if (snakes[player1Pos]) player1Pos = snakes[player1Pos];
-  if (ladders[player1Pos]) player1Pos = ladders[player1Pos];
+// AI makes a move
+function aiMove() {
+  const aiMoveIndex = bestMove();
+  gameBoard[aiMoveIndex] = 'O';
+  cells[aiMoveIndex].innerText = 'O';
 
-  if (snakes[player2Pos]) player2Pos = snakes[player2Pos];
-  if (ladders[player2Pos]) player2Pos = ladders[player2Pos];
+  if (checkWinner(gameBoard)) {
+    statusText.innerText = "AI Wins!";
+    isGameActive = false;
+    return;
+  }
+
+  if (gameBoard.every(cell => cell !== '')) {
+    statusText.innerText = "It's a Draw!";
+    isGameActive = false;
+    return;
+  }
+
+  currentPlayer = 'X';
+  statusText.innerText = "Player X's Turn";
 }
 
-// Update player positions on the board
-function updatePlayers() {
-  document.querySelectorAll('.player').forEach(p => p.remove());
-
-  const player1 = document.createElement('div');
-  player1.classList.add('player', 'player1');
-  document.getElementById('cell-' + player1Pos)?.appendChild(player1);
-
-  const player2 = document.createElement('div');
-  player2.classList.add('player', 'player2');
-  document.getElementById('cell-' + player2Pos)?.appendChild(player2);
+// Toggle AI On/Off
+function toggleAI() {
+  isAIEnabled = !isAIEnabled;
+  toggleAIButton.innerText = isAIEnabled ? "Turn AI Off" : "Turn AI On";
+  statusText.innerText = isAIEnabled ? "AI's Turn" : "Player X's Turn";
+  gameBoard = ['', '', '', '', '', '', '', '', ''];
+  isGameActive = true;
+  cells.forEach(cell => cell.innerText = '');
 }
 
-// Initialize the game
-createBoard();
+// Restart the game
+function restartGame() {
+  gameBoard = ['', '', '', '', '', '', '', '', ''];
+  isGameActive = true;
+  currentPlayer = 'X';
+  statusText.innerText = isAIEnabled ? "AI's Turn" : "Player X's Turn";
+  cells.forEach(cell => cell.innerText = '');
+}
+
+// Event listeners
+cells.forEach(cell => cell.addEventListener('click', handleCellClick));
+restartButton.addEventListener('click', restartGame);
+toggleAIButton.addEventListener('click', toggleAI);
+
+statusText.innerText = "Player X's Turn";
