@@ -35,6 +35,11 @@ body {
     align-items: center;
     cursor: pointer;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.1s ease; /* Smooth transition on hover */
+}
+
+.cell:hover {
+    transform: scale(1.1); /* Slightly enlarge the cell on hover */
 }
 
 .cell.red {
@@ -43,6 +48,20 @@ body {
 
 .cell.yellow {
     background-color: yellow;
+}
+
+/* Animation for falling disc */
+@keyframes fall {
+    0% {
+        transform: translateY(-100%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.falling {
+    animation: fall 0.5s ease-out; /* Fall animation effect */
 }
 
 button {
@@ -63,4 +82,26 @@ button:hover {
     margin-top: 10px;
     font-size: 18px;
     color: white;
+}
+
+/* Responsive Design for smaller screens */
+@media (max-width: 600px) {
+    .board {
+        grid-template-columns: repeat(7, 50px);
+        grid-template-rows: repeat(6, 50px);
+    }
+
+    .cell {
+        width: 50px;
+        height: 50px;
+    }
+
+    button {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    #message {
+        font-size: 16px;
+    }
 }
