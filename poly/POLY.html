@@ -10,10 +10,9 @@
 		<div id="ui"></div>
 		<div id="transition-layer"></div>
 
-		<script type="module" src="main.bundle.js" defer></script>
-
-		    <script>
-  (function () {
+		<script type="module" src="main.bundle.js" defer>
+		 <script>
+        (function () {
             'use strict';
 
             const defaultKeys = {
@@ -98,7 +97,7 @@
                 label.style.width = '60px';
 
                 const bindBtn = document.createElement('button');
-                bindBtn.textContent = 🎮 Bind (${currentKeys[dir].bindKey});
+                bindBtn.textContent = `🎮 Bind (${currentKeys[dir].bindKey})`;
                 bindBtn.style.marginRight = '6px';
                 bindBtn.style.cursor = 'pointer';
                 bindBtn.onclick = () => {
@@ -107,14 +106,14 @@
                 };
 
                 const labelBtn = document.createElement('button');
-                labelBtn.textContent = 🔤 Label (${currentKeys[dir].label});
+                labelBtn.textContent = `🔤 Label (${currentKeys[dir].label})`;
                 labelBtn.style.cursor = 'pointer';
                 labelBtn.onclick = () => {
-                    const newLabel = prompt(New label for ${dir.toUpperCase()}:, currentKeys[dir].label);
+                    const newLabel = prompt(`New label for ${dir.toUpperCase()}:`, currentKeys[dir].label);
                     if (newLabel) {
                         currentKeys[dir].label = newLabel;
                         keyBoxes[dir].textContent = newLabel;
-                        labelBtn.textContent = 🔤 Label (${newLabel});
+                        labelBtn.textContent = `🔤 Label (${newLabel})`;
                     }
                 };
 
@@ -135,7 +134,7 @@
                     // Update button text in settings
                     [...settingsOverlay.children].forEach(row => {
                         if (row.children[0].textContent.toLowerCase() === waitingForBind) {
-                            row.children[1].textContent = 🎮 Bind (${e.key});
+                            row.children[1].textContent = `🎮 Bind (${e.key})`;
                         }
                     });
                     waitingForBind = null;
@@ -183,7 +182,7 @@
                 el.style.pointerEvents = 'none';
                 return el;
             }
-        })(); 
+        })();
     </script>
 	</body>
 </html>
