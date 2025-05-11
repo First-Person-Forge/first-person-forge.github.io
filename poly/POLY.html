@@ -13,7 +13,7 @@
 		<script type="module" src="main.bundle.js" defer></script>
 
 		    <script>
-       (function () {
+   (function () {
     'use strict';
 
     // Load settings from localStorage if available, otherwise use default
@@ -55,16 +55,16 @@
     overlay.appendChild(keyBoxes.right);
     document.body.appendChild(overlay);
 
-    // Crosshair
+    // Red Circle Crosshair
     const crosshair = document.createElement('div');
     crosshair.style.position = 'fixed';
     crosshair.style.top = '50%';
     crosshair.style.left = '50%';
     crosshair.style.transform = 'translate(-50%, -50%)';
-    crosshair.style.width = '30px';
-    crosshair.style.height = '30px';
-    crosshair.style.borderTop = '2px solid red';
-    crosshair.style.borderLeft = '2px solid red';
+    crosshair.style.width = '20px'; // Set the diameter of the circle
+    crosshair.style.height = '20px'; // Set the diameter of the circle
+    crosshair.style.borderRadius = '50%'; // Make it circular
+    crosshair.style.backgroundColor = 'red'; // Red color for the crosshair
     crosshair.style.zIndex = '10000';
     document.body.appendChild(crosshair);
 
@@ -112,15 +112,19 @@
         label.textContent = dir.toUpperCase();
         label.style.width = '60px';
 
-        const bindBtn = document.createElement('button');
-        bindBtn.textContent = `🎮 Bind (${currentKeys[dir].bindKey})`;
-        bindBtn.style.marginRight = '6px';
-        bindBtn.style.cursor = 'pointer';
-        bindBtn.onclick = () => {
-            waitingForBind = dir;
-            bindBtn.textContent = '🎮 Press any key...';
+        // Input field for binding key
+        const bindInput = document.createElement('input');
+        bindInput.value = currentKeys[dir].bindKey;
+        bindInput.style.marginRight = '6px';
+        bindInput.style.fontSize = '14px';
+        bindInput.style.padding = '3px';
+        bindInput.style.cursor = 'pointer';
+        bindInput.oninput = (e) => {
+            currentKeys[dir].bindKey = e.target.value;
+            saveSettings();
         };
 
+        // Label input for changing the label
         const labelBtn = document.createElement('button');
         labelBtn.textContent = `🔤 Label (${currentKeys[dir].label})`;
         labelBtn.style.cursor = 'pointer';
@@ -135,7 +139,7 @@
         };
 
         row.appendChild(label);
-        row.appendChild(bindBtn);
+        row.appendChild(bindInput);
         row.appendChild(labelBtn);
         settingsOverlay.appendChild(row);
     });
@@ -145,20 +149,6 @@
     });
 
     document.addEventListener('keydown', e => {
-        if (waitingForBind) {
-            currentKeys[waitingForBind].bindKey = e.key;
-            keyBoxes[waitingForBind].textContent = currentKeys[waitingForBind].label;
-            // Update button text in settings
-            [...settingsOverlay.children].forEach(row => {
-                if (row.children[0].textContent.toLowerCase() === waitingForBind) {
-                    row.children[1].textContent = `🎮 Bind (${e.key})`;
-                }
-            });
-            saveSettings();
-            waitingForBind = null;
-            return;
-        }
-
         for (let dir in currentKeys) {
             if (e.key === currentKeys[dir].bindKey) {
                 keyBoxes[dir].style.backgroundColor = '#4CAF50';
