@@ -1,0 +1,38 @@
+body {
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  text-align: center;
+  background-color: #f0f8ff;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(10, 50px);
+  grid-template-rows: repeat(10, 50px);
+  margin: 20px auto;
+  width: 500px;
+  height: 500px;
+  border: 2px solid #000;
+}
+
+.board div {
+  border: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  position: relative;
+}
+
+.player {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.player1 { background: red; top: 5px; left: 5px; }
+.player2 { background: blue; bottom: 5px; right: 5px; }
+
+.controls {
+  margin-top: 20px;
+}
