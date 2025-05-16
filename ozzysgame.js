@@ -1,6 +1,9 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
+const playerImg = new Image();
+playerImg.src = "player.png"; // Make sure this file exists in the same folder!
+
 const player = {
   x: 50,
   y: 300,
@@ -9,11 +12,12 @@ const player = {
   velocityX: 0,
   velocityY: 0,
   speed: 5,
-  jumpPower: -12,
+  jumpPower: -18, // 🚀 BOOSTED JUMP
   grounded: false
 };
 
 const gravity = 0.7;
+
 const platforms = [
   { x: 0, y: 350, width: 800, height: 50 },
   { x: 300, y: 250, width: 120, height: 20 },
@@ -22,11 +26,11 @@ const platforms = [
 
 const keys = {};
 
-document.addEventListener("keydown", e => keys[e.key] = true);
-document.addEventListener("keyup", e => keys[e.key] = false);
+document.addEventListener("keydown", e => keys[e.key.toLowerCase()] = true);
+document.addEventListener("keyup", e => keys[e.key.toLowerCase()] = false);
 
 function update() {
-  // Left/right movement
+  // Move left/right
   if (keys["a"]) player.velocityX = -player.speed;
   else if (keys["d"]) player.velocityX = player.speed;
   else player.velocityX = 0;
@@ -45,23 +49,35 @@ function update() {
   // Collision detection
   player.grounded = false;
   for (let plat of platforms) {
-    if (
-      player.x < plat.x + plat.width &&
-      player.x + player.width > plat.x &&
-      player.y < plat.y + plat.height &&
-      player.y + player.height > plat.y
-    ) {
-      // Collision from top
+    const colliding = player.x < plat.x + plat.width &&
+                      player.x + player.width > plat.x &&
+                      player.y < plat.y + plat.height &&
+                      player.y + player.height > plat.y;
+
+    if (colliding) {
+      // From top
       if (player.velocityY > 0 && player.y + player.height - player.velocityY <= plat.y) {
         player.y = plat.y - player.height;
         player.velocityY = 0;
         player.grounded = true;
       }
+      // From bottom
+      else if (player.velocityY < 0 && player.y - player.velocityY >= plat.y + plat.height) {
+        player.y = plat.y + plat.height;
+        player.velocityY = 0;
+      }
+      // From sides
+      else if (player.velocityX > 0) {
+        player.x = plat.x - player.width;
+      } else if (player.velocityX < 0) {
+        player.x = plat.x + plat.width;
+      }
     }
   }
 
-  // Stop player from falling off screen
+  // Respawn if fall
   if (player.y > canvas.height) {
+    player.x = 50;
     player.y = 300;
     player.velocityY = 0;
   }
@@ -71,8 +87,7 @@ function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   // Draw player
-  ctx.fillStyle = "red";
-  ctx.fillRect(player.x, player.y, player.width, player.height);
+  ctx.drawImage(playerImg, player.x, player.y, player.width, player.height);
 
   // Draw platforms
   ctx.fillStyle = "green";
