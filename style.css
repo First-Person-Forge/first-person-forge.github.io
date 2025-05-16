@@ -1,0 +1,16 @@
+body {
+  margin: 0;
+  background-color: #111;
+  color: white;
+  font-family: "Comic Sans MS", sans-serif;
+  text-align: center;
+  padding: 20px;
+}
+
+canvas {
+  background: #87ceeb;
+  display: block;
+  margin: 0 auto;
+  border: 3px solid white;
+  box-shadow: 0 0 10px #ffffffaa;
+}
