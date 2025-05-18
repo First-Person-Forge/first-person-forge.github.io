@@ -1,0 +1,38 @@
+{
+    "name": "Impostor",
+    "asset": "characters/impostor",
+    "barColor": "#ff0000",
+    "startingAnim": "idle",
+    "animations": [
+      {
+        "name": "idle",
+        "prefix": "impostor idle",
+        "looped": true,
+        "offsets": [0, 0]
+      },
+      {
+        "name": "singLEFT",
+        "prefix": "impostor left",
+        "looped": true,
+        "offsets": [0, 0]
+      },
+      {
+        "name": "singRIGHT",
+        "prefix": "impostor right",
+        "looped": true,
+        "offsets": [0, 0]
+      },
+      {
+        "name": "singUP",
+        "prefix": "impostor up",
+        "looped": true,
+        "offsets": [0, 0]
+      },
+      {
+        "name": "singDOWN",
+        "prefix": "impostor left",
+        "looped": true,
+        "offsets": [0, 0]
+      }
+    ]
+  }
