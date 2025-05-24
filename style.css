@@ -1,3 +1,9 @@
+iframe {
+  border: none;
+  width: 100vw;
+  height: 100vh;
+  display: block;
+}
 body {
   margin: 0;
   background-color: #111;
