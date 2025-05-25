@@ -1,26 +1,204 @@
+/* === FULL DARK THEME WITH PINK NEON & GLASSMORPHISM === */
+
+/* Base dark background + text */
 body {
-  background-color: black !important;
+  background-color: #0d0d0d; /* Deep dark */
+  color: #eee; /* Light text */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 40px 20px; /* Just some breathing room on top/left */
+  padding: 0; /* No centering padding */
+  /* Removed flexbox centering */
+  min-height: 100vh;
 }
 
-.center {
-  //margin: auto !important;
-    margin-left: auto;
-    margin-right: auto;
+/* Glassmorphism card container */
+.card {
+  background: rgba(26, 26, 26, 0.6); /* translucent dark */
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-radius: 20px;
+  padding: 30px 40px;
+  max-width: 480px;
+  width: 100%;
+  box-shadow:
+    0 0 10px rgba(255, 105, 180, 0.3),
+    0 8px 24px rgba(255, 20, 147, 0.6);
+  border: 2px solid rgba(255, 20, 147, 0.5);
+  transition: box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  /* Removed transform scale on hover so no weird shifting */
 }
 
+/* Pink glow pulse on card */
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow:
+      0 0 15px rgba(255, 105, 180, 0.4),
+      0 8px 24px rgba(255, 20, 147, 0.6);
+  }
+  50% {
+    box-shadow:
+      0 0 30px rgba(255, 105, 180, 0.7),
+      0 12px 36px rgba(255, 20, 147, 0.9);
+  }
+}
+
+.card:hover {
+  animation: pulseGlow 3s ease-in-out infinite;
+  box-shadow:
+    0 0 30px rgba(255, 105, 180, 0.7),
+    0 12px 36px rgba(255, 20, 147, 0.9);
+}
+
+/* Neon glowing headings */
+h1, h2, h3 {
+  color: #ff69b4;
+  font-weight: 800;
+  margin-bottom: 24px;
+  text-shadow:
+    0 0 5px #ff69b4,
+    0 0 10px #ff1493,
+    0 0 20px #ff69b4,
+    0 0 30px #ff1493;
+  letter-spacing: 2px;
+  /* Removed center text */
+  text-align: left;
+}
+
+/* Paragraph text */
 p {
-  color: white !important;
+  color: #f0e6f2;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  margin-bottom: 20px;
+  /* Left align */
+  text-align: left;
 }
 
-/*button {
-  width: 80px;
-  height: 25px;
-  min-height: 25px;
-  margin-left: 90%;
-  color: black;
-}*/
+/* Neon pink buttons */
+.button {
+  display: inline-block;
+  background: linear-gradient(135deg, #ff69b4, #ff1493);
+  color: white;
+  font-weight: 700;
+  padding: 14px 32px;
+  border-radius: 9999px; /* pill shape */
+  border: none;
+  cursor: pointer;
+  box-shadow:
+    0 0 15px rgba(255, 105, 180, 0.6),
+    0 0 30px rgba(255, 20, 147, 0.9);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  transition: box-shadow 0.4s ease, transform 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  font-size: 1.05rem;
+  /* Left align the button container if needed */
+  text-align: left;
+}
 
+/* Pink glow shine sweep effect on hover */
+.button::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.35) 50%,
+    rgba(255, 255, 255, 0.15) 100%
+  );
+  transform: rotate(25deg);
+  transition: all 0.5s ease;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.button:hover::before {
+  left: 100%;
+  opacity: 1;
+  transition: all 0.7s ease;
+}
+
+/* Button hover glow + scale */
+.button:hover {
+  box-shadow:
+    0 0 25px rgba(255, 105, 180, 0.9),
+    0 0 40px rgba(255, 20, 147, 1);
+  transform: scale(1.07);
+}
+
+/* Inputs and textarea styling */
+input, textarea {
+  background-color: rgba(38, 38, 38, 0.8);
+  color: #fff;
+  border: 1.5px solid #444;
+  padding: 12px 16px;
+  border-radius: 16px;
+  width: 100%;
+  font-size: 1rem;
+  box-shadow: inset 0 0 8px rgba(255, 105, 180, 0.3);
+  margin-bottom: 20px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Pink glow focus effect on inputs */
+input:focus, textarea:focus {
+  outline: none;
+  border-color: #ff69b4;
+  box-shadow:
+    0 0 12px rgba(255, 105, 180, 0.8),
+    inset 0 0 12px rgba(255, 105, 180, 0.6);
+}
+
+/* Link styling with neon glow */
 a {
-  font-family: Arial, Helvetica, sans-serif;
-  color:lightblue !important;
+  color: #ff69b4;
+  text-decoration: none;
+  font-weight: 600;
+  transition: text-shadow 0.3s ease;
+}
+
+a:hover {
+  text-shadow:
+    0 0 8px #ff69b4,
+    0 0 20px #ff1493,
+    0 0 30px #ff69b4;
+}
+
+/* Scrollbar styling for dark theme */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ff69b4;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #ff1493;
+}
+
+/* Responsive tweaks: no centering */
+@media (max-width: 600px) {
+  body {
+    margin: 20px 10px;
+  }
+
+  .card {
+    padding: 20px 24px;
+  }
+
+  .button {
+    width: 100%;
+    padding: 16px 0;
+  }
 }
