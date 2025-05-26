@@ -1,6 +1,15 @@
+<<<<<<< HEAD
 /* === FULL DARK THEME WITH PINK NEON & GLASSMORPHISM === */
 
 /* Base dark background + text */
+=======
+iframe {
+  border: none;
+  width: 100vw;
+  height: 100vh;
+  display: block;
+}
+>>>>>>> 0da7612cf40624c4a63549b49fa708d7b41becad
 body {
   background-color: #0d0d0d; /* Deep dark */
   color: #eee; /* Light text */
@@ -62,8 +71,6 @@ h1, h2, h3 {
     0 0 20px #ff69b4,
     0 0 30px #ff1493;
   letter-spacing: 2px;
-  /* Removed center text */
-  text-align: left;
 }
 
 /* Paragraph text */
@@ -72,8 +79,6 @@ p {
   font-size: 1.1rem;
   line-height: 1.5;
   margin-bottom: 20px;
-  /* Left align */
-  text-align: left;
 }
 
 /* Neon pink buttons */
@@ -95,8 +100,6 @@ p {
   position: relative;
   overflow: hidden;
   font-size: 1.05rem;
-  /* Left align the button container if needed */
-  text-align: left;
 }
 
 /* Pink glow shine sweep effect on hover */
