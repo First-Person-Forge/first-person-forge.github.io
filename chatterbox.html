@@ -3,10 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Chat thing</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Chat</title>
+  <style>
+    /* Make sure the iframe covers the whole page with zero scroll or padding */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden; /* no scroll bars */
+    }
+    iframe {
+      border: none;
+      width: 100vw;
+      height: 100vh;
+      display: block;
+    }
+  </style>
 </head>
 <body>
-  <iframe src="https://first-person-forge.web.app" style="border: 0; width: 100%; height: 100%">Your browser doesn't support iFrames.</iframe>
+  <iframe src="https://first-person-forge.web.app" allowfullscreen></iframe>
 </body>
 </html>
