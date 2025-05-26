@@ -1,113 +1,120 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>First person forge</title>
-    <!-- Updated favicon link -->
-    <link rel="icon" type="image/gif" href="TemplateData/test.ico">
-    <link rel="stylesheet" href="TemplateData/style.css">
-  </head>
-  <body>
-    <div id="unity-container" class="unity-desktop">
-      <canvas id="unity-canvas"></canvas>
-      <div id="unity-loading-bar">
-        <div id="unity-logo"></div>
-        <div id="unity-progress-bar-empty">
-          <div id="unity-progress-bar-full"></div>
-        </div>
-      </div>
-      <div id="unity-footer">
-        <div id="unity-webgl-logo"></div>
-        <div id="unity-fullscreen-button"></div>
-        <div id="unity-build-title">My project (4)</div>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>First person forge</title>
+  <link rel="icon" type="image/gif" href="TemplateData/test.ico" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- UNITY STUFF FIRST -->
+  <div id="unity-container" class="unity-desktop">
+    <canvas id="unity-canvas"></canvas>
+    <div id="unity-loading-bar">
+      <div id="unity-logo"></div>
+      <div id="unity-progress-bar-empty">
+        <div id="unity-progress-bar-full"></div>
       </div>
     </div>
-    <script>
-      var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/webgl.loader.js";
-      var config = {
-        dataUrl: buildUrl + "/webgl.data",
-        frameworkUrl: buildUrl + "/webgl.framework.js",
-        codeUrl: buildUrl + "/webgl.wasm",
-        streamingAssetsUrl: "StreamingAssets",
-        companyName: "DefaultCompany",
-        productName: "My project (4)",
-        productVersion: "0.1",
-      };
+    <div id="unity-footer">
+      <div id="unity-webgl-logo"></div>
+      <div id="unity-fullscreen-button"></div>
+      <div id="unity-build-title">My project (4)</div>
+    </div>
+  </div>
 
-      var container = document.querySelector("#unity-container");
-      var canvas = document.querySelector("#unity-canvas");
-      var loadingBar = document.querySelector("#unity-loading-bar");
-      var progressBarFull = document.querySelector("#unity-progress-bar-full");
-      var fullscreenButton = document.querySelector("#unity-fullscreen-button");
+  <script>
+    var buildUrl = "Build";
+    var loaderUrl = buildUrl + "/webgl.loader.js";
+    var config = {
+      dataUrl: buildUrl + "/webgl.data",
+      frameworkUrl: buildUrl + "/webgl.framework.js",
+      codeUrl: buildUrl + "/webgl.wasm",
+      streamingAssetsUrl: "StreamingAssets",
+      companyName: "DefaultCompany",
+      productName: "My project (4)",
+      productVersion: "0.1",
+    };
 
-      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-        container.className = "unity-mobile";
-        config.devicePixelRatio = 1;
-      } else {
-        canvas.style.width = "960px";
-        canvas.style.height = "600px";
-      }
-      loadingBar.style.display = "block";
+    var container = document.querySelector("#unity-container");
+    var canvas = document.querySelector("#unity-canvas");
+    var loadingBar = document.querySelector("#unity-loading-bar");
+    var progressBarFull = document.querySelector("#unity-progress-bar-full");
+    var fullscreenButton = document.querySelector("#unity-fullscreen-button");
 
-      var script = document.createElement("script");
-      script.src = loaderUrl;
-      script.onload = () => {
-        createUnityInstance(canvas, config, (progress) => {
-          progressBarFull.style.width = 100 * progress + "%";
-        }).then((unityInstance) => {
-          loadingBar.style.display = "none";
-          fullscreenButton.onclick = () => {
-            unityInstance.SetFullscreen(1);
-          };
-        }).catch((message) => {
-          alert(message);
-        });
-      };
-      document.body.appendChild(script);
-    </script>
+    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+      container.className = "unity-mobile";
+      config.devicePixelRatio = 1;
+    } else {
+      canvas.style.width = "960px";
+      canvas.style.height = "600px";
+    }
+    loadingBar.style.display = "block";
+
+    var script = document.createElement("script");
+    script.src = loaderUrl;
+    script.onload = () => {
+      createUnityInstance(canvas, config, (progress) => {
+        progressBarFull.style.width = 100 * progress + "%";
+      }).then((unityInstance) => {
+        loadingBar.style.display = "none";
+        fullscreenButton.onclick = () => {
+          unityInstance.SetFullscreen(1);
+        };
+      }).catch((message) => {
+        alert(message);
+      });
+    };
+    document.body.appendChild(script);
+  </script>
+
+  <!-- THEN LINKS AT THE END -->
+  <div id="links-container">
     <a href="https://first-person-forge.github.io/funy.html" class="button">Fish</a>
     <a href="https://first-person-forge.github.io/turiipipip.html" class="button">Turi ip ip</a>
     <a href="https://first-person-forge.github.io/sad.html" class="button">Sad penguin</a>
-    <a href="https://first-person-forge.github.io/Subway%20Surfers%20Remake.html" class="button"><br>Subway surfers remake</a>
-    <a href="https://first-person-forge.github.io/chatterbox.html" class="button"><br>Chat room made by leighton</a>
-    <a href="https://first-person-forge.github.io/1.mp4" class="button"><br>anxiety cat</a>
-    <a href="https://first-person-forge.github.io/2.mp4" class="button"><br>eminem spongebob</a>
-    <a href="https://first-person-forge.github.io/3.mp4" class="button"><br>gangnam style cat</a>
-    <a href="https://first-person-forge.github.io/4.mp4" class="button"><br>travis cat</a>
-    <a href="https://first-person-forge.github.io/sm64.html" class="button"><br>My Sm64 remake</a>
-    <a href="https://first-person-forge.github.io/s1/s1.html" class="button"><br>Sonic 1</a>
-    <a href="https://first-person-forge.github.io/s2/s2.html" class="button"><br>Sonic 2</a>
-    <a href="https://first-person-forge.github.io/mc.html" class="button"><br>My minecraft remake</a>
-    <a href="https://first-person-forge.github.io/gd.html" class="button"><br>Geometry dash remake</a>
-    <a href="https://first-person-forge.github.io/slope.html" class="button"><br>Slope</a>
-    <a href="https://first-person-forge.github.io/stickman.html" class="button"><br>Stickman hook</a>
-    <a href="https://first-person-forge.github.io/motor/motor.html" class="button"><br>motorbike game</a>
-    <a href="https://first-person-forge.github.io/1v1/1v1.html" class="button"><br>1v1.Lol</a>
-    <a href="https://first-person-forge.github.io/fnfv3/fnf.html" class="button"><br>Wii Funkin'</a>
-    <a href="https://first-person-forge.github.io/monke/monke.html" class="button"><br>Monke Platformer</a>
-    <a href="https://first-person-forge.github.io/poly/POLY.html" class="button"><br>Poly Drift</a>
-    <a href="https://first-person-forge.github.io/cn4/game.html" class="button"><br>Connnect 4</a>
-    <a href="https://first-person-forge.github.io/bg1/game.html" class="button"><br>Tic-Tac-Toe</a>
-    <a href="https://first-person-forge.github.io/adofai.html" class="button"><br>A Dance Of Fire And Ice</a>
-    <a href="https://first-person-forge.github.io/Record.png" class="button"><br>Leightons Record</a>
-    <a href="https://first-person-forge.github.io/6mrtstar.jpg" class="button"><br>6mrt's Star</a>
-    <a href="https://first-person-forge.github.io/Mr T Star.jpg" class="button"><br>Mr T's Star</a>
-    <a href="https://first-person-forge.github.io/ozzysgame.html" class="button"><br>Ozzys Game</a>
-    <a href="https://first-person-forge.github.io/Shaggy/FNF-VS-Shaggy-main" class="button"><br>Fnf Vs Shaggy</a>
-    <a href="https://first-person-forge.github.io/Imposter" class="button"><br>Fnf Vs Imposter</a>
-    <a href="https://first-person-forge.github.io/Henry" class="button"><br>Fnf Vs Henry Stickmin</a>
-    <a href="https://first-person-forge.github.io/Agoti" class="button"><br>Fnf Vs Agoti</a>
-    <a href="https://first-person-forge.github.io/hex" class="button"><br>Fnf Vs Hex</a>
-    <a href="https://first-person-forge.github.io/sarv" class="button"><br>Fnf Mid-fight-masses</a>
-    <a href="https://first-person-forge.github.io/zardy" class="button"><br>Fnf Vs Zardy</a>
-    <a href="https://first-person-forge.github.io/whitty" class="button"><br>Fnf Vs Whitty</a>
-    <a href="https://first-person-forge.github.io/Fnf" class="button"><br>My New Upgraded Fnf Engine</a>
-    <a href="https://first-person-forge.github.io/Kapi" class="button"><br>Fnf VS Kapi</a>
-    <a href="https://first-person-forge.github.io/caml" class="button"><br>Fnf VS Camellia</a>
-    <a href="https://first-person-forge.github.io/sm63/supermario63.html" class="button"><br>Super Mario 63</a>
-    <a href="https://first-person-forge.github.io/sm63help.html" class="button"><br>Super Mario 63 Command list</a>
-    <a href="https://first-person-forge.github.io/sm63/sm63.html" class="button"><br>Super Mario 63 Mod</a>
-  </body>
+    <a href="https://first-person-forge.github.io/Subway%20Surfers%20Remake.html" class="button">Subway surfers remake</a>
+    <a href="https://first-person-forge.github.io/chatterbox.html" class="button">Chat room made by leighton</a>
+    <a href="https://first-person-forge.github.io/1.mp4" class="button">anxiety cat</a>
+    <a href="https://first-person-forge.github.io/2.mp4" class="button">eminem spongebob</a>
+    <a href="https://first-person-forge.github.io/3.mp4" class="button">gangnam style cat</a>
+    <a href="https://first-person-forge.github.io/4.mp4" class="button">travis cat</a>
+    <a href="https://first-person-forge.github.io/sm64.html" class="button">My Sm64 remake</a>
+    <a href="https://first-person-forge.github.io/s1/s1.html" class="button">Sonic 1</a>
+    <a href="https://first-person-forge.github.io/s2/s2.html" class="button">Sonic 2</a>
+    <a href="https://first-person-forge.github.io/mc.html" class="button">My minecraft remake</a>
+    <a href="https://first-person-forge.github.io/gd.html" class="button">Geometry dash remake</a>
+    <a href="https://first-person-forge.github.io/slope.html" class="button">Slope</a>
+    <a href="https://first-person-forge.github.io/stickman.html" class="button">Stickman hook</a>
+    <a href="https://first-person-forge.github.io/motor/motor.html" class="button">motorbike game</a>
+    <a href="https://first-person-forge.github.io/1v1/1v1.html" class="button">1v1.Lol</a>
+    <a href="https://first-person-forge.github.io/fnfv3/fnf.html" class="button">Wii Funkin'</a>
+    <a href="https://first-person-forge.github.io/monke/monke.html" class="button">Monke Platformer</a>
+    <a href="https://first-person-forge.github.io/poly/POLY.html" class="button">Poly Drift</a>
+    <a href="https://first-person-forge.github.io/cn4/game.html" class="button">Connnect 4</a>
+    <a href="https://first-person-forge.github.io/bg1/game.html" class="button">Tic-Tac-Toe</a>
+    <a href="https://first-person-forge.github.io/adofai.html" class="button">A Dance Of Fire And Ice</a>
+    <a href="https://first-person-forge.github.io/Record.png" class="button">Leightons Record</a>
+    <a href="https://first-person-forge.github.io/6mrtstar.jpg" class="button">6mrt's Star</a>
+    <a href="https://first-person-forge.github.io/Mr T Star.jpg" class="button">Mr T's Star</a>
+    <a href="https://first-person-forge.github.io/ozzysgame.html" class="button">Ozzys Game</a>
+    <a href="https://first-person-forge.github.io/Shaggy/FNF-VS-Shaggy-main" class="button">Fnf Vs Shaggy</a>
+    <a href="https://first-person-forge.github.io/Imposter" class="button">Fnf Vs Imposter</a>
+    <a href="https://first-person-forge.github.io/Henry" class="button">Fnf Vs Henry Stickmin</a>
+    <a href="https://first-person-forge.github.io/Agoti" class="button">Fnf Vs Agoti</a>
+    <a href="https://first-person-forge.github.io/hex" class="button">Fnf Vs Hex</a>
+    <a href="https://first-person-forge.github.io/sarv" class="button">Fnf Mid-fight-masses</a>
+    <a href="https://first-person-forge.github.io/zardy" class="button">Fnf Vs Zardy</a>
+    <a href="https://first-person-forge.github.io/whitty" class="button">Fnf Vs Whitty</a>
+    <a href="https://first-person-forge.github.io/Fnf" class="button">My New Upgraded Fnf Engine</a>
+    <a href="https://first-person-forge.github.io/Kapi" class="button">Fnf VS Kapi</a>
+    <a href="https://first-person-forge.github.io/caml" class="button">Fnf VS Camellia</a>
+    <a href="https://first-person-forge.github.io/sm63/supermario63.html" class="button">Super Mario 63</a>
+    <a href="https://first-person-forge.github.io/sm63help.html" class="button">Super Mario 63 Command list</a>
+    <a href="https://first-person-forge.github.io/sm63/sm63.html" class="button">Super Mario 63 Mod</a>
+  </div>
+
+</body>
 </html>

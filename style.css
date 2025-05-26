@@ -1,13 +1,157 @@
 /* === FULL DARK THEME WITH PINK NEON & GLASSMORPHISM === */
 
-/* Base dark background + text */
+/* === UNITY CONTAINER & GAME CANVAS STYLING === */
+#unity-container {
+  background: rgba(26, 26, 26, 0.6); /* match glassmorphism vibe */
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-radius: 20px;
+  padding: 20px;
+  max-width: 960px;
+  width: 100%;
+  margin: 40px auto 20px auto; /* center horizontally with margin top */
+  box-shadow:
+    0 0 15px rgba(255, 105, 180, 0.4),
+    0 12px 36px rgba(255, 20, 147, 0.7);
+  border: 2px solid rgba(255, 20, 147, 0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#unity-canvas {
+  width: 100%;
+  max-width: 900px;
+  height: 600px;
+  background: black;
+  border-radius: 16px;
+  box-shadow:
+    0 0 12px rgba(255, 20, 147, 0.6);
+  display: block;
+  margin-bottom: 16px;
+}
+
+#unity-loading-bar {
+  width: 100%;
+  height: 14px;
+  background: #330022;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 16px;
+  box-shadow:
+    0 0 10px rgba(255, 20, 147, 0.5);
+}
+
+#unity-progress-bar-full {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #ff69b4, #ff1493);
+  transition: width 0.3s ease;
+}
+
+#unity-footer {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  font-size: 0.9rem;
+  color: #ff69b4;
+  font-weight: 600;
+}
+
+#unity-fullscreen-button {
+  background: linear-gradient(135deg, #ff69b4, #ff1493);
+  border: none;
+  padding: 8px 20px;
+  border-radius: 9999px;
+  color: #0d0d0d;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow:
+    0 0 20px rgba(255, 105, 180, 0.8),
+    0 0 40px rgba(255, 20, 147, 1);
+  transition: box-shadow 0.4s ease, transform 0.2s ease;
+}
+
+#unity-fullscreen-button:hover {
+  box-shadow:
+    0 0 30px rgba(255, 105, 180, 1),
+    0 0 60px rgba(255, 20, 147, 1);
+  transform: scale(1.05);
+}
+
+/* === LINKS CONTAINER & BUTTONS === */
+#links-container {
+  max-width: 960px;
+  width: 100%;
+  margin: 0 auto 40px auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+a.button {
+  background: linear-gradient(135deg, #ff69b4, #ff1493);
+  color: #0d0d0d;
+  font-weight: 700;
+  padding: 14px 32px;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  box-shadow:
+    0 0 15px rgba(255, 105, 180, 0.6),
+    0 0 30px rgba(255, 20, 147, 0.9);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  transition: box-shadow 0.4s ease, transform 0.2s ease;
+  user-select: none;
+  min-width: 160px;
+  text-align: center;
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  font-size: 1.1rem;
+}
+
+a.button::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.35) 50%,
+    rgba(255, 255, 255, 0.15) 100%
+  );
+  transform: rotate(25deg);
+  transition: all 0.5s ease;
+  pointer-events: none;
+  opacity: 0;
+}
+
+a.button:hover::before {
+  left: 100%;
+  opacity: 1;
+  transition: all 0.7s ease;
+}
+
+a.button:hover {
+  box-shadow:
+    0 0 25px rgba(255, 105, 180, 0.9),
+    0 0 40px rgba(255, 20, 147, 1);
+  transform: scale(1.07);
+}
+
+/* === BASE PAGE STYLES === */
 body {
   background-color: #0d0d0d; /* Deep dark */
   color: #eee; /* Light text */
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  margin: 40px 20px; /* Just some breathing room on top/left */
-  padding: 0; /* No centering padding */
-  /* Removed flexbox centering */
+  margin: 40px 20px; /* breathing room */
+  padding: 0;
   min-height: 100vh;
 }
 
@@ -27,7 +171,6 @@ body {
   transition: box-shadow 0.3s ease;
   position: relative;
   overflow: hidden;
-  /* Removed transform scale on hover so no weird shifting */
 }
 
 /* Pink glow pulse on card */
@@ -62,8 +205,6 @@ h1, h2, h3 {
     0 0 20px #ff69b4,
     0 0 30px #ff1493;
   letter-spacing: 2px;
-  /* Removed center text */
-  text-align: left;
 }
 
 /* Paragraph text */
@@ -72,65 +213,6 @@ p {
   font-size: 1.1rem;
   line-height: 1.5;
   margin-bottom: 20px;
-  /* Left align */
-  text-align: left;
-}
-
-/* Neon pink buttons */
-.button {
-  display: inline-block;
-  background: linear-gradient(135deg, #ff69b4, #ff1493);
-  color: white;
-  font-weight: 700;
-  padding: 14px 32px;
-  border-radius: 9999px; /* pill shape */
-  border: none;
-  cursor: pointer;
-  box-shadow:
-    0 0 15px rgba(255, 105, 180, 0.6),
-    0 0 30px rgba(255, 20, 147, 0.9);
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  transition: box-shadow 0.4s ease, transform 0.2s ease;
-  position: relative;
-  overflow: hidden;
-  font-size: 1.05rem;
-  /* Left align the button container if needed */
-  text-align: left;
-}
-
-/* Pink glow shine sweep effect on hover */
-.button::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(
-    120deg,
-    rgba(255, 255, 255, 0.15) 0%,
-    rgba(255, 255, 255, 0.35) 50%,
-    rgba(255, 255, 255, 0.15) 100%
-  );
-  transform: rotate(25deg);
-  transition: all 0.5s ease;
-  pointer-events: none;
-  opacity: 0;
-}
-
-.button:hover::before {
-  left: 100%;
-  opacity: 1;
-  transition: all 0.7s ease;
-}
-
-/* Button hover glow + scale */
-.button:hover {
-  box-shadow:
-    0 0 25px rgba(255, 105, 180, 0.9),
-    0 0 40px rgba(255, 20, 147, 1);
-  transform: scale(1.07);
 }
 
 /* Inputs and textarea styling */
@@ -200,5 +282,24 @@ a:hover {
   .button {
     width: 100%;
     padding: 16px 0;
+  }
+
+  #unity-canvas {
+    height: 320px;
+
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden; /* no scrolling on the main page */
+}
+
+iframe {
+  border: none;
+  width: 100vw;
+  height: 100vh;
+  display: block;
+
   }
 }
