@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>rtc Bookmarklet</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    textarea {
+      width: 100%;
+      height: 400px;
+      font-family: monospace;
+      background-color: #f9f9f9;
+      border: 1px solid #ccc;
+      padding: 10px;
+      color: #333;
+      box-sizing: border-box;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>rtc Bookmarklet</h2>
+  <p>Copy and paste this into your bookmarks bar or console:made by leighton</p>
+
+  <textarea id="scriptText" readonly>
+  javascript:(function(){  const MAX_DEPTH = 3;  const panel = document.createElement('div');  panel.style = `    position:fixed;top:100px;left:100px;background:#111d;color:#0ff;font-family:monospace;padding:10px;font-size:14px;    z-index:999999;border:2px solid #0ff;border-radius:8px;max-width:350px;max-height:400px;overflow:auto;  %60;  panel.innerHTML = %60    <div style="margin-bottom:8px;">      <b>🎮 LeightHackz Deep Scan</b><br>      <input id="varSearch" placeholder="Search vars or paths..." style="width:100%;margin-top:5px;padding:3px;">      <button id="scanBtn" style="margin-top:5px;">🔍 Scan Everything</button>    </div>    <div id="varList" style="max-height:300px;overflow:auto;"></div>  %60;  document.body.appendChild(panel);  panel.onmousedown = function(e){    if(e.target.tagName==='INPUT'||e.target.tagName==='BUTTON')return;    let sx = e.clientX - panel.getBoundingClientRect().left;    let sy = e.clientY - panel.getBoundingClientRect().top;    function move(e){      panel.style.left = e.pageX - sx + 'px';      panel.style.top = e.pageY - sy + 'px';    }    function stop(){      document.removeEventListener('mousemove', move);      document.removeEventListener('mouseup', stop);    }    document.addEventListener('mousemove', move);    document.addEventListener('mouseup', stop);  };  const freezes = {};  let allVars = [];  function safeGet(obj, key) {    try {      return obj[key];    } catch {      return undefined;    }  }  function scanObj(obj, path='', depth=0, visited=new Set()){    if(depth > MAX_DEPTH) return;    if(obj === null) return;    if(typeof obj !== 'object' && typeof obj !== 'function') return;    if(visited.has(obj)) return;    visited.add(obj);    for(let key in obj){      if(!obj.hasOwnProperty(key)) continue;      let val = safeGet(obj, key);      let fullPath = path ? path + '.' + key : key;      if(val === undefined) continue;      if(typeof val === 'number' || typeof val === 'string' || typeof val === 'boolean'){        allVars.push({path: fullPath, value: val, type: typeof val, parent: obj, key: key});      } else if(typeof val === 'object' || typeof val === 'function'){        scanObj(val, fullPath, depth+1, visited);      }    }  }  function renderVars(filter=''){    const varList = document.getElementById('varList');    varList.innerHTML = '';    let filtered = allVars.filter(v => v.path.toLowerCase().includes(filter.toLowerCase()) || String(v.value).toLowerCase().includes(filter.toLowerCase()));    filtered.forEach(v=>{      const row = document.createElement('div');      row.style.margin = '5px 0';      row.style.borderBottom = '1px solid #0ff3';      row.style.paddingBottom = '4px';      const label = document.createElement('div');      label.textContent = v.path + ' (' + v.type + '):';      label.style.fontSize = '12px';      label.style.color = '#0ff9';      row.appendChild(label);      const input = document.createElement('input');      input.style = 'width:80%;margin-top:2px;';      if(v.type === 'boolean'){        input.type = 'checkbox';        input.checked = v.value;      } else if(v.type === 'number'){        input.type = 'number';        input.value = v.value;      } else {        input.type = 'text';        input.value = v.value;      }      row.appendChild(input);      const saveBtn = document.createElement('button');      saveBtn.textContent = '💾';      saveBtn.style.marginLeft = '6px';      saveBtn.onclick = () => {        try {          if(v.type === 'boolean'){            v.parent[v.key] = input.checked;          } else if(v.type === 'number'){            v.parent[v.key] = parseFloat(input.value);          } else {            v.parent[v.key] = input.value;          }          alert(%60Saved ${v.path} = ${input.value}%60);        } catch(e){          alert('Failed to save variable: ' + e.message);        }      };      row.appendChild(saveBtn);      const freezeBtn = document.createElement('button');      freezeBtn.textContent = freezes[v.path] ? '🧊' : '❄%EF%B8%8F';      freezeBtn.style.marginLeft = '4px';      freezeBtn.onclick = () => {        if(freezes[v.path]){          clearInterval(freezes[v.path]);          delete freezes[v.path];          freezeBtn.textContent = '❄%EF%B8%8F';        } else {          freezes[v.path] = setInterval(() => {            try {              if(v.type === 'boolean'){                v.parent[v.key] = input.checked;              } else if(v.type === 'number'){                v.parent[v.key] = parseFloat(input.value);              } else {                v.parent[v.key] = input.value;              }            } catch {}          }, 100);          freezeBtn.textContent = '🧊';        }      };      row.appendChild(freezeBtn);      varList.appendChild(row);    });  }  document.getElementById('scanBtn').onclick = () => {    allVars = [];    renderVars('');    try {      scanObj(window);      renderVars(document.getElementById('varSearch').value);    } catch(e) {      alert('Scan failed: ' + e.message);    }  };  document.getElementById('varSearch').oninput = (e) => {    renderVars(e.target.value);  };})();
+    </textarea>
+
+  <button onclick="copyToClipboard()">Copy to Clipboard</button>
+
+  <script>
+    function copyToClipboard() {
+      const textarea = document.getElementById("scriptText");
+      textarea.select();
+      textarea.setSelectionRange(0, 99999); // For mobile support
+      document.execCommand("copy");
+      alert("Script copied to clipboard!");
+    }
+  </script>
+
+</body>
+</html>
