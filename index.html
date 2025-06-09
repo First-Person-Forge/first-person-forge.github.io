@@ -6,6 +6,88 @@
   <title>First Person Forge</title>
   <link rel="icon" type="image/gif" href="TemplateData/test.ico" />
   <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Glitch effect for countdown text */
+    @keyframes glitch {
+      0% { text-shadow: 2px 0 red, -2px 0 cyan; }
+      25% { text-shadow: -2px 0 red, 2px 0 cyan; }
+      50% { text-shadow: 2px 0 lime, -2px 0 magenta; }
+      75% { text-shadow: -1px 0 red, 1px 0 blue; }
+      100% { text-shadow: 2px 0 red, -2px 0 cyan; }
+    }
+    /* TV zoom out animation */
+    @keyframes tvZoomOut {
+      0% { transform: scale(1); opacity: 1; }
+      100% { transform: scale(0.1) translate(-200%, -200%); opacity: 0; }
+    }
+    /* TV zoom in animation */
+    @keyframes tvZoomIn {
+      0% { transform: scale(0.1) translate(200%, 200%); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    /* Banner styling */
+    #update-banner {
+      font-family: 'Courier New', monospace;
+      text-align: center;
+      padding: 10px;
+      background: black;
+      color: yellow;
+      font-size: 1.2em;
+      text-shadow: 0 0 5px red;
+      animation: glitch 1s infinite;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      left: 0;
+      z-index: 10000;
+    }
+    /* TV overlay styling */
+    #tv-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: black;
+      z-index: 10001;
+      justify-content: center;
+      align-items: center;
+    }
+    #tv-screen {
+      width: 90vw;
+      height: 90vh;
+      background: radial-gradient(#333, #000);
+      border: 10px solid #444;
+      box-shadow: 0 0 50px red;
+      animation: none;
+    }
+    /* Links buttons style (optional, just so they look clickable) */
+    #links-container {
+      margin-top: 80px;
+      padding: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+      background: #111;
+    }
+    #links-container .button {
+      display: inline-block;
+      padding: 8px 14px;
+      background: #222;
+      color: #eee;
+      text-decoration: none;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 0.9em;
+      box-shadow: 0 0 6px #444;
+      transition: background 0.3s, box-shadow 0.3s;
+    }
+    #links-container .button:hover {
+      background: #444;
+      box-shadow: 0 0 12px #ff0;
+      color: #ff0;
+    }
+  </style>
 </head>
 <body>
 
@@ -70,6 +152,16 @@
     document.body.appendChild(script);
   </script>
 
+  <!-- Countdown Banner -->
+  <div id="update-banner">
+    Next update adds 4 new games and secrets.<br>Update in: <span id="countdown-timer">Loading...</span>
+  </div>
+
+  <!-- TV Animation Overlay -->
+  <div id="tv-overlay">
+    <div id="tv-screen"></div>
+  </div>
+
   <!-- THEN LINKS AT THE END -->
   <div id="links-container">
     <a href="https://first-person-forge.github.io/funy.html" class="button">Fish</a>
@@ -116,37 +208,101 @@
     <a href="https://first-person-forge.github.io/sm63/sm63.html" class="button">Super Mario 63 Mod</a>
     <a href="https://first-person-forge.github.io/hak.html" class="button">Js Value Changer</a>
     <a href="https://first-person-forge.github.io/haktest/main.html" class="button">Try The Value Changer</a>
-<a href="https://first-person-forge.github.io/stickgame/stick-fighter/index.html" class="button">Stickman Game</a>
+    <a href="https://first-person-forge.github.io/stickgame/stick-fighter/index.html" class="button">Stickman Game</a>
     <a href="https://first-person-forge.github.io/Hngman/index.html" class="button">Hangman</a>
     <a href="https://first-person-forge.github.io/penalty/index.html" class="button">Penalty Shootout</a>
-     <a href="https://first-person-forge.github.io/Xp/VirtualXP.htm" class="button">Windows XP</a>
+    <a href="https://first-person-forge.github.io/Xp/VirtualXP.htm" class="button">Windows XP</a>
   </div>
-<!-- Jumpscare -->
-<div id="jumpscare" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:black; justify-content:center; align-items:center; z-index:9999;">
-  <img src="https://first-person-forge.github.io/cat.png" style="width:100%; height:100%; object-fit:cover;" />
-  <audio id="scream-sound" src="https://first-person-forge.github.io/get-out.mp3"></audio>
-</div>
 
-<script>
-  let buffer = "";
-  document.addEventListener("keydown", (e) => {
-    if (getSelection().toString()) return; // ignore if text is selected
-    buffer += e.key.toLowerCase();
-    if (buffer.length > 6) buffer = buffer.slice(-6); // keep last 6 chars only
+  <!-- Jumpscare -->
+  <div id="jumpscare" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:black; justify-content:center; align-items:center; z-index:9999;">
+    <img src="https://first-person-forge.github.io/cat.png" style="width:100%; height:100%; object-fit:cover;" />
+    <audio id="scream-sound" src="https://first-person-forge.github.io/get-out.mp3"></audio>
+  </div>
 
-    if (buffer === "cheese") {
-      const scare = document.getElementById("jumpscare");
-      const scream = document.getElementById("scream-sound");
-      scare.style.display = "flex";
-      scream.play();
-      setTimeout(() => {
-        scare.style.display = "none";
-        buffer = "";
-      }, 2400); // jumpscare lasts 3 seconds
+  <!-- Audio for ticking -->
+  <audio id="tick-sound" src="https://first-person-forge.github.io/tick.mp3" preload="auto"></audio>
+
+  <script>
+    let buffer = "";
+    document.addEventListener("keydown", (e) => {
+      if (getSelection().toString()) return; // ignore if text is selected
+      buffer += e.key.toLowerCase();
+      if (buffer.length > 6) buffer = buffer.slice(-6); // keep last 6 chars only
+
+      if (buffer === "cheese") {
+        const scare = document.getElementById("jumpscare");
+        const scream = document.getElementById("scream-sound");
+        scare.style.display = "flex";
+        scream.play();
+        setTimeout(() => {
+          scare.style.display = "none";
+          buffer = "";
+        }, 2400); // jumpscare lasts 2.4 seconds
+      }
+    });
+  </script>
+
+  <script>
+    const countdownElement = document.getElementById("countdown-timer");
+    const banner = document.getElementById("update-banner");
+    const overlay = document.getElementById("tv-overlay");
+    const screen = document.getElementById("tv-screen");
+    const tickSound = document.getElementById("tick-sound");
+
+    // Target date: June 14, 2025 at 08:50 UTC
+    const targetDate = new Date("2025-06-14T08:50:00Z");
+
+    function updateCountdown() {
+      const now = new Date();
+      const diff = targetDate - now;
+
+      if (diff <= 0) {
+        clearInterval(timerInterval);
+        triggerAnimation();
+        return;
+      }
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+
+      countdownElement.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+      
+      // Play tick sound every second
+      tickSound.currentTime = 0;
+      tickSound.play().catch(() => {
+        // ignore play promise errors for muted/autoplay policies
+      });
     }
-  });
-</script>
 
+    const timerInterval = setInterval(updateCountdown, 1000);
+    updateCountdown(); // initial call
+
+    function triggerAnimation() {
+      banner.style.display = "none";
+      overlay.style.display = "flex";
+
+      // TV zoom out animation
+      screen.style.animation = "tvZoomOut 2s forwards";
+
+      setTimeout(() => {
+        // TV zoom in animation after zoom out
+        screen.style.animation = "tvZoomIn 2s forwards";
+      }, 2200);
+
+      // Refresh page after animation
+      setTimeout(() => {
+        location.reload();
+      }, 4500);
+    }
+
+    // Console test trigger: call this in browser console to test animation now
+    window.testUpdateAnimation = triggerAnimation;
+
+    console.log("Type testUpdateAnimation() in the console to trigger the update animation immediately!");
+  </script>
 
 </body>
 </html>
