@@ -6,110 +6,70 @@
   <title>First Person Forge</title>
   <link rel="icon" type="image/gif" href="TemplateData/test.ico" />
   <link rel="stylesheet" href="style.css" />
-  <style>
-    /* Glitch effect for countdown text */
-    @keyframes glitch {
-      0% { text-shadow: 2px 0 red, -2px 0 cyan; }
-      25% { text-shadow: -2px 0 red, 2px 0 cyan; }
-      50% { text-shadow: 2px 0 lime, -2px 0 magenta; }
-      75% { text-shadow: -1px 0 red, 1px 0 blue; }
-      100% { text-shadow: 2px 0 red, -2px 0 cyan; }
-    }
-    /* TV zoom out animation */
-    @keyframes zoomOutOnly {
-      0% { transform: scale(1) translateX(0); opacity: 1; }
-      100% { transform: scale(0.3) translateX(-100%); opacity: 0.5; }
-    }
-    /* TV slide right animation */
-    @keyframes slideRightOnly {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(100%); }
-    }
-    /* TV slide left animation */
-    @keyframes slideLeftOnly {
-      0% { transform: translateX(100%); }
-      100% { transform: translateX(0); }
-    }
-    /* TV zoom in animation */
-    @keyframes zoomInOnly {
-      0% { transform: scale(0.3) translateX(-100%); opacity: 0.5; }
-      100% { transform: scale(1) translateX(0); opacity: 1; }
-    }
-    /* Banner styling */
-    #update-banner {
-      font-family: 'Courier New', monospace;
-      text-align: center;
-      padding: 10px;
-      background: black;
-      color: yellow;
-      font-size: 1.2em;
-      text-shadow: 0 0 5px red;
-      animation: glitch 1s infinite;
-      position: fixed;
-      width: 100%;
-      top: 0;
-      left: 0;
-      z-index: 10000;
-      cursor: pointer;
-    }
-    /* TV overlay styling */
-    #tv-overlay {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      background: black;
-      z-index: 10001;
-      justify-content: center;
-      align-items: center;
-    }
-    #tv-frame {
-      display: flex;
-      overflow: hidden;
-      width: 80vw;
-      height: 60vh;
-      border: 5px solid #222;
-      box-shadow: 0 0 30px red;
-    }
-    #tv-screen-1, #tv-screen-2 {
-      flex: 0 0 100%;
-      background: radial-gradient(#333, #000);
-      box-shadow: inset 0 0 30px red;
-    }
-    #tv-screen-2 {
-      background: black;
-    }
-    /* Container for main content including games and unity */
-    #main-content {
-      margin-top: 60px; /* to not be behind the fixed banner */
-      transition: transform 2s ease; /* smooth transform for animation */
-    }
-    /* Games Links container */
-    #links-container {
-      margin: 20px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-    /* No styling on anchor buttons as requested */
-  </style>
 </head>
 <body>
 
-  <!-- Banner -->
-  <div id="update-banner">
-    Next update adds 4 new games and secrets.<br>Update in: <span id="countdown-timer">Loading...</span>
-  </div>
-
-  <!-- TV Animation Overlay -->
-  <div id="tv-overlay">
-    <div id="tv-frame">
-      <div id="tv-screen-1"></div>
-      <div id="tv-screen-2"></div>
+  <!-- UNITY STUFF FIRST -->
+  <div id="unity-container" class="unity-desktop">
+    <canvas id="unity-canvas"></canvas>
+    <div id="unity-loading-bar">
+      <div id="unity-logo"></div>
+      <div id="unity-progress-bar-empty">
+        <div id="unity-progress-bar-full"></div>
+      </div>
+    </div>
+    <div id="unity-footer">
+      <div id="unity-webgl-logo"></div>
+      <div id="unity-fullscreen-button"></div>
+      <div id="unity-build-title">My project (4)</div>
     </div>
   </div>
 
-<<<<<<< Updated upstream
+  <script>
+    var buildUrl = "Build";
+    var loaderUrl = buildUrl + "/webgl.loader.js";
+    var config = {
+      dataUrl: buildUrl + "/webgl.data",
+      frameworkUrl: buildUrl + "/webgl.framework.js",
+      codeUrl: buildUrl + "/webgl.wasm",
+      streamingAssetsUrl: "StreamingAssets",
+      companyName: "DefaultCompany",
+      productName: "My project (4)",
+      productVersion: "0.1",
+    };
+
+    var container = document.querySelector("#unity-container");
+    var canvas = document.querySelector("#unity-canvas");
+    var loadingBar = document.querySelector("#unity-loading-bar");
+    var progressBarFull = document.querySelector("#unity-progress-bar-full");
+    var fullscreenButton = document.querySelector("#unity-fullscreen-button");
+
+    if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+      container.className = "unity-mobile";
+      config.devicePixelRatio = 1;
+    } else {
+      canvas.style.width = "960px";
+      canvas.style.height = "600px";
+    }
+    loadingBar.style.display = "block";
+
+    var script = document.createElement("script");
+    script.src = loaderUrl;
+    script.onload = () => {
+      createUnityInstance(canvas, config, (progress) => {
+        progressBarFull.style.width = 100 * progress + "%";
+      }).then((unityInstance) => {
+        loadingBar.style.display = "none";
+        fullscreenButton.onclick = () => {
+          unityInstance.SetFullscreen(1);
+        };
+      }).catch((message) => {
+        alert(message);
+      });
+    };
+    document.body.appendChild(script);
+  </script>
+
   <!-- THEN LINKS AT THE END -->
   <div id="links-container">
     <a href="https://first-person-forge.github.io/funy.html" class="button">Fish</a>
@@ -156,136 +116,41 @@
     <a href="https://first-person-forge.github.io/sm63/sm63.html" class="button">Super Mario 63 Mod</a>
     <a href="https://first-person-forge.github.io/hak.html" class="button">Js Value Changer</a>
     <a href="https://first-person-forge.github.io/haktest/main.html" class="button">Try The Value Changer</a>
-    <a href="https://first-person-forge.github.io/stickgame/stick-fighter/index.html" class="button">Stickman Game</a>
+<a href="https://first-person-forge.github.io/stickgame/stick-fighter/index.html" class="button">Stickman Game</a>
     <a href="https://first-person-forge.github.io/Hngman/index.html" class="button">Hangman</a>
     <a href="https://first-person-forge.github.io/penalty/index.html" class="button">Penalty Shootout</a>
-    <a href="https://first-person-forge.github.io/Xp/VirtualXP.htm" class="button">Windows XP</a>
-    <a href="https://first-person-forge.github.io/ww2.mp4" class="button">Brainrot WW2</a>
+     <a href="https://first-person-forge.github.io/Xp/VirtualXP.htm" class="button">Windows XP</a>
+       <a href="https://first-person-forge.github.io/ww2.mp4" class="button">Brainrot WW2 v1</a>
+      <a href="https://first-person-forge.github.io/ww2v2.mp4" class="button">Brainrot WW2 v2</a>
   </div>
-=======
-  <!-- Main content including Unity and games -->
-  <div id="main-content">
-    <!-- UNITY STUFF FIRST -->
-    <div id="unity-container" class="unity-desktop">
-      <canvas id="unity-canvas"></canvas>
-      <div id="unity-loading-bar">
-        <div id="unity-logo"></div>
-        <div id="unity-progress-bar-empty">
-          <div id="unity-progress-bar-full"></div>
-        </div>
-      </div>
-      <div id="unity-footer">
-        <div id="unity-webgl-logo"></div>
-        <div id="unity-fullscreen-button"></div>
-        <div id="unity-build-title">My project (4)</div>
-      </div>
-    </div>
->>>>>>> Stashed changes
+<!-- Jumpscare -->
+<div id="jumpscare" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:black; justify-content:center; align-items:center; z-index:9999;">
+  <img src="https://first-person-forge.github.io/cat.png" style="width:100%; height:100%; object-fit:cover;" />
+  <audio id="scream-sound" src="https://first-person-forge.github.io/get-out.mp3"></audio>
+</div>
 
-    <!-- Games Links -->
-    <div id="links-container">
-      <a href="https://first-person-forge.github.io/funy.html">Fish</a>
-      <a href="https://first-person-forge.github.io/turiipipip.html">Turi ip ip</a>
-      <a href="https://first-person-forge.github.io/sad.html">Sad penguin</a>
-      <a href="https://first-person-forge.github.io/Subway%20Surfers%20Remake.html">Subway surfers remake</a>
-      <a href="https://first-person-forge.github.io/chatterbox.html">Chat room made by leighton</a>
-      <a href="https://first-person-forge.github.io/1.mp4">anxiety cat</a>
-      <a href="https://first-person-forge.github.io/2.mp4">eminem spongebob</a>
-      <a href="https://first-person-forge.github.io/3.mp4">gangnam style cat</a>
-      <a href="https://first-person-forge.github.io/4.mp4">travis cat</a>
-      <a href="https://first-person-forge.github.io/sm64.html">My Sm64 remake</a>
-      <a href="https://first-person-forge.github.io/s1/s1.html">Sonic 1</a>
-      <a href="https://first-person-forge.github.io/s2/s2.html">Sonic 2</a>
-      <a href="https://first-person-forge.github.io/mc.html">My minecraft remake</a>
-      <a href="https://first-person-forge.github.io/gd.html">Geometry dash remake</a>
-      <a href="https://first-person-forge.github.io/slope.html">Slope</a>
-      <a href="https://first-person-forge.github.io/stickman.html">Stickman hook</a>
-      <a href="https://first-person-forge.github.io/motor/motor.html">motorbike game</a>
-      <a href="https://first-person-forge.github.io/1v1/1v1.html">1v1.Lol</a>
-      <a href="https://first-person-forge.github.io/fnfv3/fnf.html">Wii Funkin'</a>
-      <a href="https://first-person-forge.github.io/monke/monke.html">Monke Platformer</a>
-      <a href="https://first-person-forge.github.io/poly/POLY.html">Poly Drift</a>
-      <a href="https://first-person-forge.github.io/cn4/game.html">Connnect 4</a>
-      <a href="https://first-person-forge.github.io/bg1/game.html">Tic-Tac-Toe</a>
-      <a href="https://first-person-forge.github.io/adofai.html">A Dance Of Fire And Ice</a>
-      <a href="https://first-person-forge.github.io/Record.png">Leightons Record</a>
-      <a href="https://first-person-forge.github.io/6mrtstar.jpg">6mrt's Star</a>
-      <a href="https://first-person-forge.github.io/Mr T Star.jpg">Mr T's Star</a>
-      <a href="https://first-person-forge.github.io/ozzysgame.html">Ozzys Game</a>
-      <a href="https://first-person-forge.github.io/Shaggy/FNF-VS-Shaggy-main">Fnf Vs Shaggy</a>
-      <a href="https://first-person-forge.github.io/Imposter">Fnf Vs Imposter</a>
-      <a href="https://first-person-forge.github.io/Henry">Fnf Vs Henry Stickmin</a>
-      <a href="https://first-person-forge.github.io/Agoti">Fnf Vs Agoti</a>
-      <a href="https://first-person-forge.github.io/hex">Fnf Vs Hex</a>
-      <a href="https://first-person-forge.github.io/sarv">Fnf Mid-fight-masses</a>
-      <a href="https://first-person-forge.github.io/zardy">Fnf Vs Zardy</a>
-      <a href="https://first-person-forge.github.io/whitty">Fnf Vs Whitty</a>
-      <a href="https://first-person-forge.github.io/Fnf">My New Upgraded Fnf Engine</a>
-      <a href="https://first-person-forge.github.io/Kapi">Fnf VS Kapi</a>
-      <a href="https://first-person-forge.github.io/caml">Fnf VS Camellia</a>
-      <a href="https://first-person-forge.github.io/sm63/supermario63.html">Super Mario 63</a>
-      <a href="https://first-person-forge.github.io/sm63help.html">Super Mario 63 Command list</a>
-      <a href="https://first-person-forge.github.io/sm63/sm63.html">Super Mario 63 Mod</a>
-      <a href="https://first-person-forge.github.io/hak.html">Js Value Changer</a>
-      <a href="https://first-person-forge.github.io/haktest/main.html">Try The Value Changer</a>
-      <a href="https://first-person-forge.github.io/stickgame/stick-fighter/index.html">Stickman Game</a>
-      <a href="https://first-person-forge.github.io/Hngman/index.html">Hangman</a>
-      <a href="https://first-person-forge.github.io/penalty/index.html">Penalty Shootout</a>
-      <a href="https://first-person-forge.github.io/Xp/VirtualXP.htm">Windows XP</a>
-    </div>
-  </div>
+<script>
+  let buffer = "";
+  document.addEventListener("keydown", (e) => {
+    if (getSelection().toString()) return; // ignore if text is selected
+    buffer += e.key.toLowerCase();
+    if (buffer.length > 6) buffer = buffer.slice(-6); // keep last 6 chars only
 
-  <script>
-    const banner = document.getElementById('update-banner');
-    const overlay = document.getElementById('tv-overlay');
-    const tvFrame = document.getElementById('tv-frame');
-    const mainContent = document.getElementById('main-content');
-
-    const stepDuration = 2000; // 2 seconds per step for smoothness
-
-    function runAnimation() {
-      banner.style.display = 'none';
-      overlay.style.display = 'flex';
-
-      // Step 1: Zoom out + slide left for main content
-      tvFrame.style.animation = 'zoomOutOnly 2s forwards';
-      mainContent.style.transition = `transform ${stepDuration}ms ease`;
-      mainContent.style.transform = 'scale(0.3) translateX(-100%)';
-
-      // Step 2: Slide right (tv frame)
+    if (buffer === "cheese") {
+      const scare = document.getElementById("jumpscare");
+      const scream = document.getElementById("scream-sound");
+      scare.style.display = "flex";
+      scream.play();
       setTimeout(() => {
-        tvFrame.style.animation = 'slideRightOnly 2s forwards';
-        mainContent.style.transform = 'translateX(100%) scale(0.3)';
-      }, stepDuration);
-
-      // Step 3: Slide left (tv frame)
-      setTimeout(() => {
-        tvFrame.style.animation = 'slideLeftOnly 2s forwards';
-        mainContent.style.transform = 'translateX(0) scale(0.3)';
-      }, stepDuration * 2);
-
-      // Step 4: Zoom in (tv frame)
-      setTimeout(() => {
-        tvFrame.style.animation = 'zoomInOnly 2s forwards';
-        mainContent.style.transform = 'scale(1) translateX(0)';
-      }, stepDuration * 3);
-
-      // Finish - reset everything
-      setTimeout(() => {
-        overlay.style.display = 'none';
-        banner.style.display = 'block';
-        tvFrame.style.animation = 'none';
-        mainContent.style.transition = '';
-      }, stepDuration * 4 + 200);
+        scare.style.display = "none";
+        buffer = "";
+      }, 2400); // jumpscare lasts 3 seconds
     }
+  });
+</script>
 
-    banner.addEventListener('click', runAnimation);
-
-    // Expose testanim() for console use if needed
-    window.testanim = runAnimation;
-
-    console.log('%cType testanim() in the console to test the TV animation!', 'color: cyan; background: black; font-size: 14px; padding: 4px;');
-  </script>
 
 </body>
 </html>
+
+
