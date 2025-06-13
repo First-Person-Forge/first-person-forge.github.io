@@ -1,3 +1,11 @@
+/* === CUSTOM SAKANA FONT SETUP === */
+@font-face {
+  font-family: 'Sakana';
+  src: url('fonts/Sakana.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 /* === FULL DARK THEME WITH PINK NEON & GLASSMORPHISM === */
 
 /* === UNITY CONTAINER & GAME CANVAS STYLING === */
@@ -111,6 +119,7 @@ a.button {
   position: relative;
   overflow: hidden;
   font-size: 1.1rem;
+  font-family: 'Sakana', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 a.button::before {
@@ -149,7 +158,7 @@ a.button:hover {
 body {
   background-color: #0d0d0d; /* Deep dark */
   color: #eee; /* Light text */
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Sakana', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 40px 20px; /* breathing room */
   padding: 0;
   min-height: 100vh;
@@ -171,6 +180,7 @@ body {
   transition: box-shadow 0.3s ease;
   position: relative;
   overflow: hidden;
+  font-family: 'Sakana', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* Pink glow pulse on card */
@@ -205,6 +215,7 @@ h1, h2, h3 {
     0 0 20px #ff69b4,
     0 0 30px #ff1493;
   letter-spacing: 2px;
+  font-family: 'Sakana', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* Paragraph text */
@@ -213,6 +224,7 @@ p {
   font-size: 1.1rem;
   line-height: 1.5;
   margin-bottom: 20px;
+  font-family: 'Sakana', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* Inputs and textarea styling */
@@ -227,7 +239,7 @@ input, textarea {
   box-shadow: inset 0 0 8px rgba(255, 105, 180, 0.3);
   margin-bottom: 20px;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Sakana', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* Pink glow focus effect on inputs */
@@ -245,6 +257,7 @@ a {
   text-decoration: none;
   font-weight: 600;
   transition: text-shadow 0.3s ease;
+  font-family: 'Sakana', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 a:hover {
@@ -286,8 +299,10 @@ a:hover {
 
   #unity-canvas {
     height: 320px;
+  }
+}
 
-
+/* General resets and iframe */
 html, body {
   margin: 0;
   padding: 0;
@@ -300,6 +315,4 @@ iframe {
   width: 100vw;
   height: 100vh;
   display: block;
-
-  }
 }
