@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bottle flip scoreboard bookmark</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    textarea {
+      width: 100%;
+      height: 400px;
+      font-family: monospace;
+      background-color: #f9f9f9;
+      border: 1px solid #ccc;
+      padding: 10px;
+      color: #333;
+      box-sizing: border-box;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Bottle flip scoreboard bookmark</h2>
+  <p>Copy and paste this into your bookmarks bar or console:made by leighton</p>
+
+  <textarea id="scriptText" readonly>
+  javascript:(()=>{if(document.getElementById('flipHudContainer'))return alert('HUD already open!');const style=`#flipHudContainer{position:fixed;top:10px;left:10px;width:300px;background:rgba(255,111,207,0.15);backdrop-filter:blur(16px);border:1px solid rgba(255,111,207,0.4);border-radius:20px;box-shadow:0 0 20px #ff6fcf99,inset 0 0 40px #ff6fcf55;font-family:sans-serif;color:#ff6fcf;padding:20px;z-index:999999;}#flipHudContainer h1{margin:0 0 10px;font-size:1.2rem;}#bottleWrapper{width:100%;display:flex;justify-content:center;perspective:800px;}#bottleEmoji{font-size:3rem;display:inline-block;transform-origin:center;transition:transform 1.2s ease;}button{background:rgba(255,111,207,0.25);border:none;border-radius:12px;color:white;font-weight:bold;padding:6px 12px;margin:5px 4px 0 0;cursor:pointer;}button:hover{background:rgba(255,111,207,0.5);}`;const html=`<div id=\"flipHudContainer\"><h1>Bottle Flip HUD</h1><div id=\"bottleWrapper\"><span id=\"bottleEmoji\">\ud83e\udd64</span></div><div>Total: <span id=\"totalFlips\">0</span></div><div>Streak: <span id=\"currentStreak\">0</span></div><div>Misses: <span id=\"misses\">0</span></div><div><button id=\"flipBtn\">+1 Flip</button><button id=\"missBtn\">+1 Miss</button><button id=\"resetBtn\">Reset</button></div></div>`;const s=document.createElement('style');s.textContent=style;document.head.appendChild(s);const d=document.createElement('div');d.innerHTML=html;document.body.appendChild(d.firstChild);let flips=0,streak=0,misses=0,angle=0;const t=document.getElementById('totalFlips'),st=document.getElementById('currentStreak'),m=document.getElementById('misses'),b=document.getElementById('bottleEmoji');function update(){t.textContent=flips;st.textContent=streak;m.textContent=misses;}function rotateBottle(deg){angle+=deg;b.style.transition='transform 1.2s ease';b.style.transform=`translateY(-40px) rotateZ(${angle}deg)`;setTimeout(()=>{b.style.transform=`translateY(0px) rotateZ(${angle}deg)`},1200);}document.getElementById('flipBtn').onclick=()=>{flips++;streak++;update();rotateBottle(360);};document.getElementById('missBtn').onclick=()=>{misses++;streak=0;update();rotateBottle(450);};document.getElementById('resetBtn').onclick=()=>{flips=0;streak=0;misses=0;angle=0;update();b.style.transform=`rotateZ(0deg)`;};update();})();
+  </textarea>
+
+  <button onclick="copyToClipboard()">Copy to Clipboard</button>
+
+  <script>
+    function copyToClipboard() {
+      const textarea = document.getElementById("scriptText");
+      textarea.select();
+      textarea.setSelectionRange(0, 99999); // For mobile support
+      document.execCommand("copy");
+      alert("Script copied to clipboard!");
+    }
+  </script>
+
+</body>
+</html>
