@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Bottle Flip Scoreboard 💫</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron&display=swap');
+  body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #ff6fcf, #5ec9ff, #9b59b6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Orbitron', sans-serif;
+    color: #fefefe;
+  }
+  .glassmorphic {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 24px;
+    box-shadow:
+      0 0 20px rgba(255, 255, 255, 0.2),
+      inset 0 0 40px rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1.5px solid rgba(255, 255, 255, 0.25);
+    padding: 40px 60px;
+    width: 320px;
+    text-align: center;
+    user-select: none;
+    position: relative;
+  }
+  h1 {
+    font-size: 2.8rem;
+    text-shadow:
+      0 0 8px #ff94d7,
+      0 0 16px #5ec9ff,
+      0 0 24px #9b59b6cc;
+    margin-bottom: 30px;
+  }
+  #bottleEmoji {
+    display: inline-block;
+    cursor: default;
+    user-select: none;
+    transform-origin: center center;
+    font-size: 4rem;
+    position: relative;
+    color: #ff6fcf;
+    transition: box-shadow 0.3s ease;
+    will-change: transform;
+  }
+  @keyframes flipSpin360 {
+    0% {
+      transform: translateY(0) rotateZ(0deg);
+      opacity: 1;
+    }
+    40% {
+      transform: translateY(-120px) rotateZ(180deg);
+      opacity: 1;
+    }
+    80% {
+      transform: translateY(0) rotateZ(360deg);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(0) rotateZ(360deg);
+      opacity: 1;
+    }
+  }
+  @keyframes missSpin450 {
+    0% {
+      transform: translateY(0) rotateZ(0deg);
+      opacity: 1;
+    }
+    40% {
+      transform: translateY(-120px) rotateZ(225deg);
+      opacity: 1;
+    }
+    80% {
+      transform: translateY(0) rotateZ(450deg);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(0) rotateZ(450deg);
+      opacity: 1;
+    }
+  }
+  .flip {
+    animation: flipSpin360 1.2s cubic-bezier(0.42, 0, 0.58, 1) forwards;
+  }
+  .miss {
+    animation: missSpin450 1.2s cubic-bezier(0.42, 0, 0.58, 1) forwards;
+  }
+  .stat {
+    font-size: 1.6rem;
+    margin: 18px 0;
+    text-shadow:
+      0 0 6px #ff94d7,
+      0 0 12px #5ec9ffcc;
+  }
+  button {
+    background: rgba(255, 111, 207, 0.35);
+    border: none;
+    border-radius: 12px;
+    color: #fff;
+    font-weight: 900;
+    font-size: 1.25rem;
+    padding: 14px 30px;
+    margin: 15px 12px 0 12px;
+    cursor: pointer;
+    box-shadow:
+      0 0 15px #ff6fcf88,
+      inset 0 0 25px #ff6fcf44;
+    transition: background 0.3s ease;
+    user-select: none;
+  }
+  button:hover {
+    background: rgba(94, 201, 255, 0.75);
+    box-shadow:
+      0 0 25px #5ec9ffdd,
+      inset 0 0 35px #5ec9ff99;
+  }
+  button:active {
+    transform: scale(0.95);
+  }
+</style>
+</head>
+<body>
+  <div class="glassmorphic">
+    <h1>
+      <span id="bottleEmoji">🥤</span>Bottle Flip Scoreboard
+    </h1>
+    <div class="stat" id="totalFlips">Total Flips: 0</div>
+    <div class="stat" id="currentStreak">Current Streak: 0</div>
+    <div class="stat" id="misses">Misses: 0</div>
+    <div>
+      <button onclick="flip()">+1 Flip</button>
+      <button onclick="miss()">+1 Miss</button>
+      <button onclick="reset()">Reset</button>
+    </div>
+  </div>
+
+<script>
+  let totalFlips = 0;
+  let currentStreak = 0;
+  let misses = 0;
+
+  const totalEl = document.getElementById('totalFlips');
+  const streakEl = document.getElementById('currentStreak');
+  const missesEl = document.getElementById('misses');
+  const bottleEmoji = document.getElementById('bottleEmoji');
+
+  function flip() {
+    totalFlips++;
+    currentStreak++;
+    updateDisplay();
+    animateEmoji('flip');
+  }
+
+  function miss() {
+    misses++;
+    currentStreak = 0;
+    updateDisplay();
+    animateEmoji('miss');
+  }
+
+  function reset() {
+    totalFlips = 0;
+    currentStreak = 0;
+    misses = 0;
+    updateDisplay();
+    bottleEmoji.classList.remove('flip', 'miss');
+  }
+
+  function updateDisplay() {
+    totalEl.textContent = `Total Flips: ${totalFlips}`;
+    streakEl.textContent = `Current Streak: ${currentStreak}`;
+    missesEl.textContent = `Misses: ${misses}`;
+  }
+
+  function animateEmoji(animationClass) {
+    bottleEmoji.classList.remove('flip', 'miss');
+    void bottleEmoji.offsetWidth; // force reflow to restart animation
+    bottleEmoji.classList.add(animationClass);
+  }
+</script>
+</body>
+</html>
