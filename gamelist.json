@@ -9,7 +9,7 @@
     "coverArt": "/Arcade/games/sonic1/sonic1.png",
     "pageUrl": "/Arcade/play?game=sonic1",
     "core": "segaMD",
-    "romPath": "/Arcade/roms/GENESIS/sonic1.md",
+    "romPath": "/Arcade/roms/GENESIS/sonic1.bin",
     "saveState": ""
   },
   "previousGames": [
@@ -49,7 +49,7 @@
       "coverArt": "/Arcade/games/sonic2/sonic2.png",
       "pageUrl": "/Arcade/play?game=sonic2",
       "core": "segaMD",
-      "romPath": "/Arcade/roms/GENESIS/sonic2.md",
+      "romPath": "/Arcade/roms/GENESIS/sonic2.bin",
       "saveState": ""
     },
     {
@@ -75,7 +75,7 @@
   "coverArt": "/Arcade/games/sonic3/sonic3.png",
   "pageUrl": "/Arcade/play?game=sonic3",
   "core": "segaMD",
-  "romPath":  "/Arcade/roms/GENESIS/sonic3.md",
+  "romPath":  "/Arcade/roms/GENESIS/sonic3.bin",
   "saveState": ""
 }
  ] }
