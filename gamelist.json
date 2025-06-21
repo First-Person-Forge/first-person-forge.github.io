@@ -65,7 +65,7 @@
       "romPath": "/Arcade/roms/GENESIS/sonic2proto.bin",
       "saveState": ""
     },
-        {
+    {
       "id": "sonicdelta",
       "title": "Sonic Delta",
       "developer": "Sega",
@@ -78,17 +78,57 @@
       "romPath": "/Arcade/roms/GENESIS/sonicdelta.bin",
       "saveState": ""
     },
- {
-  "id": "sonic3",
-  "title": "Sonic 3",
-  "developer": "Sega",
-  "year": "1994",
-  "genre": "",
-  "hide": "no",
-  "coverArt": "/Arcade/games/sonic3/sonic3.png",
-  "pageUrl": "/Arcade/play?game=sonic3",
-  "core": "segaMD",
-  "romPath":  "/Arcade/roms/GENESIS/sonic3.bin",
-  "saveState": ""
+    {
+      "id": "sonic1proto",
+      "title": "Sonic 1 Prototype",
+      "developer": "Sega",
+      "year": "1992",
+      "genre": "",
+      "hide": "no",
+      "coverArt": "",
+      "pageUrl": "/Arcade/play?game=sonic1proto",
+      "core": "segaMD",
+      "romPath": "/Arcade/roms/GENESIS/s1proto.bin",
+      "saveState": ""
+    },
+    {
+      "id": "sonic3proto",
+      "title": "Sonic 3 Prototype",
+      "developer": "Sega",
+      "year": "1992",
+      "genre": "",
+      "hide": "no",
+      "coverArt": "",
+      "pageUrl": "/Arcade/play?game=sonic3proto",
+      "core": "segaMD",
+      "romPath": "/Arcade/roms/GENESIS/s3proto.bin",
+      "saveState": ""
+    },
+    {
+      "id": "sonickproto",
+      "title": "Sonic and Knuckles Prototype",
+      "developer": "Sega",
+      "year": "1992",
+      "genre": "",
+      "hide": "no",
+      "coverArt": "",
+      "pageUrl": "/Arcade/play?game=sonickproto",
+      "core": "segaMD",
+      "romPath": "/Arcade/roms/GENESIS/skproto.bin",
+      "saveState": ""
+    },
+    {
+      "id": "sonic3",
+      "title": "Sonic 3",
+      "developer": "Sega",
+      "year": "1994",
+      "genre": "",
+      "hide": "no",
+      "coverArt": "/Arcade/games/sonic3/sonic3.png",
+      "pageUrl": "/Arcade/play?game=sonic3",
+      "core": "segaMD",
+      "romPath": "/Arcade/roms/GENESIS/sonic3.bin",
+      "saveState": ""
+    }
+  ]
 }
- ] }
