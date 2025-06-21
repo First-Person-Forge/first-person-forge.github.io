@@ -65,6 +65,19 @@
       "romPath": "/Arcade/roms/GENESIS/sonic2proto.bin",
       "saveState": ""
     },
+        {
+      "id": "sonicdelta",
+      "title": "Sonic Delta",
+      "developer": "Sega",
+      "year": "1992",
+      "genre": "",
+      "hide": "no",
+      "coverArt": "/Arcade/games/sonicdelta.png",
+      "pageUrl": "/Arcade/play?game=sonicdelta",
+      "core": "segaMD",
+      "romPath": "/Arcade/roms/GENESIS/sonicdelta.bin",
+      "saveState": ""
+    },
  {
   "id": "sonic3",
   "title": "Sonic 3",
