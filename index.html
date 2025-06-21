@@ -8,8 +8,52 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+ <style>
+    .navbar {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      background-color: rgba(26, 26, 26, 0.6);
+      backdrop-filter: blur(10px);
+      padding: 16px;
+      border-bottom: 2px solid rgba(255, 20, 147, 0.5);
+      box-shadow: 0 4px 12px rgba(255, 20, 147, 0.4);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
 
-  <!-- UNITY STUFF FIRST -->
+    .navbar a {
+      font-weight: bold;
+      text-transform: uppercase;
+      color: #ff69b4;
+      text-decoration: none;
+      font-family: 'Sakana', sans-serif;
+      padding: 8px 16px;
+      border-radius: 12px;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .navbar a:hover {
+      background: #ff69b4;
+      color: #0d0d0d;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <a href="index.html">Home</a>
+    <a href="games.html">Games</a>
+    <a href="fnf-mods.html">FNF Mods</a>
+    <a href="tools.html">Tools</a>
+    <a href="retro.html">Retro</a>
+    <a href="videos.html">Videos</a>
+    <a href="misc.html">Misc</a>
+<a href="Arcade/index.html">Arcade</a>
+
+  </nav>
+
+  <!-- UNITY STUFF -->
   <div id="unity-container" class="unity-desktop">
     <canvas id="unity-canvas"></canvas>
     <div id="unity-loading-bar">
@@ -70,96 +114,30 @@
     document.body.appendChild(script);
   </script>
 
-  <!-- THEN LINKS AT THE END -->
-  <div id="links-container">
-    <a href="https://first-person-forge.github.io/funy.html" class="button">Fish</a>
-    <a href="https://first-person-forge.github.io/turiipipip.html" class="button">Turi ip ip</a>
-    <a href="https://first-person-forge.github.io/sad.html" class="button">Sad penguin</a>
-    <a href="https://first-person-forge.github.io/Subway%20Surfers%20Remake.html" class="button">Subway surfers remake</a>
-    <a href="https://first-person-forge.github.io/chatterbox.html" class="button">Chat room made by leighton</a>
-    <a href="https://first-person-forge.github.io/1.mp4" class="button">anxiety cat</a>
-    <a href="https://first-person-forge.github.io/2.mp4" class="button">eminem spongebob</a>
-    <a href="https://first-person-forge.github.io/3.mp4" class="button">gangnam style cat</a>
-    <a href="https://first-person-forge.github.io/4.mp4" class="button">travis cat</a>
-    <a href="https://first-person-forge.github.io/sm64.html" class="button">My Sm64 remake</a>
-    <a href="https://first-person-forge.github.io/s1/s1.html" class="button">Sonic 1</a>
-    <a href="https://first-person-forge.github.io/s2/s2.html" class="button">Sonic 2</a>
-    <a href="https://first-person-forge.github.io/mc.html" class="button">My minecraft remake</a>
-    <a href="https://first-person-forge.github.io/gd.html" class="button">Geometry dash remake</a>
-    <a href="https://first-person-forge.github.io/slope.html" class="button">Slope</a>
-    <a href="https://first-person-forge.github.io/stickman.html" class="button">Stickman hook</a>
-    <a href="https://first-person-forge.github.io/motor/motor.html" class="button">motorbike game</a>
-    <a href="https://first-person-forge.github.io/1v1/1v1.html" class="button">1v1.Lol</a>
-    <a href="https://first-person-forge.github.io/fnfv3/fnf.html" class="button">Wii Funkin'</a>
-    <a href="https://first-person-forge.github.io/monke/monke.html" class="button">Monke Platformer</a>
-    <a href="https://first-person-forge.github.io/poly/POLY.html" class="button">Poly Drift</a>
-    <a href="https://first-person-forge.github.io/cn4/game.html" class="button">Connnect 4</a>
-    <a href="https://first-person-forge.github.io/bg1/game.html" class="button">Tic-Tac-Toe</a>
-    <a href="https://first-person-forge.github.io/adofai.html" class="button">A Dance Of Fire And Ice</a>
-    <a href="https://first-person-forge.github.io/Record.png" class="button">Leightons Record</a>
-    <a href="https://first-person-forge.github.io/6mrtstar.jpg" class="button">6mrt's Star</a>
-    <a href="https://first-person-forge.github.io/Mr T Star.jpg" class="button">Mr T's Star</a>
-    <a href="https://first-person-forge.github.io/ozzysgame.html" class="button">Ozzys Game</a>
-    <a href="https://first-person-forge.github.io/Shaggy/FNF-VS-Shaggy-main" class="button">Fnf Vs Shaggy</a>
-    <a href="https://first-person-forge.github.io/Imposter" class="button">Fnf Vs Imposter</a>
-    <a href="https://first-person-forge.github.io/Henry" class="button">Fnf Vs Henry Stickmin</a>
-    <a href="https://first-person-forge.github.io/Agoti" class="button">Fnf Vs Agoti</a>
-    <a href="https://first-person-forge.github.io/hex" class="button">Fnf Vs Hex</a>
-    <a href="https://first-person-forge.github.io/sarv" class="button">Fnf Mid-fight-masses</a>
-    <a href="https://first-person-forge.github.io/zardy" class="button">Fnf Vs Zardy</a>
-    <a href="https://first-person-forge.github.io/whitty" class="button">Fnf Vs Whitty</a>
-    <a href="https://first-person-forge.github.io/Fnf" class="button">My New Upgraded Fnf Engine</a>
-    <a href="https://first-person-forge.github.io/Kapi" class="button">Fnf VS Kapi</a>
-    <a href="https://first-person-forge.github.io/caml" class="button">Fnf VS Camellia</a>
-    <a href="https://first-person-forge.github.io/sm63/supermario63.html" class="button">Super Mario 63</a>
-    <a href="https://first-person-forge.github.io/sm63help.html" class="button">Super Mario 63 Command list</a>
-    <a href="https://first-person-forge.github.io/sm63/sm63.html" class="button">Super Mario 63 Mod</a>
-    <a href="https://first-person-forge.github.io/hak.html" class="button">Js Value Changer</a>
-    <a href="https://first-person-forge.github.io/haktest/main.html" class="button">Try The Value Changer</a>
-<a href="https://first-person-forge.github.io/stickgame/stick-fighter/index.html" class="button">Stickman Game</a>
-    <a href="https://first-person-forge.github.io/Hngman/index.html" class="button">Hangman</a>
-    <a href="https://first-person-forge.github.io/penalty/index.html" class="button">Penalty Shootout</a>
-     <a href="https://first-person-forge.github.io/Xp/VirtualXP.htm" class="button">Windows XP</a>
-    <a href="https://first-person-forge.github.io/bottleflip.html" class="button">BottleFlip Scoreboard</a>
-        <a href="https://first-person-forge.github.io/bflip.html" class="button">BottleFlip Scoreboard Bookmarklet</a>
-<a href="https://first-person-forge.github.io/UNDERTALE/index.html" class="button">UnderTale</a>
-<a href="https://first-person-forge.github.io/Mania/index.html" class="button">Sonic Mania</a>
-<a href="https://first-person-forge.github.io/PIZZA/index.html" class="button">Pizza Tower</a>
-<a href="https://first-person-forge.github.io/sm63/Pig.html" class="button">Bad Piggies</a>
-<a href="https://first-person-forge.github.io/Birds/index.html" class="button">Angry Birds</a>
-
-
-       <a href="https://first-person-forge.github.io/ww2.mp4" class="button">Brainrot WW2 v1</a>
-      <a href="https://first-person-forge.github.io/ww2v2.mp4" class="button">Brainrot WW2 v2</a>
+  <!-- JUMPSCARE -->
+  <div id="jumpscare" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:black; justify-content:center; align-items:center; z-index:9999;">
+    <img src="cat.png" style="width:100%; height:100%; object-fit:cover;" />
+    <audio id="scream-sound" src="get-out.mp3"></audio>
   </div>
-<!-- Jumpscare -->
-<div id="jumpscare" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:black; justify-content:center; align-items:center; z-index:9999;">
-  <img src="https://first-person-forge.github.io/cat.png" style="width:100%; height:100%; object-fit:cover;" />
-  <audio id="scream-sound" src="https://first-person-forge.github.io/get-out.mp3"></audio>
-</div>
 
-<script>
-  let buffer = "";
-  document.addEventListener("keydown", (e) => {
-    if (getSelection().toString()) return; // ignore if text is selected
-    buffer += e.key.toLowerCase();
-    if (buffer.length > 6) buffer = buffer.slice(-6); // keep last 6 chars only
-
-    if (buffer === "cheese") {
-      const scare = document.getElementById("jumpscare");
-      const scream = document.getElementById("scream-sound");
-      scare.style.display = "flex";
-      scream.play();
-      setTimeout(() => {
-        scare.style.display = "none";
-        buffer = "";
-      }, 2400); // jumpscare lasts 3 seconds
-    }
-  });
-</script>
-
+  <script>
+    let buffer = "";
+    document.addEventListener("keydown", (e) => {
+      if (getSelection().toString()) return;
+      buffer += e.key.toLowerCase();
+      if (buffer.length > 6) buffer = buffer.slice(-6);
+      if (buffer === "cheese") {
+        const scare = document.getElementById("jumpscare");
+        const scream = document.getElementById("scream-sound");
+        scare.style.display = "flex";
+        scream.play();
+        setTimeout(() => {
+          scare.style.display = "none";
+          buffer = "";
+        }, 2400);
+      }
+    });
+  </script>
 
 </body>
 </html>
-
-

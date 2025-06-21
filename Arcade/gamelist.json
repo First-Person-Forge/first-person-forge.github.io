@@ -1,0 +1,81 @@
+{
+  "gameOfTheWeek": {
+    "id": "sonic1",
+    "title": "Sonic 1",
+    "developer": "Sega",
+    "year": "1991",
+    "genre": "",
+    "hide": "no",
+    "coverArt": "/Arcade/games/sonic1/sonic1.png",
+    "pageUrl": "/Arcade/play?game=sonic1",
+    "core": "segaMD",
+    "romPath": "/Arcade/roms/GENESIS/sonic1.md",
+    "saveState": ""
+  },
+  "previousGames": [
+    {
+      "id": "sk",
+      "title": "Sonic and Knuckles",
+      "developer": "Sega",
+      "year": "1994",
+      "genre": "",
+      "hide": "no",
+      "coverArt": "/Arcade/games/sk/sk.png",
+      "pageUrl": "/Arcade/play?game=sk",
+      "core": "segaMD",
+      "romPath": "/Arcade/roms/GENESIS/sk.bin",
+      "saveState": ""
+    },
+    {
+      "id": "sk3",
+      "title": "Sonic 3 and Knuckles",
+      "developer": "Sega",
+      "year": "1994",
+      "genre": "",
+      "hide": "no",
+      "coverArt": "/Arcade/games/sk3/sk3.png",
+      "pageUrl": "/Arcade/play?game=sk3",
+      "core": "segaMD",
+      "romPath": "/Arcade/roms/GENESIS/sk3.bin",
+      "saveState": ""
+    },
+    {
+      "id": "sonic2",
+      "title": "Sonic 2",
+      "developer": "Sega",
+      "year": "1992",
+      "genre": "",
+      "hide": "no",
+      "coverArt": "/Arcade/games/sonic2/sonic2.png",
+      "pageUrl": "/Arcade/play?game=sonic2",
+      "core": "segaMD",
+      "romPath": "/Arcade/roms/GENESIS/sonic2.md",
+      "saveState": ""
+    },
+    {
+      "id": "sonic2proto",
+      "title": "Sonic 2 Nick Arcade Prototype",
+      "developer": "Sega",
+      "year": "1992",
+      "genre": "",
+      "hide": "no",
+      "coverArt": "/Arcade/games/sonic2proto/sonic2proto.png",
+      "pageUrl": "/Arcade/play?game=sonic2proto",
+      "core": "segaMD",
+      "romPath": "/Arcade/roms/GENESIS/sonic2proto.bin",
+      "saveState": ""
+    },
+ {
+  "id": "sonic3",
+  "title": "Sonic 3",
+  "developer": "Sega",
+  "year": "1994",
+  "genre": "",
+  "hide": "no",
+  "coverArt": "/Arcade/games/sonic3/sonic3.png",
+  "pageUrl": "/Arcade/play?game=sonic3",
+  "core": "segaMD",
+  "romPath":  "/Arcade/roms/GENESIS/sonic3.md",
+  "saveState": ""
+}
+ ] }
