@@ -118,6 +118,59 @@
       "saveState": ""
     },
     {
+      "id": "alexkidd",
+      "title": "Alex Kidd",
+      "developer": "Sega",
+      "year": "",
+      "genre": "",
+      "hide": "no",
+      "coverArt": "",
+      "pageUrl": "/Arcade/play?game=alexkidd",
+      "core": "segaMD",
+      "romPath": "/Arcade/roms/GENESIS/alexkidd.bin",
+      "saveState": ""
+    },
+  {
+      "id": "streetsofrage",
+      "title": "Streets Of Rage 2",
+      "developer": "Sega",
+      "year": "",
+      "genre": "",
+      "hide": "no",
+      "coverArt": "",
+      "pageUrl": "/Arcade/play?game=streetsofrage",
+      "core": "segaMD",
+      "romPath": "/Arcade/roms/GENESIS/streetsofrage.bin",
+      "saveState": ""
+    },
+{
+      "id": "desertstrike",
+      "title": "Desert Strike",
+      "developer": "Sega",
+      "year": "",
+      "genre": "",
+      "hide": "no",
+      "coverArt": "",
+      "pageUrl": "/Arcade/play?game=desertstrike",
+      "core": "segaMD",
+      "romPath": "/Arcade/roms/GENESIS/desertstrike.bin",
+      "saveState": ""
+    },
+{
+      "id": "nhl",
+      "title": "NHL 95",
+      "developer": "Sega",
+      "year": "",
+      "genre": "",
+      "hide": "no",
+      "coverArt": "",
+      "pageUrl": "/Arcade/play?game=nhl",
+      "core": "segaMD",
+      "romPath": "/Arcade/roms/GENESIS/nhl95.bin",
+      "saveState": ""
+    },
+
+    {
       "id": "sonic3",
       "title": "Sonic 3",
       "developer": "Sega",
