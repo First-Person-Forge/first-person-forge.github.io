@@ -170,6 +170,20 @@
       "saveState": ""
     },
 
+{
+      "id": "mortalkombat",
+      "title": "Mortal Kombat",
+      "developer": "Sega",
+      "year": "",
+      "genre": "",
+      "hide": "no",
+      "coverArt": "",
+      "pageUrl": "/Arcade/play?game=mortalkombat",
+      "core": "segaMD",
+      "romPath": "/Arcade/roms/GENESIS/mortalkombat.bin",
+      "saveState": ""
+    },
+
     {
       "id": "sonic3",
       "title": "Sonic 3",
