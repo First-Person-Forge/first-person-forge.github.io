@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>First Person Forge News</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <section id="news-section">
+    <!-- Left: News + search -->
+    <div class="news-left">
+      <div class="news-header">
+        <img src="/path/to/logo.png" alt="Logo" class="news-logo" />
+        <h1>First Person Forge News</h1>
+        <div class="search-container">
+          <input type="text" id="search-news" placeholder="Search news..." autocomplete="off" />
+          <div id="suggestions-boxes"></div>
+        </div>
+      </div>
+
+      <div id="news-content">
+        <h3 id="news-title"></h3>
+        <p id="news-summary"></p>
+        <div id="news-full-wrapper">
+          <p id="news-full"></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Picture stack -->
+    <div id="news-pics"></div>
+  </section>
+
+  <script>
+    const newsData = [
+      {
+        week: 1,
+        title: "Week 1 - July 6, 2025",
+        summary: "Monkey bars betrayed me. Wrist hurt but still crushed 4.0 K/D 💪",
+        full: "The monkey bars really got me this week—fell hard and my wrist was swelling, but I didn’t let it stop me. Managed to keep up my 4.0 kill/death ratio in Fortnite, so feels like a win despite the pain!",
+        pics: [
+          "https://placekitten.com/180/120",
+          "https://placekitten.com/181/120",
+          "https://placekitten.com/182/120"
+        ]
+      },
+      {
+        week: 2,
+        title: "Week 2 - July 13, 2025",
+        summary: "Rebuilt the news section with style. CSS game on point 😎",
+        full: "Took some time this week to completely overhaul the news section. Added new styles, search filters, and made it all look slick. Can’t wait for you to check it out!",
+        pics: [
+          "https://placebear.com/180/120",
+          "https://placebear.com/181/120",
+          "https://placebear.com/182/120"
+        ]
+      }
+    ];
+
+    const currentWeekNumber = 1;
+
+    const newsTitle = document.getElementById('news-title');
+    const newsSummary = document.getElementById('news-summary');
+    const newsFull = document.getElementById('news-full');
+    const newsPicsDiv = document.getElementById('news-pics');
+    const searchInput = document.getElementById('search-news');
+    const suggestionsBoxes = document.getElementById('suggestions-boxes');
+    const currentNews = document.getElementById('news-content');
+
+    function updateNews(weekNum) {
+      const news = newsData.find(n => n.week === weekNum);
+      if (!news) return;
+
+      newsTitle.textContent = news.title;
+      newsSummary.textContent = news.summary;
+      newsFull.textContent = news.full;
+
+      newsPicsDiv.innerHTML = '';
+      news.pics.forEach((url, index) => {
+        const img = document.createElement('img');
+        img.src = url;
+        img.alt = `Week ${weekNum} pic ${index + 1}`;
+        img.classList.add('news-image');
+        img.tabIndex = 0;
+
+        img.addEventListener('click', () => {
+          if (weekNum !== currentWeekNumber) slideChangeNews(weekNum);
+        });
+        img.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            img.click();
+            e.preventDefault();
+          }
+        });
+
+        newsPicsDiv.appendChild(img);
+      });
+    }
+
+    function slideChangeNews(weekNum) {
+      currentNews.style.maxHeight = '0';
+      currentNews.addEventListener('transitionend', function handler() {
+        currentNews.removeEventListener('transitionend', handler);
+        updateNews(weekNum);
+        currentNews.style.maxHeight = '2000px';
+      }, { once: true });
+    }
+
+    function showSuggestions(keyword) {
+      if (!keyword) {
+        suggestionsBoxes.style.display = 'none';
+        suggestionsBoxes.innerHTML = '';
+        return;
+      }
+
+      keyword = keyword.toLowerCase();
+      const filtered = newsData.filter(n =>
+        n.week !== currentWeekNumber &&
+        (n.title.toLowerCase().includes(keyword) ||
+         n.summary.toLowerCase().includes(keyword) ||
+         n.full.toLowerCase().includes(keyword))
+      );
+
+      suggestionsBoxes.innerHTML = '';
+
+      if (filtered.length === 0) {
+        suggestionsBoxes.style.display = 'none';
+        return;
+      }
+
+      filtered.forEach(n => {
+        const box = document.createElement('div');
+        box.classList.add('mini-news-box');
+        box.textContent = n.title;
+        box.tabIndex = 0;
+
+        box.addEventListener('click', () => {
+          suggestionsBoxes.style.display = 'none';
+          searchInput.value = '';
+          slideChangeNews(n.week);
+        });
+        box.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            box.click();
+            e.preventDefault();
+          }
+        });
+
+        suggestionsBoxes.appendChild(box);
+      });
+
+      suggestionsBoxes.style.display = 'block';
+    }
+
+    searchInput.addEventListener('input', e => {
+      showSuggestions(e.target.value);
+    });
+
+    document.addEventListener('click', e => {
+      if (!searchInput.contains(e.target) && !suggestionsBoxes.contains(e.target)) {
+        suggestionsBoxes.style.display = 'none';
+      }
+    });
+
+    updateNews(currentWeekNumber);
+  </script>
+
+</body>
+</html>
+
