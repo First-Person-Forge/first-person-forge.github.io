@@ -1,18 +1,59 @@
 {
   "gameOfTheWeek": {
-    "id": "sonic1",
-    "title": "Sonic 1",
-    "developer": "Sega",
-    "year": "1991",
-    "genre": "",
+    "id": "fami1",
+    "title": "famidash pt 1",
+    "developer": "idk",
+    "year": "idk",
+    "genre": "dashing",
     "hide": "no",
-    "coverArt": "/Arcade/games/sonic1/sonic1.png",
-    "pageUrl": "/Arcade/play?game=sonic1",
-    "core": "segaMD",
-    "romPath": "/Arcade/roms/GENESIS/sonic1.bin",
+    "coverArt": "/Arcade/games/fami/fami.png",
+    "pageUrl": "/Arcade/play?game=fami1",
+    "core": "nes",
+    "romPath": "/Arcade/roms/NES/fami1.nes",
     "saveState": ""
   },
   "previousGames": [
+{
+    "id": "fami2",
+    "title": "famidash pt 2",
+    "developer": "idk",
+    "year": "idk",
+    "genre": "dashing",
+    "hide": "no",
+    "coverArt": "/Arcade/games/fami/fami.png",
+    "pageUrl": "/Arcade/play?game=fami2",
+    "core": "nes",
+    "romPath": "/Arcade/roms/NES/fami2.nes",
+    "saveState": ""
+  },
+{
+    "id": "fami3",
+    "title": "famidash pt 3",
+    "developer": "idk",
+    "year": "idk",
+    "genre": "dashing",
+    "hide": "no",
+    "coverArt": "/Arcade/games/fami/fami.png",
+    "pageUrl": "/Arcade/play?game=fami3",
+    "core": "nes",
+    "romPath": "/Arcade/roms/NES/fami3.nes",
+    "saveState": ""
+  },
+
+{
+    "id": "fami4",
+    "title": "famidash pt 4",
+    "developer": "idk",
+    "year": "idk",
+    "genre": "dashing",
+    "hide": "no",
+    "coverArt": "/Arcade/games/fami/fami.png",
+    "pageUrl": "/Arcade/play?game=fami4",
+    "core": "nes",
+    "romPath": "/Arcade/roms/NES/fami4.nes",
+    "saveState": ""
+  },
+
     {
       "id": "sk",
       "title": "Sonic and Knuckles",
@@ -22,7 +63,7 @@
       "hide": "no",
       "coverArt": "/Arcade/games/sk/sk.png",
       "pageUrl": "/Arcade/play?game=sk",
-      "core": "segaMD",
+      "core": "nes",
       "romPath": "/Arcade/roms/GENESIS/sk.bin",
       "saveState": ""
     },
